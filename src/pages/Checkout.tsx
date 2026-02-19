@@ -1,8 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ShieldCheck, Truck, ArrowLeft, Lock, User, MapPin, CreditCard, Check, ChevronRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
+
+const maskCPF = (v: string) => v.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+const maskPhone = (v: string) => {
+  const d = v.replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 10) return d.replace(/(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2");
+  return d.replace(/(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d)/, "$1-$2");
+};
+const maskCEP = (v: string) => v.replace(/\D/g, "").slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
+
+const EMAIL_DOMAINS = ["@gmail.com", "@hotmail.com", "@outlook.com", "@yahoo.com.br", "@icloud.com", "@live.com"];
 
 const steps = [
   { id: 1, label: "Dados Pessoais", icon: User },
@@ -23,8 +33,35 @@ const Checkout = () => {
     neighborhood: "", city: "", state: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [emailSuggestions, setEmailSuggestions] = useState<string[]>([]);
+  const [showEmailSuggestions, setShowEmailSuggestions] = useState(false);
+  const emailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (emailRef.current && !emailRef.current.contains(e.target as Node)) setShowEmailSuggestions(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleEmailChange = (value: string) => {
+    updateField("email", value);
+    const atIndex = value.indexOf("@");
+    if (atIndex > 0) {
+      const typed = value.slice(atIndex);
+      const matches = EMAIL_DOMAINS.filter(d => d.startsWith(typed) && d !== typed);
+      setEmailSuggestions(matches.map(d => value.slice(0, atIndex) + d));
+      setShowEmailSuggestions(matches.length > 0);
+    } else if (value.length > 0 && !value.includes("@")) {
+      setEmailSuggestions(EMAIL_DOMAINS.map(d => value + d));
+      setShowEmailSuggestions(true);
+    } else {
+      setShowEmailSuggestions(false);
+    }
+  };
 
   if (items.length === 0 && !submitted) {
     return (
@@ -144,18 +181,41 @@ const Checkout = () => {
                         <input required placeholder="Ex: João da Silva" value={form.name} onChange={(e) => updateField("name", e.target.value)} className={inputClass} />
                       </div>
                       <div className="grid sm:grid-cols-2 gap-4">
-                        <div>
+                        <div ref={emailRef} className="relative">
                           <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Email</label>
-                          <input required type="email" placeholder="seu@email.com" value={form.email} onChange={(e) => updateField("email", e.target.value)} className={inputClass} />
+                          <input
+                            required
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={form.email}
+                            onChange={(e) => handleEmailChange(e.target.value)}
+                            onFocus={() => form.email.length > 0 && handleEmailChange(form.email)}
+                            className={inputClass}
+                            autoComplete="off"
+                          />
+                          {showEmailSuggestions && emailSuggestions.length > 0 && (
+                            <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-card border border-border rounded-xl shadow-lg overflow-hidden">
+                              {emailSuggestions.map((s) => (
+                                <button
+                                  key={s}
+                                  type="button"
+                                  className="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 transition-colors text-foreground"
+                                  onClick={() => { updateField("email", s); setShowEmailSuggestions(false); }}
+                                >
+                                  {s}
+                                </button>
+                              ))}
+                            </div>
+                          )}
                         </div>
                         <div>
                           <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Telefone</label>
-                          <input required placeholder="(11) 99999-9999" value={form.phone} onChange={(e) => updateField("phone", e.target.value)} className={inputClass} />
+                          <input required placeholder="(11) 99999-9999" value={form.phone} onChange={(e) => updateField("phone", maskPhone(e.target.value))} className={inputClass} inputMode="numeric" />
                         </div>
                       </div>
                       <div className="sm:w-1/2">
                         <label className="text-xs font-medium text-muted-foreground mb-1.5 block">CPF</label>
-                        <input required placeholder="000.000.000-00" value={form.cpf} onChange={(e) => updateField("cpf", e.target.value)} className={inputClass} />
+                        <input required placeholder="000.000.000-00" value={form.cpf} onChange={(e) => updateField("cpf", maskCPF(e.target.value))} className={inputClass} inputMode="numeric" />
                       </div>
                     </div>
                     <button
@@ -185,7 +245,7 @@ const Checkout = () => {
                     <div className="space-y-4">
                       <div className="sm:w-1/2">
                         <label className="text-xs font-medium text-muted-foreground mb-1.5 block">CEP</label>
-                        <input required placeholder="00000-000" value={form.cep} onChange={(e) => updateField("cep", e.target.value)} className={inputClass} />
+                        <input required placeholder="00000-000" value={form.cep} onChange={(e) => updateField("cep", maskCEP(e.target.value))} className={inputClass} inputMode="numeric" />
                       </div>
                       <div>
                         <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Rua</label>
