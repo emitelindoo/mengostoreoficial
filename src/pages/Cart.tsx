@@ -1,0 +1,134 @@
+import { Link } from "react-router-dom";
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+const Cart = () => {
+  const { items, updateQuantity, removeItem, total, itemCount } = useCart();
+
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="pt-24 pb-16 px-4 flex items-center justify-center min-h-[70vh]">
+          <div className="text-center">
+            <ShoppingCart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h1 className="text-2xl font-display font-bold mb-2">Seu carrinho está vazio</h1>
+            <p className="text-muted-foreground mb-6">Adicione produtos para continuar</p>
+            <Link
+              to="/#produtos"
+              className="inline-block px-8 py-3 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-semibold rounded-lg transition-colors"
+            >
+              Ver Produtos
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="pt-24 pb-16 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <Link to="/#produtos" className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Continuar comprando
+          </Link>
+
+          <h1 className="text-2xl md:text-3xl font-display font-bold mb-8 flex items-center gap-3">
+            <ShoppingCart className="w-6 h-6 text-primary" /> Carrinho ({itemCount} {itemCount === 1 ? "item" : "itens"})
+          </h1>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="md:col-span-2 space-y-4">
+              {items.map((item) => (
+                <div
+                  key={`${item.product.id}-${item.size}`}
+                  className="bg-card border border-border rounded-xl p-4 flex gap-4"
+                >
+                  <Link to={`/produto/${item.product.id}`}>
+                    <img
+                      src={item.product.image}
+                      alt={item.product.name}
+                      className="w-24 h-24 object-contain rounded-lg bg-secondary flex-shrink-0"
+                    />
+                  </Link>
+                  <div className="flex-1 min-w-0">
+                    <Link to={`/produto/${item.product.id}`}>
+                      <h3 className="font-semibold text-foreground text-sm line-clamp-2 hover:text-primary transition-colors">
+                        {item.product.name}
+                      </h3>
+                    </Link>
+                    {item.size && (
+                      <p className="text-xs text-muted-foreground mt-1">Tamanho: {item.size}</p>
+                    )}
+                    <p className="text-primary font-bold mt-2">
+                      R$ {item.product.price.toFixed(2).replace(".", ",")}
+                    </p>
+
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.size)}
+                          className="w-8 h-8 rounded-lg border border-border bg-secondary flex items-center justify-center hover:border-primary/50 transition-colors"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <span className="font-display font-bold w-6 text-center">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.size)}
+                          className="w-8 h-8 rounded-lg border border-border bg-secondary flex items-center justify-center hover:border-primary/50 transition-colors"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
+                      </div>
+                      <button
+                        onClick={() => removeItem(item.product.id, item.size)}
+                        className="text-muted-foreground hover:text-destructive transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="md:col-span-1">
+              <div className="bg-card border border-border rounded-xl p-6 sticky top-24">
+                <h2 className="font-display font-bold text-lg mb-4">Resumo</h2>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Subtotal ({itemCount} itens)</span>
+                    <span>R$ {total.toFixed(2).replace(".", ",")}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Frete</span>
+                    <span className="text-primary font-semibold">Grátis</span>
+                  </div>
+                </div>
+                <div className="flex justify-between font-bold text-lg border-t border-border pt-4">
+                  <span>Total</span>
+                  <span className="text-primary">R$ {total.toFixed(2).replace(".", ",")}</span>
+                </div>
+
+                <Link
+                  to="/checkout"
+                  className="block w-full mt-6 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow text-center"
+                >
+                  FINALIZAR COMPRA
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default Cart;

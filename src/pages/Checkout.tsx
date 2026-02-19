@@ -1,15 +1,12 @@
-import { useSearchParams, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ShieldCheck, Truck, ArrowLeft, Lock } from "lucide-react";
-import { getProductById } from "@/data/products";
+import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 
 const Checkout = () => {
-  const [searchParams] = useSearchParams();
-  const productId = searchParams.get("product") || "";
-  const qty = parseInt(searchParams.get("qty") || "1");
-  const size = searchParams.get("size") || "";
-  const product = getProductById(productId);
+  const { items, total, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "", email: "", phone: "", cpf: "",
@@ -18,22 +15,21 @@ const Checkout = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  if (!product) {
+  if (items.length === 0 && !submitted) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-display font-bold mb-4">Produto não encontrado</h1>
+          <h1 className="text-2xl font-display font-bold mb-4">Carrinho vazio</h1>
           <Link to="/#produtos" className="text-primary hover:underline">Voltar aos produtos</Link>
         </div>
       </div>
     );
   }
 
-  const total = product.price * qty;
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    clearCart();
   };
 
   const updateField = (field: string, value: string) => {
@@ -69,9 +65,9 @@ const Checkout = () => {
       <Header />
       <main className="pt-24 pb-16 px-4">
         <div className="container mx-auto max-w-4xl">
-          <Link to={`/produto/${product.id}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Voltar ao produto
-          </Link>
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Voltar
+          </button>
 
           <h1 className="text-2xl md:text-3xl font-display font-bold mb-8 flex items-center gap-3">
             <Lock className="w-6 h-6 text-primary" /> Checkout Seguro
@@ -80,7 +76,6 @@ const Checkout = () => {
           <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-8">
             {/* Form */}
             <div className="md:col-span-2 space-y-6">
-              {/* Personal */}
               <div className="bg-card border border-border rounded-xl p-6">
                 <h2 className="font-display font-bold text-lg mb-4">Dados Pessoais</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -91,7 +86,6 @@ const Checkout = () => {
                 </div>
               </div>
 
-              {/* Address */}
               <div className="bg-card border border-border rounded-xl p-6">
                 <h2 className="font-display font-bold text-lg mb-4">Endereço de Entrega</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -111,30 +105,25 @@ const Checkout = () => {
             <div className="md:col-span-1">
               <div className="bg-card border border-border rounded-xl p-6 sticky top-24">
                 <h2 className="font-display font-bold text-lg mb-4">Resumo do Pedido</h2>
-                <div className="flex gap-4 mb-4">
-                  <img src={product.image} alt={product.name} className="w-20 h-20 object-contain rounded-lg bg-secondary" />
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-foreground line-clamp-2">{product.name}</p>
-                    {size && <p className="text-xs text-muted-foreground mt-1">Tamanho: {size}</p>}
-                    <p className="text-xs text-muted-foreground">Qtd: {qty}</p>
-                  </div>
+                <div className="space-y-3 mb-4">
+                  {items.map((item) => (
+                    <div key={`${item.product.id}-${item.size}`} className="flex gap-3">
+                      <img src={item.product.image} alt={item.product.name} className="w-16 h-16 object-contain rounded-lg bg-secondary" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-foreground line-clamp-2">{item.product.name}</p>
+                        {item.size && <p className="text-xs text-muted-foreground">Tam: {item.size}</p>}
+                        <p className="text-xs text-muted-foreground">Qtd: {item.quantity}</p>
+                        <p className="text-sm text-primary font-bold">R$ {(item.product.price * item.quantity).toFixed(2).replace(".", ",")}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="border-t border-border pt-4 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span>R$ {total.toFixed(2).replace(".", ",")}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
                     <span className="text-primary font-semibold">Grátis</span>
                   </div>
-                  {product.discount > 0 && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Desconto</span>
-                      <span className="text-primary font-semibold">-{product.discount}%</span>
-                    </div>
-                  )}
                   <div className="flex justify-between font-bold text-lg border-t border-border pt-3 mt-3">
                     <span>Total</span>
                     <span className="text-primary">R$ {total.toFixed(2).replace(".", ",")}</span>
