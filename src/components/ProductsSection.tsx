@@ -1,4 +1,8 @@
 import ProductCard from "./ProductCard";
+import camisaFlamengo1 from "@/assets/camisa-flamengo-1.webp";
+import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
+import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
+import bolsaFlamengo from "@/assets/bolsa-flamengo.webp";
 
 const products = [
   {
@@ -8,39 +12,39 @@ const products = [
     discount: 42,
     rating: 5,
     reviews: 1523,
-    image: "/placeholder.svg",
+    image: camisaFlamengo1,
     link: "#",
   },
   {
-    name: "Camisa Polo Flamengo Vermelha Casual Masculina",
+    name: "Camisa Flamengo II 2025 Branca Reserva Masculina",
     price: 129.90,
     originalPrice: 199.90,
     discount: 57,
     rating: 5,
     reviews: 2847,
-    image: "/placeholder.svg",
+    image: camisaBranca,
     badge: "Mais Vendido",
     link: "#",
   },
   {
-    name: "Camisa Oficial Flamengo 2025 Preta",
+    name: "Mochila Oficial Flamengo CRF Preta",
     price: 179.90,
     originalPrice: 249.90,
-    discount: 0,
+    discount: 28,
     rating: 5,
     reviews: 987,
-    image: "/placeholder.svg",
-    soldOut: true,
+    image: mochilaFlamengo,
+    link: "#",
   },
   {
-    name: "Blusa Flamengo Masculina Vermelha",
-    price: 179.90,
-    originalPrice: 249.90,
-    discount: 0,
+    name: "Bolsa Shoulder Bag Flamengo Preta",
+    price: 89.90,
+    originalPrice: 139.90,
+    discount: 36,
     rating: 5,
     reviews: 654,
-    image: "/placeholder.svg",
-    soldOut: true,
+    image: bolsaFlamengo,
+    link: "#",
   },
 ];
 
