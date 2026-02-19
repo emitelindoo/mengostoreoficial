@@ -51,6 +51,7 @@ export const products: Product[] = [
     reviews: 1523,
     image: camisaFlamengo2026,
     images: [camisaFlamengo2026, camisa2026Costas],
+    badge: "Mais Vendido",
     description: "A nova camisa oficial do Flamengo 2026, nas cores rubro-negras tradicionais. Tecido de alta qualidade com tecnologia de absorção de suor. Ideal para jogos e uso casual.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
@@ -95,7 +96,7 @@ export const products: Product[] = [
     reviews: 2847,
     image: camisaBranca,
     images: [camisaBranca, camisaBrancaCostas],
-    badge: "Mais Vendido",
+    
     description: "Camisa reserva oficial do Flamengo 2025, modelo branco com detalhes em vermelho e preto. Conforto e estilo para o dia a dia da Nação.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
