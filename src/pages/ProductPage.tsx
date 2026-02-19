@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getProductById } from "@/data/products";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SocialProofGallery from "@/components/SocialProofGallery";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -131,8 +132,13 @@ const ProductPage = () => {
                   <span>Compra 100% segura • Produto oficial</span>
                 </div>
               </div>
-            </div>
           </div>
+
+          {/* Social Proof Gallery - spans full width */}
+          <div className="md:col-span-2">
+            <SocialProofGallery />
+          </div>
+        </div>
         </div>
       </main>
       <Footer />
