@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { ShieldCheck, Truck, ArrowLeft, Lock, User, MapPin, CreditCard, Check, ChevronRight, Loader2, Copy, CheckCircle } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
@@ -450,9 +451,11 @@ const Checkout = () => {
                           <p className="text-sm text-muted-foreground">Escaneie o QR Code ou copie o código abaixo</p>
                         </div>
 
-                        {pixData.qrCodeUrl && (
+                        {pixData.qrCode && (
                           <div className="flex justify-center">
-                            <img src={pixData.qrCodeUrl} alt="QR Code PIX" className="w-48 h-48 rounded-xl border border-border" />
+                            <div className="bg-white p-4 rounded-xl">
+                              <QRCodeSVG value={pixData.qrCode} size={192} />
+                            </div>
                           </div>
                         )}
 
