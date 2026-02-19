@@ -35,7 +35,7 @@ const Footer = () => {
         <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-display font-bold text-lg text-primary mb-3">
-              Shop Mengão Oficial
+              Mengão Store Oficial
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Loja oficial de produtos do Clube de Regatas do Flamengo. Produtos originais, qualidade garantida e entrega para todo o Brasil.
