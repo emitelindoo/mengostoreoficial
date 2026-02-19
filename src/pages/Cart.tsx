@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { useEffect } from "react";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total, itemCount } = useCart();
+  const { items, updateQuantity, removeItem, total, discount, finalTotal, itemCount } = useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -134,6 +134,12 @@ const Cart = () => {
                     <span className="text-muted-foreground">Subtotal ({itemCount} itens)</span>
                     <span>R$ {total.toFixed(2).replace(".", ",")}</span>
                   </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-sm text-green-500">
+                      <span>Desconto promoção</span>
+                      <span>- R$ {discount.toFixed(2).replace(".", ",")}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
                     <span className="text-primary font-semibold">Grátis</span>
@@ -141,7 +147,7 @@ const Cart = () => {
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t border-border pt-4">
                   <span>Total</span>
-                  <span className="text-primary">R$ {total.toFixed(2).replace(".", ",")}</span>
+                  <span className="text-primary">R$ {finalTotal.toFixed(2).replace(".", ",")}</span>
                 </div>
 
                 <Link
