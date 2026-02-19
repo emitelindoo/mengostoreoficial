@@ -2,18 +2,18 @@ import heroBanner from "@/assets/hero-banner.avif";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-16 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-end pt-16 overflow-hidden">
       {/* Full background banner */}
-      <div className="absolute inset-0">
+      <div className="w-full">
         <img
           src={heroBanner}
           alt="Flamengo 2026 - Nova Camisa"
-          className="w-full h-full object-cover object-center md:object-top"
+          className="w-full h-auto object-contain"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
       </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       
-      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl mx-auto mt-auto pb-16">
+      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl mx-auto pb-16 -mt-32 md:-mt-48">
         <span className="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider bg-primary text-primary-foreground rounded-full animate-fade-in-up">
           EDIÇÃO LIMITADA
         </span>
