@@ -1,18 +1,18 @@
 import ProductCard from "./ProductCard";
-import camisaFlamengo1 from "@/assets/camisa-flamengo-1.webp";
+import camisaFlamengo2026 from "@/assets/camisa-flamengo-2026.webp";
 import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
 import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
-import bolsaFlamengo from "@/assets/bolsa-flamengo.webp";
+import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
 
 const products = [
   {
-    name: "Camisa Flamengo I 2025 Vermelha e Preta",
+    name: "Camisa Flamengo I 2026 Vermelha e Preta",
     price: 149.90,
     originalPrice: 199.90,
     discount: 42,
     rating: 5,
     reviews: 1523,
-    image: camisaFlamengo1,
+    image: camisaFlamengo2026,
     link: "#",
   },
   {
@@ -37,13 +37,13 @@ const products = [
     link: "#",
   },
   {
-    name: "Bolsa Shoulder Bag Flamengo Preta",
+    name: "Cropete Flamengo 2025 Bege Feminino",
     price: 89.90,
     originalPrice: 139.90,
     discount: 36,
     rating: 5,
     reviews: 654,
-    image: bolsaFlamengo,
+    image: cropeteBege,
     link: "#",
   },
 ];
