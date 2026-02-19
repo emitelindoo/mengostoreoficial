@@ -4,6 +4,8 @@ import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
 import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
 import bermudaBranca from "@/assets/bermuda-flamengo-branca.webp";
 import bermudaPreta from "@/assets/bermuda-flamengo-preta.webp";
+import camisaCreme from "@/assets/camisa-flamengo-creme.png";
+import bermudaCreme from "@/assets/bermuda-flamengo-creme.webp";
 
 export interface Product {
   id: string;
@@ -91,6 +93,31 @@ export const products: Product[] = [
     reviews: 512,
     image: bermudaPreta,
     description: "Bermuda reserva oficial do Flamengo 2025, modelo preto com detalhes em vermelho e escudo CRF bordado. Design moderno com tecnologia Climacool.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+  },
+  {
+    id: "camisa-flamengo-iii-2025-creme",
+    name: "Camisa Flamengo III 2025 Creme Dourada",
+    price: 139.90,
+    originalPrice: 219.90,
+    discount: 36,
+    rating: 5,
+    reviews: 1187,
+    image: camisaCreme,
+    badge: "Lançamento",
+    description: "Camisa especial do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição em uma peça única.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+  },
+  {
+    id: "bermuda-flamengo-iii-2025-creme",
+    name: "Bermuda Flamengo III 2025 Creme Dourada",
+    price: 99.90,
+    originalPrice: 159.90,
+    discount: 38,
+    rating: 5,
+    reviews: 632,
+    image: bermudaCreme,
+    description: "Bermuda especial do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras laterais. Escudo CRF bordado. Combina perfeitamente com a camisa III.",
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
 ];
