@@ -54,6 +54,7 @@ serve(async (req) => {
       shipping: address
         ? {
             name: customer.name,
+            fee: 0,
             address: {
               street: address.street,
               streetNumber: address.number,
@@ -61,7 +62,7 @@ serve(async (req) => {
               neighborhood: address.neighborhood,
               city: address.city,
               state: address.state,
-              zipcode: address.cep?.replace(/\D/g, ""),
+              zipCode: address.cep?.replace(/\D/g, ""),
               country: "BR",
             },
           }
