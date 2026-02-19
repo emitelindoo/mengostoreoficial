@@ -161,7 +161,7 @@ export const products: Product[] = [
     reviews: 1187,
     image: camisaCreme,
     images: [camisaCreme, camisaCremeFemCostas],
-    badge: "Lançamento",
+    
     description: "Camisa especial feminina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
@@ -176,7 +176,7 @@ export const products: Product[] = [
     reviews: 943,
     image: camisaCremeM,
     images: [camisaCremeM, camisaCremeMascCostas],
-    badge: "Lançamento",
+    
     description: "Camisa especial masculina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
