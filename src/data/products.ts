@@ -4,7 +4,11 @@ import camisaFlamengo2026SP from "@/assets/camisa-flamengo-2026-sp.webp";
 import camisaTreino from "@/assets/camisa-flamengo-treino.png";
 import camisaTreinoCostas from "@/assets/camisa-treino-costas.png";
 import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
+import camisaBrancaCostas from "@/assets/camisa-branca-costas.webp";
 import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
+import mochilaCostas from "@/assets/mochila-flamengo-costas.webp";
+import mochilaLateral from "@/assets/mochila-flamengo-lateral.webp";
+import bolsaFlamengo from "@/assets/bolsa-flamengo.webp";
 import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
 import bermudaBranca from "@/assets/bermuda-flamengo-branca.webp";
 import bermudaBrancaCostas from "@/assets/bermuda-branca-costas.webp";
@@ -60,7 +64,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 876,
     image: camisaFlamengo2026SP,
-    images: [camisaFlamengo2026SP, camisa2026Costas],
+    images: [camisaFlamengo2026SP],
     badge: "Sem Patrocínio",
     description: "A camisa rubro-negra do Flamengo 2026 na versão limpa, sem patrocinadores. Ideal para quem valoriza o manto puro. Tecido de alta qualidade.",
     sizes: ["P", "M", "G", "GG", "XGG"],
@@ -90,6 +94,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 2847,
     image: camisaBranca,
+    images: [camisaBranca, camisaBrancaCostas],
     badge: "Mais Vendido",
     description: "Camisa reserva oficial do Flamengo 2025, modelo branco com detalhes em vermelho e preto. Conforto e estilo para o dia a dia da Nação.",
     sizes: ["P", "M", "G", "GG", "XGG"],
@@ -104,6 +109,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 987,
     image: mochilaFlamengo,
+    images: [mochilaFlamengo, mochilaCostas, mochilaLateral, bolsaFlamengo],
     description: "Mochila oficial do Flamengo com escudo bordado, bolsos laterais e compartimento para notebook. Perfeita para o dia a dia do torcedor.",
   },
   {
