@@ -1,5 +1,6 @@
 import camisaFlamengo2026 from "@/assets/camisa-flamengo-2026.webp";
 import camisaFlamengo2026SP from "@/assets/camisa-flamengo-2026-sp.webp";
+import camisaTreino from "@/assets/camisa-flamengo-treino.png";
 import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
 import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
 import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
@@ -50,6 +51,20 @@ export const products: Product[] = [
     image: camisaFlamengo2026SP,
     badge: "Sem Patrocínio",
     description: "A camisa rubro-negra do Flamengo 2026 na versão limpa, sem patrocinadores. Ideal para quem valoriza o manto puro. Tecido de alta qualidade.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+  },
+  {
+    id: "camisa-flamengo-treino-2026",
+    name: "Camisa de Treino Flamengo 2026 Masculina",
+    price: 119.90,
+    originalPrice: 179.90,
+    discount: 33,
+    rating: 5,
+    reviews: 734,
+    image: camisaTreino,
+    badge: "Novo",
+    description: "Camisa de treino oficial do Flamengo 2026, com estampa exclusiva em tons de vermelho e preto. Design moderno e tecido respirável para alta performance.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
   },
