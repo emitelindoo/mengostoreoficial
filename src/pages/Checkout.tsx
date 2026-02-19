@@ -278,6 +278,28 @@ const Checkout = () => {
                       </div>
                     </div>
 
+                    {/* Totals */}
+                    <div className="border-t border-border pt-4 mb-6 space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Subtotal</span>
+                        <span>{formatCurrency(total)}</span>
+                      </div>
+                      {discount > 0 && (
+                        <div className="flex justify-between text-sm text-emerald-500 font-semibold">
+                          <span>Desconto promoção 🔥</span>
+                          <span>- {formatCurrency(discount)}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Frete</span>
+                        <span className="text-emerald-500 font-semibold">Grátis</span>
+                      </div>
+                      <div className="flex justify-between font-bold text-xl border-t border-border pt-3 mt-2">
+                        <span>Total</span>
+                        <span className="text-primary">{formatCurrency(finalTotal)}</span>
+                      </div>
+                    </div>
+
                     <button
                       onClick={handleSubmit}
                       className="w-full py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow flex items-center justify-center gap-2"
