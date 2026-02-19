@@ -8,7 +8,7 @@ const HeroSection = () => {
         <img
           src={heroBanner}
           alt="Flamengo 2026 - Nova Camisa"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center md:object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
       </div>
