@@ -112,12 +112,15 @@ const Checkout = () => {
 
       // Try to extract PIX data from response
       const pix = data?.pix || data?.pixQrCode || data;
-      if (pix?.qrCode || pix?.qr_code || pix?.qrcode || pix?.copy_paste || pix?.pixCopiaECola) {
+      const pixCode = pix?.qrcode || pix?.qrCode || pix?.qr_code;
+      const copyPaste = pix?.copy_paste || pix?.pixCopiaECola || pixCode;
+      if (pixCode || copyPaste) {
         setPixData({
-          qrCode: pix.qrCode || pix.qr_code || pix.qrcode,
-          qrCodeUrl: pix.qrCodeUrl || pix.qr_code_url,
-          copyPaste: pix.copy_paste || pix.pixCopiaECola || pix.qrCode || pix.qr_code,
+          qrCode: pixCode,
+          qrCodeUrl: pix?.qrCodeUrl || pix?.qr_code_url,
+          copyPaste: copyPaste,
         });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         // If no PIX data, assume success
         setSubmitted(true);
