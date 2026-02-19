@@ -62,7 +62,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => setItems([]);
 
-  const total = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  const CUSTOM_FEE = 19.90;
+  const total = items.reduce((sum, i) => {
+    const customExtra = (i.customName || i.customNumber) ? CUSTOM_FEE : 0;
+    return sum + (i.product.price + customExtra) * i.quantity;
+  }, 0);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   // Promo: leve 3 pague 2 → menor item grátis; leve 6 pague 3 → 3 menores grátis

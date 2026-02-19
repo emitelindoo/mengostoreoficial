@@ -154,7 +154,8 @@ const ProductPage = () => {
               {/* Customization - only for shirts */}
               {product.customizable && (
                 <div className="mb-6">
-                  <p className="text-sm font-semibold mb-3">Personalizar (opcional):</p>
+                  <p className="text-sm font-semibold mb-1">Personalizar (opcional):</p>
+                  <p className="text-xs text-primary font-semibold mb-3">+ R$ 19,90 por personalização</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="text-xs text-muted-foreground mb-1 block">Nome nas costas</label>
