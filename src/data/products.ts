@@ -59,7 +59,7 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-i-2026-sp",
     name: "Camisa Flamengo I 2026 Sem Patrocinadores",
-    price: 109.90,
+    price: 99.90,
     originalPrice: 199.90,
     discount: 45,
     rating: 5,
