@@ -5,6 +5,7 @@ import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
 import bermudaBranca from "@/assets/bermuda-flamengo-branca.webp";
 import bermudaPreta from "@/assets/bermuda-flamengo-preta.webp";
 import camisaCreme from "@/assets/camisa-flamengo-creme.png";
+import camisaCremeM from "@/assets/camisa-flamengo-creme-masc.png";
 import bermudaCreme from "@/assets/bermuda-flamengo-creme.webp";
 
 export interface Product {
@@ -96,8 +97,8 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
   {
-    id: "camisa-flamengo-iii-2025-creme",
-    name: "Camisa Flamengo III 2025 Creme Dourada Masculina",
+    id: "camisa-flamengo-iii-2025-creme-feminina",
+    name: "Camisa Flamengo III 2025 Creme Dourada Feminina",
     price: 139.90,
     originalPrice: 219.90,
     discount: 36,
@@ -105,7 +106,20 @@ export const products: Product[] = [
     reviews: 1187,
     image: camisaCreme,
     badge: "Lançamento",
-    description: "Camisa especial do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição em uma peça única.",
+    description: "Camisa especial feminina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
+    sizes: ["P", "M", "G", "GG"],
+  },
+  {
+    id: "camisa-flamengo-iii-2025-creme-masculina",
+    name: "Camisa Flamengo III 2025 Creme Dourada Masculina",
+    price: 139.90,
+    originalPrice: 219.90,
+    discount: 36,
+    rating: 5,
+    reviews: 943,
+    image: camisaCremeM,
+    badge: "Lançamento",
+    description: "Camisa especial masculina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
   {
