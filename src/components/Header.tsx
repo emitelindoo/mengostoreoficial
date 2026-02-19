@@ -12,7 +12,7 @@ const Header = () => {
         <Link to="/" className="flex items-center gap-3">
           <img src={logoFlamengo} alt="Flamengo" className="w-8 h-8 object-contain" />
           <span className="font-display text-xl font-bold tracking-wider text-primary">
-            SHOP MENGÃO
+            MENGÃO STORE
           </span>
         </Link>
         <Link to="/carrinho" className="relative p-2 text-foreground hover:text-primary transition-colors">
