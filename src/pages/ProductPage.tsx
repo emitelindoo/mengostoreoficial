@@ -47,9 +47,11 @@ const ProductPage = () => {
     fbEvent("AddToCart", {
       content_name: product.name,
       content_ids: [product.id],
+      contents: [{ id: product.id, quantity }],
       content_type: "product",
       value: product.price * quantity,
       currency: "BRL",
+      num_items: quantity,
     });
     navigate("/carrinho");
   };
