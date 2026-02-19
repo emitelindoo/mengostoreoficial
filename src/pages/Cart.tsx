@@ -44,22 +44,28 @@ const Cart = () => {
           </Link>
 
           {/* Promo Banner */}
-          <div className="mb-6 space-y-3">
-            <div className="bg-flamengo-gold/10 border border-flamengo-gold/30 rounded-xl p-4 flex items-center gap-3">
-              <Gift className="w-6 h-6 text-flamengo-gold flex-shrink-0" />
-              <div>
-                <p className="font-display font-bold text-foreground text-sm">🔥 LEVE 3, PAGUE 2!</p>
-                <p className="text-xs text-muted-foreground">Adicione 3 produtos ao carrinho e pague apenas 2. O menor valor sai de graça!</p>
+          {itemCount < 3 && (
+            <div className="mb-6">
+              <div className="bg-flamengo-gold/10 border border-flamengo-gold/30 rounded-xl p-4 flex items-center gap-3">
+                <Gift className="w-6 h-6 text-flamengo-gold flex-shrink-0" />
+                <div>
+                  <p className="font-display font-bold text-foreground text-sm">🔥 LEVE 3, PAGUE 2!</p>
+                  <p className="text-xs text-muted-foreground">Adicione {3 - itemCount} {3 - itemCount === 1 ? "produto" : "produtos"} a mais e o menor valor sai de graça!</p>
+                </div>
               </div>
             </div>
-            <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-center gap-3">
-              <Sparkles className="w-6 h-6 text-primary flex-shrink-0" />
-              <div>
-                <p className="font-display font-bold text-foreground text-sm">⚡ LEVE 6, PAGUE 3!</p>
-                <p className="text-xs text-muted-foreground">Compre 6 produtos e pague apenas 3. Desconto máximo para a Nação!</p>
+          )}
+          {itemCount >= 3 && itemCount < 6 && (
+            <div className="mb-6">
+              <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-primary flex-shrink-0" />
+                <div>
+                  <p className="font-display font-bold text-foreground text-sm">⚡ LEVE 6, PAGUE 3!</p>
+                  <p className="text-xs text-muted-foreground">Adicione {6 - itemCount} {6 - itemCount === 1 ? "produto" : "produtos"} a mais e pague apenas metade!</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <h1 className="text-2xl md:text-3xl font-display font-bold mb-8 flex items-center gap-3">
             <ShoppingCart className="w-6 h-6 text-primary" /> Carrinho ({itemCount} {itemCount === 1 ? "item" : "itens"})
