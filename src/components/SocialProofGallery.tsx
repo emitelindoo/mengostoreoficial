@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, Star } from "lucide-react";
 import provaSocial1 from "@/assets/prova-social-1.webp";
 import provaSocial2 from "@/assets/prova-social-2.webp";
 import provaSocial3 from "@/assets/prova-social-3.webp";
@@ -7,13 +7,13 @@ import provaSocial4 from "@/assets/prova-social-4.webp";
 import provaSocial5 from "@/assets/prova-social-5.webp";
 import provaSocial6 from "@/assets/prova-social-6.webp";
 
-const socialImages = [
-  { src: provaSocial1, alt: "Cliente satisfeito - Camisa vermelha" },
-  { src: provaSocial2, alt: "Cliente satisfeito - Camisa branca" },
-  { src: provaSocial3, alt: "Cliente satisfeito - Short oficial" },
-  { src: provaSocial4, alt: "Cliente satisfeito - Camisa rubro-negra" },
-  { src: provaSocial5, alt: "Cliente satisfeito - Kit camisas" },
-  { src: provaSocial6, alt: "Cliente satisfeito - Produto com etiqueta oficial" },
+const socialReviews = [
+  { src: provaSocial1, name: "Carlos M.", rating: 5, text: "Chegou certinho, qualidade top! Recomendo demais." },
+  { src: provaSocial2, name: "Fernanda S.", rating: 5, text: "Amei! Tecido muito bom, igual da loja oficial." },
+  { src: provaSocial3, name: "Rafael O.", rating: 5, text: "Produto original, entrega super rápida. Nota 10!" },
+  { src: provaSocial4, name: "Ana Paula R.", rating: 5, text: "Meu marido amou o presente. É Mengão! 🔴⚫" },
+  { src: provaSocial5, name: "Lucas F.", rating: 4, text: "Muito boa! Só demorou um pouquinho pra chegar." },
+  { src: provaSocial6, name: "Juliana C.", rating: 5, text: "Comprei 2 e vieram perfeitas. Já quero mais!" },
 ];
 
 const SocialProofGallery = () => {
@@ -28,19 +28,35 @@ const SocialProofGallery = () => {
         Veja o que a Nação está recebendo em casa!
       </p>
 
-      <div className="grid grid-cols-3 gap-3">
-        {socialImages.map((img, i) => (
-          <button
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {socialReviews.map((review, i) => (
+          <div
             key={i}
-            onClick={() => setSelectedImage(img.src)}
-            className="aspect-square rounded-xl overflow-hidden border border-border hover:border-primary/50 transition-colors"
+            className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/30 transition-colors"
           >
-            <img
-              src={img.src}
-              alt={img.alt}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-          </button>
+            <button
+              onClick={() => setSelectedImage(review.src)}
+              className="w-full aspect-square overflow-hidden"
+            >
+              <img
+                src={review.src}
+                alt={`Avaliação de ${review.name}`}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </button>
+            <div className="p-3">
+              <div className="flex gap-0.5 mb-1">
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <Star
+                    key={j}
+                    className={`w-3.5 h-3.5 ${j < review.rating ? "fill-flamengo-gold text-flamengo-gold" : "text-muted-foreground"}`}
+                  />
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground italic leading-snug mb-1">"{review.text}"</p>
+              <p className="text-xs font-semibold text-foreground">{review.name}</p>
+            </div>
+          </div>
         ))}
       </div>
 
