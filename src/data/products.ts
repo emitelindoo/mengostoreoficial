@@ -1,4 +1,5 @@
 import camisaFlamengo2026 from "@/assets/camisa-flamengo-2026.webp";
+import camisaFlamengo2026SP from "@/assets/camisa-flamengo-2026-sp.webp";
 import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
 import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
 import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
@@ -21,6 +22,7 @@ export interface Product {
   soldOut?: boolean;
   description: string;
   sizes?: string[];
+  customizable?: boolean;
 }
 
 export const products: Product[] = [
@@ -35,6 +37,21 @@ export const products: Product[] = [
     image: camisaFlamengo2026,
     description: "A nova camisa oficial do Flamengo 2026, nas cores rubro-negras tradicionais. Tecido de alta qualidade com tecnologia de absorção de suor. Ideal para jogos e uso casual.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+  },
+  {
+    id: "camisa-flamengo-i-2026-sp",
+    name: "Camisa Flamengo I 2026 Sem Patrocinadores",
+    price: 159.90,
+    originalPrice: 229.90,
+    discount: 30,
+    rating: 5,
+    reviews: 876,
+    image: camisaFlamengo2026SP,
+    badge: "Sem Patrocínio",
+    description: "A camisa rubro-negra do Flamengo 2026 na versão limpa, sem patrocinadores. Ideal para quem valoriza o manto puro. Tecido de alta qualidade.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
   },
   {
     id: "camisa-flamengo-ii-2025-branca",
@@ -48,6 +65,7 @@ export const products: Product[] = [
     badge: "Mais Vendido",
     description: "Camisa reserva oficial do Flamengo 2025, modelo branco com detalhes em vermelho e preto. Conforto e estilo para o dia a dia da Nação.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
   },
   {
     id: "mochila-flamengo-crf",
@@ -71,6 +89,7 @@ export const products: Product[] = [
     image: cropeteBege,
     description: "Cropete feminino oficial do Flamengo 2025, modelo bege com detalhes dourados. Elegância e paixão rubro-negra para a torcedora.",
     sizes: ["P", "M", "G", "GG"],
+    customizable: true,
   },
   {
     id: "bermuda-flamengo-i-2025-branca",
@@ -108,6 +127,7 @@ export const products: Product[] = [
     badge: "Lançamento",
     description: "Camisa especial feminina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG"],
+    customizable: true,
   },
   {
     id: "camisa-flamengo-iii-2025-creme-masculina",
@@ -121,6 +141,7 @@ export const products: Product[] = [
     badge: "Lançamento",
     description: "Camisa especial masculina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
   },
   {
     id: "bermuda-flamengo-iii-2025-creme",

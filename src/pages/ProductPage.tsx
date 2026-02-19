@@ -15,6 +15,8 @@ const ProductPage = () => {
   const product = getProductById(id || "");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
+  const [customName, setCustomName] = useState("");
+  const [customNumber, setCustomNumber] = useState("");
 
   useEffect(() => {
     if (product) {
@@ -40,7 +42,7 @@ const ProductPage = () => {
   }
 
   const handleBuy = () => {
-    addItem(product, quantity, selectedSize || undefined);
+    addItem(product, quantity, selectedSize || undefined, customName || undefined, customNumber || undefined);
     fbEvent("AddToCart", {
       content_name: product.name,
       content_ids: [product.id],
@@ -118,6 +120,38 @@ const ProductPage = () => {
                         {size}
                       </button>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Customization - only for shirts */}
+              {product.customizable && (
+                <div className="mb-6">
+                  <p className="text-sm font-semibold mb-3">Personalizar (opcional):</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">Nome nas costas</label>
+                      <input
+                        type="text"
+                        placeholder="Ex: GABIGOL"
+                        value={customName}
+                        onChange={(e) => setCustomName(e.target.value.toUpperCase().slice(0, 15))}
+                        maxLength={15}
+                        className="w-full px-3 py-2.5 bg-secondary/50 border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-sm font-display tracking-wider"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">Número</label>
+                      <input
+                        type="text"
+                        placeholder="Ex: 10"
+                        value={customNumber}
+                        onChange={(e) => setCustomNumber(e.target.value.replace(/\D/g, "").slice(0, 2))}
+                        maxLength={2}
+                        inputMode="numeric"
+                        className="w-full px-3 py-2.5 bg-secondary/50 border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-sm font-display tracking-wider"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
