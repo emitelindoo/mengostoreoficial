@@ -96,8 +96,8 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
   {
-    id: "camisa-flamengo-iii-2025-creme-feminina",
-    name: "Camisa Flamengo III 2025 Creme Dourada Feminina",
+    id: "camisa-flamengo-iii-2025-creme",
+    name: "Camisa Flamengo III 2025 Creme Dourada Masculina",
     price: 139.90,
     originalPrice: 219.90,
     discount: 36,
