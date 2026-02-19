@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+// Cart flow: Product → Cart → Checkout
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
