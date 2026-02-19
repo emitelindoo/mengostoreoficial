@@ -97,7 +97,7 @@ const ProductPage = () => {
               </div>
 
               <p className="text-sm text-muted-foreground mb-6">
-                ou <span className="font-semibold text-foreground">3x de R$ {(product.price / 3).toFixed(2).replace(".", ",")}</span> sem juros
+                Pagamento exclusivo via <span className="font-semibold text-foreground">PIX</span> • Envio via <span className="font-semibold text-foreground">SEDEX</span> • Frete Grátis
               </p>
 
               {/* Size selector */}
