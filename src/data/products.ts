@@ -1,14 +1,23 @@
 import camisaFlamengo2026 from "@/assets/camisa-flamengo-2026.webp";
+import camisa2026Costas from "@/assets/camisa-2026-costas.webp";
 import camisaFlamengo2026SP from "@/assets/camisa-flamengo-2026-sp.webp";
 import camisaTreino from "@/assets/camisa-flamengo-treino.png";
+import camisaTreinoCostas from "@/assets/camisa-treino-costas.png";
 import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
 import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
 import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
 import bermudaBranca from "@/assets/bermuda-flamengo-branca.webp";
+import bermudaBrancaCostas from "@/assets/bermuda-branca-costas.webp";
 import bermudaPreta from "@/assets/bermuda-flamengo-preta.webp";
+import bermudaPretaFrente from "@/assets/bermuda-preta-frente.avif";
+import bermudaPretaCostas from "@/assets/bermuda-preta-costas.webp";
+import bermudaPretaDetalhe from "@/assets/bermuda-preta-detalhe.webp";
 import camisaCreme from "@/assets/camisa-flamengo-creme.png";
+import camisaCremeFemCostas from "@/assets/camisa-creme-fem-costas.png";
 import camisaCremeM from "@/assets/camisa-flamengo-creme-masc.png";
+import camisaCremeMascCostas from "@/assets/camisa-creme-masc-costas.png";
 import bermudaCreme from "@/assets/bermuda-flamengo-creme.webp";
+import bermudaCremeCostas from "@/assets/bermuda-creme-costas.webp";
 
 export interface Product {
   id: string;
@@ -19,6 +28,7 @@ export interface Product {
   rating: number;
   reviews: number;
   image: string;
+  images?: string[];
   badge?: string;
   soldOut?: boolean;
   description: string;
@@ -36,6 +46,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 1523,
     image: camisaFlamengo2026,
+    images: [camisaFlamengo2026, camisa2026Costas],
     description: "A nova camisa oficial do Flamengo 2026, nas cores rubro-negras tradicionais. Tecido de alta qualidade com tecnologia de absorção de suor. Ideal para jogos e uso casual.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
@@ -49,6 +60,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 876,
     image: camisaFlamengo2026SP,
+    images: [camisaFlamengo2026SP, camisa2026Costas],
     badge: "Sem Patrocínio",
     description: "A camisa rubro-negra do Flamengo 2026 na versão limpa, sem patrocinadores. Ideal para quem valoriza o manto puro. Tecido de alta qualidade.",
     sizes: ["P", "M", "G", "GG", "XGG"],
@@ -63,6 +75,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 734,
     image: camisaTreino,
+    images: [camisaTreino, camisaTreinoCostas],
     badge: "Novo",
     description: "Camisa de treino oficial do Flamengo 2026, com estampa exclusiva em tons de vermelho e preto. Design moderno e tecido respirável para alta performance.",
     sizes: ["P", "M", "G", "GG", "XGG"],
@@ -115,6 +128,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 743,
     image: bermudaBranca,
+    images: [bermudaBranca, bermudaBrancaCostas],
     description: "Bermuda oficial do Flamengo 2025, modelo branco com listras vermelhas laterais e escudo CRF bordado. Tecido leve com tecnologia Climacool.",
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
@@ -127,6 +141,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 512,
     image: bermudaPreta,
+    images: [bermudaPreta, bermudaPretaFrente, bermudaPretaCostas, bermudaPretaDetalhe],
     description: "Bermuda reserva oficial do Flamengo 2025, modelo preto com detalhes em vermelho e escudo CRF bordado. Design moderno com tecnologia Climacool.",
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
@@ -139,6 +154,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 1187,
     image: camisaCreme,
+    images: [camisaCreme, camisaCremeFemCostas],
     badge: "Lançamento",
     description: "Camisa especial feminina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG"],
@@ -153,6 +169,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 943,
     image: camisaCremeM,
+    images: [camisaCremeM, camisaCremeMascCostas],
     badge: "Lançamento",
     description: "Camisa especial masculina do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras nos ombros. Escudo CRF bordado em dourado. Elegância e tradição.",
     sizes: ["P", "M", "G", "GG", "XGG"],
@@ -167,6 +184,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 632,
     image: bermudaCreme,
+    images: [bermudaCreme, bermudaCremeCostas],
     description: "Bermuda especial do Flamengo 2025, modelo creme com detalhes dourados e listras rubro-negras laterais. Escudo CRF bordado. Combina perfeitamente com a camisa III.",
     sizes: ["P", "M", "G", "GG", "XGG"],
   },
