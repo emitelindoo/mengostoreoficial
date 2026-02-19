@@ -2,6 +2,8 @@ import camisaFlamengo2026 from "@/assets/camisa-flamengo-2026.webp";
 import camisaBranca from "@/assets/camisa-flamengo-branca.webp";
 import mochilaFlamengo from "@/assets/mochila-flamengo.webp";
 import cropeteBege from "@/assets/cropete-flamengo-bege.webp";
+import bermudaBranca from "@/assets/bermuda-flamengo-branca.webp";
+import bermudaPreta from "@/assets/bermuda-flamengo-preta.webp";
 
 export interface Product {
   id: string;
@@ -66,6 +68,30 @@ export const products: Product[] = [
     image: cropeteBege,
     description: "Cropete feminino oficial do Flamengo 2025, modelo bege com detalhes dourados. Elegância e paixão rubro-negra para a torcedora.",
     sizes: ["P", "M", "G", "GG"],
+  },
+  {
+    id: "bermuda-flamengo-i-2025-branca",
+    name: "Bermuda Flamengo I 2025 Branca Masculina",
+    price: 109.90,
+    originalPrice: 159.90,
+    discount: 31,
+    rating: 5,
+    reviews: 743,
+    image: bermudaBranca,
+    description: "Bermuda oficial do Flamengo 2025, modelo branco com listras vermelhas laterais e escudo CRF bordado. Tecido leve com tecnologia Climacool.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+  },
+  {
+    id: "bermuda-flamengo-ii-2025-preta",
+    name: "Bermuda Flamengo II 2025 Preta Masculina",
+    price: 119.90,
+    originalPrice: 169.90,
+    discount: 29,
+    rating: 5,
+    reviews: 512,
+    image: bermudaPreta,
+    description: "Bermuda reserva oficial do Flamengo 2025, modelo preto com detalhes em vermelho e escudo CRF bordado. Design moderno com tecnologia Climacool.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
   },
 ];
 
