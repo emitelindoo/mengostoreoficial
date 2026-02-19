@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   name: string;
@@ -77,12 +78,12 @@ const ProductCard = ({
                 </span>
               )}
             </div>
-            <a
-              href={link}
+            <Link
+              to={link}
               className="block w-full py-3 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-semibold tracking-wider rounded-lg transition-colors text-center"
             >
               Comprar Agora
-            </a>
+            </Link>
           </>
         ) : (
           <div className="py-3 bg-muted text-muted-foreground font-display font-semibold tracking-wider rounded-lg text-center">
