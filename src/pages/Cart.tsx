@@ -4,12 +4,22 @@ import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
+import { fbEvent } from "@/lib/fbpixel";
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, total, discount, finalTotal, itemCount } = useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (items.length > 0) {
+      fbEvent("ViewContent", {
+        content_ids: items.map(i => i.product.id),
+        contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+        content_type: "product",
+        value: total,
+        currency: "BRL",
+      });
+    }
   }, []);
 
   if (items.length === 0) {
@@ -157,6 +167,16 @@ const Cart = () => {
 
                 <Link
                   to="/checkout"
+                  onClick={() => {
+                    fbEvent("InitiateCheckout", {
+                      content_ids: items.map(i => i.product.id),
+                      contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+                      content_type: "product",
+                      value: finalTotal,
+                      currency: "BRL",
+                      num_items: itemCount,
+                    });
+                  }}
                   className="block w-full mt-6 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow text-center"
                 >
                   FINALIZAR COMPRA

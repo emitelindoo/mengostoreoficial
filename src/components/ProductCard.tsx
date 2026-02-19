@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/data/products";
+import { fbEvent } from "@/lib/fbpixel";
 
 interface ProductCardProps extends Product {}
 
@@ -11,6 +12,15 @@ const ProductCard = (product: ProductCardProps) => {
 
   const handleBuy = () => {
     addItem(product, 1);
+    fbEvent("AddToCart", {
+      content_name: product.name,
+      content_ids: [product.id],
+      contents: [{ id: product.id, quantity: 1 }],
+      content_type: "product",
+      value: product.price,
+      currency: "BRL",
+      num_items: 1,
+    });
     navigate("/carrinho");
   };
 
