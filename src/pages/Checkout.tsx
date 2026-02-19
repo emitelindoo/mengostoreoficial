@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { fbEvent } from "@/lib/fbpixel";
 
 const maskCPF = (v: string) => v.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 const maskPhone = (v: string) => {
@@ -123,6 +124,12 @@ const Checkout = () => {
           copyPaste: copyPaste,
           transactionId: data?.id,
         });
+        fbEvent("InitiateCheckout", {
+          content_ids: items.map(i => i.product.id),
+          value: finalTotal,
+          currency: "BRL",
+          num_items: itemCount,
+        });
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         // If no PIX data, assume success
@@ -156,6 +163,12 @@ const Checkout = () => {
       if (error) throw error;
 
       if (data?.status === "paid") {
+        fbEvent("Purchase", {
+          content_ids: items.map(i => i.product.id),
+          value: finalTotal,
+          currency: "BRL",
+          num_items: itemCount,
+        });
         setSubmitted(true);
         clearCart();
         toast.success("Pagamento confirmado! 🎉");

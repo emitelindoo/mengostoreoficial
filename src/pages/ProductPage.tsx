@@ -1,11 +1,12 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Star, ShieldCheck, Truck, ArrowLeft, Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getProductById } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SocialProofGallery from "@/components/SocialProofGallery";
+import { fbEvent } from "@/lib/fbpixel";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +15,18 @@ const ProductPage = () => {
   const product = getProductById(id || "");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (product) {
+      fbEvent("ViewContent", {
+        content_name: product.name,
+        content_ids: [product.id],
+        content_type: "product",
+        value: product.price,
+        currency: "BRL",
+      });
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -28,6 +41,13 @@ const ProductPage = () => {
 
   const handleBuy = () => {
     addItem(product, quantity, selectedSize || undefined);
+    fbEvent("AddToCart", {
+      content_name: product.name,
+      content_ids: [product.id],
+      content_type: "product",
+      value: product.price * quantity,
+      currency: "BRL",
+    });
     navigate("/carrinho");
   };
 
