@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { Star, ShieldCheck, Truck, ArrowLeft, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { getProductById } from "@/data/products";
+import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SocialProofGallery from "@/components/SocialProofGallery";
@@ -9,6 +10,7 @@ import SocialProofGallery from "@/components/SocialProofGallery";
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { addItem } = useCart();
   const product = getProductById(id || "");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
@@ -25,8 +27,8 @@ const ProductPage = () => {
   }
 
   const handleBuy = () => {
-    const sizeParam = selectedSize ? `&size=${selectedSize}` : "";
-    navigate(`/checkout?product=${product.id}&qty=${quantity}${sizeParam}`);
+    addItem(product, quantity, selectedSize || undefined);
+    navigate("/carrinho");
   };
 
   return (
