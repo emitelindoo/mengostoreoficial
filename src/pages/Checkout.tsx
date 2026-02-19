@@ -6,7 +6,7 @@ import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { fbEvent } from "@/lib/fbpixel";
+import { fbEvent, updatePixelUserData } from "@/lib/fbpixel";
 
 const maskCPF = (v: string) => v.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 const maskPhone = (v: string) => {
@@ -124,11 +124,12 @@ const Checkout = () => {
           copyPaste: copyPaste,
           transactionId: data?.id,
         });
-        fbEvent("InitiateCheckout", {
+        fbEvent("AddPaymentInfo", {
           content_ids: items.map(i => i.product.id),
+          contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+          content_type: "product",
           value: finalTotal,
           currency: "BRL",
-          num_items: itemCount,
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
@@ -165,6 +166,8 @@ const Checkout = () => {
       if (data?.status === "paid") {
         fbEvent("Purchase", {
           content_ids: items.map(i => i.product.id),
+          contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+          content_type: "product",
           value: finalTotal,
           currency: "BRL",
           num_items: itemCount,
@@ -323,7 +326,17 @@ const Checkout = () => {
                       </div>
                     </div>
                     <button
-                      onClick={() => canAdvanceStep1 && setStep(2)}
+                      onClick={() => {
+                        if (!canAdvanceStep1) return;
+                        const nameParts = form.name.trim().split(" ");
+                        updatePixelUserData({
+                          email: form.email,
+                          phone: form.phone,
+                          firstName: nameParts[0],
+                          lastName: nameParts.length > 1 ? nameParts.slice(1).join(" ") : undefined,
+                        });
+                        setStep(2);
+                      }}
                       disabled={!canAdvanceStep1}
                       className="w-full mt-8 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
@@ -381,7 +394,27 @@ const Checkout = () => {
                       </div>
                     </div>
                     <button
-                      onClick={() => canAdvanceStep2 && setStep(3)}
+                      onClick={() => {
+                        if (!canAdvanceStep2) return;
+                        updatePixelUserData({
+                          email: form.email,
+                          phone: form.phone,
+                          firstName: form.name.trim().split(" ")[0],
+                          lastName: form.name.trim().split(" ").slice(1).join(" ") || undefined,
+                          city: form.city,
+                          state: form.state,
+                          zipCode: form.cep,
+                        });
+                        fbEvent("InitiateCheckout", {
+                          content_ids: items.map(i => i.product.id),
+                          contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+                          content_type: "product",
+                          value: finalTotal,
+                          currency: "BRL",
+                          num_items: itemCount,
+                        });
+                        setStep(3);
+                      }}
                       disabled={!canAdvanceStep2}
                       className="w-full mt-8 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
