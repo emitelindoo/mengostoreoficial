@@ -60,7 +60,8 @@ export const updatePixelUserData = async (userData: {
 
   advancedMatchingData.country = await hashValue("br");
 
-  window.fbq("init", "1019093040794139", advancedMatchingData);
+  // Use setUserProperties instead of re-init to avoid resetting the pixel
+  window.fbq("setUserProperties", "1019093040794139", advancedMatchingData);
 };
 
 export const fbEvent = (eventName: string, params?: Record<string, any>) => {
