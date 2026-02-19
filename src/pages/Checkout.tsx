@@ -371,6 +371,8 @@ const Checkout = () => {
                       </div>
                     </div>
 
+                    {!pixData && (
+                      <>
                     {/* Review cards */}
                     <div className="space-y-4 mb-6">
                       <div className="bg-secondary/30 rounded-xl p-4 flex items-start justify-between">
@@ -429,6 +431,8 @@ const Checkout = () => {
                         <span className="text-primary">{formatCurrency(finalTotal)}</span>
                       </div>
                     </div>
+                      </>
+                    )}
 
                     {!pixData ? (
                       <button
