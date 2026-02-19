@@ -5,11 +5,13 @@ export interface CartItem {
   product: Product;
   quantity: number;
   size?: string;
+  customName?: string;
+  customNumber?: string;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (product: Product, quantity: number, size?: string) => void;
+  addItem: (product: Product, quantity: number, size?: string, customName?: string, customNumber?: string) => void;
   removeItem: (productId: string, size?: string) => void;
   updateQuantity: (productId: string, quantity: number, size?: string) => void;
   clearCart: () => void;
@@ -25,19 +27,19 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addItem = (product: Product, quantity: number, size?: string) => {
+  const addItem = (product: Product, quantity: number, size?: string, customName?: string, customNumber?: string) => {
     setItems((prev) => {
       const existing = prev.find(
-        (i) => i.product.id === product.id && i.size === size
+        (i) => i.product.id === product.id && i.size === size && i.customName === customName && i.customNumber === customNumber
       );
       if (existing) {
         return prev.map((i) =>
-          i.product.id === product.id && i.size === size
+          i.product.id === product.id && i.size === size && i.customName === customName && i.customNumber === customNumber
             ? { ...i, quantity: i.quantity + quantity }
             : i
         );
       }
-      return [...prev, { product, quantity, size }];
+      return [...prev, { product, quantity, size, customName, customNumber }];
     });
   };
 

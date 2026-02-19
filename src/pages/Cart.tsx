@@ -94,6 +94,11 @@ const Cart = () => {
                     {item.size && (
                       <p className="text-xs text-muted-foreground mt-1">Tamanho: {item.size}</p>
                     )}
+                    {(item.customName || item.customNumber) && (
+                      <p className="text-xs text-primary mt-1 font-semibold">
+                        Personalizado: {item.customName && `${item.customName}`}{item.customName && item.customNumber && " • "}{item.customNumber && `Nº ${item.customNumber}`}
+                      </p>
+                    )}
                     <p className="text-primary font-bold mt-2">
                       R$ {item.product.price.toFixed(2).replace(".", ",")}
                     </p>
