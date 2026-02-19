@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface ProductCardProps {
+  id: string;
   name: string;
   price: number;
   originalPrice: number;
@@ -11,10 +12,10 @@ interface ProductCardProps {
   image: string;
   badge?: string;
   soldOut?: boolean;
-  link?: string;
 }
 
 const ProductCard = ({
+  id,
   name,
   price,
   originalPrice,
@@ -24,11 +25,10 @@ const ProductCard = ({
   image,
   badge,
   soldOut = false,
-  link = "#",
 }: ProductCardProps) => {
   return (
     <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/40 transition-all duration-300 group">
-      <div className="relative aspect-square overflow-hidden bg-secondary">
+      <Link to={`/produto/${id}`} className="block relative aspect-square overflow-hidden bg-secondary">
         <img
           src={image}
           alt={name}
@@ -51,7 +51,7 @@ const ProductCard = ({
             </span>
           </div>
         )}
-      </div>
+      </Link>
 
       <div className="p-4">
         <div className="flex items-center gap-1 mb-2">
@@ -64,7 +64,9 @@ const ProductCard = ({
           <span className="text-sm text-muted-foreground ml-1">({reviews.toLocaleString("pt-BR")})</span>
         </div>
 
-        <h3 className="font-semibold text-foreground text-sm mb-3 line-clamp-2">{name}</h3>
+        <Link to={`/produto/${id}`}>
+          <h3 className="font-semibold text-foreground text-sm mb-3 line-clamp-2 hover:text-primary transition-colors">{name}</h3>
+        </Link>
 
         {!soldOut ? (
           <>
@@ -79,7 +81,7 @@ const ProductCard = ({
               )}
             </div>
             <Link
-              to={link}
+              to={`/checkout?product=${id}&qty=1`}
               className="block w-full py-3 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-semibold tracking-wider rounded-lg transition-colors text-center"
             >
               Comprar Agora
