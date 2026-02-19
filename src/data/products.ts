@@ -72,8 +72,8 @@ export const products: Product[] = [
   {
     id: "bermuda-flamengo-i-2025-branca",
     name: "Bermuda Flamengo I 2025 Branca Masculina",
-    price: 109.90,
-    originalPrice: 159.90,
+    price: 89.90,
+    originalPrice: 139.90,
     discount: 31,
     rating: 5,
     reviews: 743,
@@ -84,8 +84,8 @@ export const products: Product[] = [
   {
     id: "bermuda-flamengo-ii-2025-preta",
     name: "Bermuda Flamengo II 2025 Preta Masculina",
-    price: 119.90,
-    originalPrice: 169.90,
+    price: 89.90,
+    originalPrice: 139.90,
     discount: 29,
     rating: 5,
     reviews: 512,
