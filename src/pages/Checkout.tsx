@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ShieldCheck, Truck, ArrowLeft, Lock, User, MapPin, CreditCard, Check, ChevronRight } from "lucide-react";
+import { ShieldCheck, Truck, ArrowLeft, Lock, User, MapPin, CreditCard, Check, ChevronRight, Loader2, Copy, CheckCircle } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const maskCPF = (v: string) => v.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 const maskPhone = (v: string) => {
@@ -35,6 +37,9 @@ const Checkout = () => {
   const [submitted, setSubmitted] = useState(false);
   const [emailSuggestions, setEmailSuggestions] = useState<string[]>([]);
   const [showEmailSuggestions, setShowEmailSuggestions] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [pixData, setPixData] = useState<{ qrCode?: string; qrCodeUrl?: string; copyPaste?: string } | null>(null);
+  const [pixCopied, setPixCopied] = useState(false);
   const emailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -74,7 +79,68 @@ const Checkout = () => {
     );
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsProcessing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-payment", {
+        body: {
+          amount: finalTotal,
+          customer: {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            cpf: form.cpf,
+          },
+          items: items.map((item) => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            price: item.product.price,
+          })),
+          address: {
+            street: form.street,
+            number: form.number,
+            complement: form.complement,
+            neighborhood: form.neighborhood,
+            city: form.city,
+            state: form.state,
+            cep: form.cep,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      // Try to extract PIX data from response
+      const pix = data?.pix || data?.pixQrCode || data;
+      if (pix?.qrCode || pix?.qr_code || pix?.qrcode || pix?.copy_paste || pix?.pixCopiaECola) {
+        setPixData({
+          qrCode: pix.qrCode || pix.qr_code || pix.qrcode,
+          qrCodeUrl: pix.qrCodeUrl || pix.qr_code_url,
+          copyPaste: pix.copy_paste || pix.pixCopiaECola || pix.qrCode || pix.qr_code,
+        });
+      } else {
+        // If no PIX data, assume success
+        setSubmitted(true);
+        clearCart();
+      }
+    } catch (err: any) {
+      console.error("Payment error:", err);
+      toast.error("Erro ao processar pagamento. Tente novamente.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleCopyPix = () => {
+    if (pixData?.copyPaste) {
+      navigator.clipboard.writeText(pixData.copyPaste);
+      setPixCopied(true);
+      toast.success("Código PIX copiado!");
+      setTimeout(() => setPixCopied(false), 3000);
+    }
+  };
+
+  const handleConfirmPixPayment = () => {
     setSubmitted(true);
     clearCart();
   };
@@ -360,12 +426,61 @@ const Checkout = () => {
                       </div>
                     </div>
 
-                    <button
-                      onClick={handleSubmit}
-                      className="w-full py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow flex items-center justify-center gap-2"
-                    >
-                      <Lock className="w-5 h-5" /> FINALIZAR COMPRA
-                    </button>
+                    {!pixData ? (
+                      <button
+                        onClick={handleSubmit}
+                        disabled={isProcessing}
+                        className="w-full py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        {isProcessing ? (
+                          <><Loader2 className="w-5 h-5 animate-spin" /> PROCESSANDO...</>
+                        ) : (
+                          <><Lock className="w-5 h-5" /> PAGAR COM PIX</>
+                        )}
+                      </button>
+                    ) : (
+                      <div className="space-y-5 animate-fade-in">
+                        <div className="text-center">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-500 rounded-full text-sm font-semibold mb-4">
+                            <CheckCircle className="w-4 h-4" /> PIX Gerado com Sucesso
+                          </div>
+                          <p className="text-sm text-muted-foreground">Escaneie o QR Code ou copie o código abaixo</p>
+                        </div>
+
+                        {pixData.qrCodeUrl && (
+                          <div className="flex justify-center">
+                            <img src={pixData.qrCodeUrl} alt="QR Code PIX" className="w-48 h-48 rounded-xl border border-border" />
+                          </div>
+                        )}
+
+                        {pixData.copyPaste && (
+                          <div>
+                            <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Código PIX Copia e Cola</label>
+                            <div className="flex gap-2">
+                              <input
+                                readOnly
+                                value={pixData.copyPaste}
+                                className="flex-1 px-4 py-3 bg-secondary/50 border border-border rounded-xl text-foreground text-xs truncate"
+                              />
+                              <button
+                                onClick={handleCopyPix}
+                                className="px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm flex items-center gap-1.5 hover:bg-flamengo-dark-red transition-colors"
+                              >
+                                {pixCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                                {pixCopied ? "Copiado" : "Copiar"}
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        <button
+                          onClick={handleConfirmPixPayment}
+                          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                        >
+                          <CheckCircle className="w-5 h-5" /> JÁ FIZ O PAGAMENTO
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
