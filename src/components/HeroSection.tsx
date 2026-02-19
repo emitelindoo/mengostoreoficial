@@ -19,7 +19,7 @@ const HeroSection = () => {
         </span>
         
         <h1 className="text-4xl md:text-6xl font-display font-bold mb-2 animate-fade-in-up text-white drop-shadow-lg" style={{ animationDelay: "0.1s" }}>
-          Coleção Oficial Flamengo
+          Coleção 2026 Flamengo
         </h1>
         
         <p className="text-2xl md:text-4xl font-display font-bold text-primary mb-4 animate-fade-in-up drop-shadow-lg" style={{ animationDelay: "0.2s" }}>
