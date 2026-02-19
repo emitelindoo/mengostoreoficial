@@ -183,9 +183,9 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
-      <main className="pt-24 pb-16 px-4">
+      <main className="pt-24 pb-16 px-4 overflow-x-hidden">
         <div className="container mx-auto max-w-5xl">
           {/* Back button */}
           <button onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)} className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors text-sm">
@@ -464,20 +464,20 @@ const Checkout = () => {
                         )}
 
                         {pixData.copyPaste && (
-                          <div>
+                          <div className="overflow-hidden">
                             <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Código PIX Copia e Cola</label>
                             <div className="flex gap-2">
                               <input
                                 readOnly
                                 value={pixData.copyPaste}
-                                className="flex-1 px-4 py-3 bg-secondary/50 border border-border rounded-xl text-foreground text-xs truncate"
+                                className="flex-1 min-w-0 px-3 py-3 bg-secondary/50 border border-border rounded-xl text-foreground text-xs truncate"
                               />
                               <button
                                 onClick={handleCopyPix}
-                                className="px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm flex items-center gap-1.5 hover:bg-flamengo-dark-red transition-colors"
+                                className="px-3 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm flex items-center gap-1 flex-shrink-0 hover:bg-flamengo-dark-red transition-colors"
                               >
                                 {pixCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                                {pixCopied ? "Copiado" : "Copiar"}
+                                <span className="hidden sm:inline">{pixCopied ? "Copiado" : "Copiar"}</span>
                               </button>
                             </div>
                           </div>
