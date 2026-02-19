@@ -39,8 +39,9 @@ const Checkout = () => {
   const [emailSuggestions, setEmailSuggestions] = useState<string[]>([]);
   const [showEmailSuggestions, setShowEmailSuggestions] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [pixData, setPixData] = useState<{ qrCode?: string; qrCodeUrl?: string; copyPaste?: string } | null>(null);
+  const [pixData, setPixData] = useState<{ qrCode?: string; qrCodeUrl?: string; copyPaste?: string; transactionId?: number } | null>(null);
   const [pixCopied, setPixCopied] = useState(false);
+  const [checkingPayment, setCheckingPayment] = useState(false);
   const emailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -120,6 +121,7 @@ const Checkout = () => {
           qrCode: pixCode,
           qrCodeUrl: pix?.qrCodeUrl || pix?.qr_code_url,
           copyPaste: copyPaste,
+          transactionId: data?.id,
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
@@ -144,9 +146,28 @@ const Checkout = () => {
     }
   };
 
-  const handleConfirmPixPayment = () => {
-    setSubmitted(true);
-    clearCart();
+  const handleConfirmPixPayment = async () => {
+    if (!pixData?.transactionId) return;
+    setCheckingPayment(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("check-payment", {
+        body: { transactionId: pixData.transactionId },
+      });
+      if (error) throw error;
+
+      if (data?.status === "paid") {
+        setSubmitted(true);
+        clearCart();
+        toast.success("Pagamento confirmado! 🎉");
+      } else {
+        toast.error("Pagamento ainda não identificado. Aguarde alguns instantes e tente novamente.");
+      }
+    } catch (err: any) {
+      console.error("Check payment error:", err);
+      toast.error("Erro ao verificar pagamento. Tente novamente.");
+    } finally {
+      setCheckingPayment(false);
+    }
   };
 
   const updateField = (field: string, value: string) => {
@@ -485,9 +506,14 @@ const Checkout = () => {
 
                         <button
                           onClick={handleConfirmPixPayment}
-                          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                          disabled={checkingPayment}
+                          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          <CheckCircle className="w-5 h-5" /> JÁ FIZ O PAGAMENTO
+                          {checkingPayment ? (
+                            <><Loader2 className="w-5 h-5 animate-spin" /> VERIFICANDO PAGAMENTO...</>
+                          ) : (
+                            <><CheckCircle className="w-5 h-5" /> JÁ FIZ O PAGAMENTO</>
+                          )}
                         </button>
                       </div>
                     )}
