@@ -14,8 +14,8 @@ const Footer = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: Shield, title: "Compra Segura", desc: "Pagamento 100% protegido" },
-              { icon: Truck, title: "Frete Grátis", desc: "Para todo o Brasil" },
+              { icon: Shield, title: "Compra Segura", desc: "Pagamento 100% protegido via PIX" },
+              { icon: Truck, title: "Frete Grátis SEDEX", desc: "Envio para todo o Brasil" },
               { icon: RefreshCw, title: "Troca Fácil", desc: "30 dias para trocar" },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-4 justify-center">
