@@ -17,6 +17,7 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [customName, setCustomName] = useState("");
   const [customNumber, setCustomNumber] = useState("");
+  const [selectedImage, setSelectedImage] = useState(0);
 
   useEffect(() => {
     if (product) {
@@ -63,18 +64,42 @@ const ProductPage = () => {
           </button>
 
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {/* Image */}
-            <div className="relative rounded-2xl overflow-hidden bg-secondary border border-border">
-              <img src={product.image} alt={product.name} className="w-full h-auto object-contain aspect-square" />
-              {product.discount > 0 && (
-                <span className="absolute top-4 left-4 px-4 py-1.5 bg-primary text-primary-foreground font-bold rounded-lg text-sm">
-                  -{product.discount}%
-                </span>
-              )}
-              {product.badge && (
-                <span className="absolute top-4 right-4 px-4 py-1.5 bg-flamengo-gold text-flamengo-black text-xs font-bold rounded-lg uppercase">
-                  {product.badge}
-                </span>
+            {/* Image Gallery */}
+            <div>
+              <div className="relative rounded-2xl overflow-hidden bg-secondary border border-border mb-3">
+                <img
+                  src={product.images ? product.images[selectedImage] : product.image}
+                  alt={product.name}
+                  className="w-full h-auto object-contain aspect-square"
+                />
+                {product.discount > 0 && (
+                  <span className="absolute top-4 left-4 px-4 py-1.5 bg-primary text-primary-foreground font-bold rounded-lg text-sm">
+                    -{product.discount}%
+                  </span>
+                )}
+                {product.badge && (
+                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-flamengo-gold text-flamengo-black text-xs font-bold rounded-lg uppercase">
+                    {product.badge}
+                  </span>
+                )}
+              </div>
+              {/* Thumbnails */}
+              {product.images && product.images.length > 1 && (
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  {product.images.map((img, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setSelectedImage(i)}
+                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all ${
+                        selectedImage === i
+                          ? "border-primary ring-2 ring-primary/30"
+                          : "border-border hover:border-primary/50 opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      <img src={img} alt={`${product.name} - foto ${i + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
 
