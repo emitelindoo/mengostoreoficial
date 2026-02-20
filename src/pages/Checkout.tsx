@@ -113,16 +113,22 @@ const Checkout = () => {
 
       if (error) throw error;
 
-      // Try to extract PIX data from response
-      const pix = data?.pix || data?.pixQrCode || data;
-      const pixCode = pix?.qrcode || pix?.qrCode || pix?.qr_code;
-      const copyPaste = pix?.copy_paste || pix?.pixCopiaECola || pixCode;
-      if (pixCode || copyPaste) {
+      // Check if transaction was refused
+      if (data?.status === "refused" || data?.status === "error") {
+        const reason = data?.refusedReason?.description || "Transação recusada. Verifique seus dados e tente novamente.";
+        toast.error(reason);
+        return;
+      }
+
+      // Extract PIX data from new Nivus API response
+      const pixQrCode = data?.pix?.qrcode;
+      const transactionId = data?.id;
+
+      if (pixQrCode) {
         setPixData({
-          qrCode: pixCode,
-          qrCodeUrl: pix?.qrCodeUrl || pix?.qr_code_url,
-          copyPaste: copyPaste,
-          transactionId: data?.id,
+          qrCode: pixQrCode,
+          copyPaste: pixQrCode,
+          transactionId: transactionId,
         });
         fbEvent("AddPaymentInfo", {
           content_ids: items.map(i => i.product.id),
@@ -132,10 +138,11 @@ const Checkout = () => {
           currency: "BRL",
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        // If no PIX data, assume success
+      } else if (data?.status === "paid") {
         setSubmitted(true);
         clearCart();
+      } else {
+        toast.error("Não foi possível gerar o PIX. Tente novamente.");
       }
     } catch (err: any) {
       console.error("Payment error:", err);
