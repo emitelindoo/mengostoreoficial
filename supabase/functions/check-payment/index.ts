@@ -12,10 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    const NIVUS_PUBLIC_KEY = Deno.env.get("NIVUS_PUBLIC_KEY");
     const NIVUS_SECRET_KEY = Deno.env.get("NIVUS_SECRET_KEY");
+    const NIVUS_COMPANY_ID = Deno.env.get("NIVUS_COMPANY_ID");
 
-    if (!NIVUS_PUBLIC_KEY || !NIVUS_SECRET_KEY) {
+    if (!NIVUS_SECRET_KEY || !NIVUS_COMPANY_ID) {
       throw new Error("Nivus Pay keys not configured");
     }
 
@@ -28,15 +28,15 @@ serve(async (req) => {
       );
     }
 
-    const encoder = new TextEncoder();
-    const credentials = encoder.encode(`${NIVUS_PUBLIC_KEY}:${NIVUS_SECRET_KEY}`);
-    const base64Credentials = btoa(String.fromCharCode(...credentials));
+    // Build Basic auth: SECRET_KEY:COMPANY_ID
+    const credentials = btoa(`${NIVUS_SECRET_KEY}:${NIVUS_COMPANY_ID}`);
 
-    const response = await fetch(`https://api.nivuspayments.com.br/v1/transactions/${transactionId}`, {
+    const response = await fetch(`https://api.nivuspay.com.br/functions/v1/transactions/${transactionId}`, {
       method: "GET",
       headers: {
-        Authorization: `Basic ${base64Credentials}`,
+        Authorization: `Basic ${credentials}`,
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
     });
 
