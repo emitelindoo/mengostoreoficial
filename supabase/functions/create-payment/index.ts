@@ -31,6 +31,9 @@ serve(async (req) => {
     // Build Basic auth: SECRET_KEY:COMPANY_ID
     const credentials = btoa(`${NIVUS_SECRET_KEY}:${NIVUS_COMPANY_ID}`);
 
+    // Generate short order ID
+    const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+
     const payload: Record<string, any> = {
       amount: Math.round(amount * 100), // centavos
       paymentMethod: "PIX",
@@ -44,11 +47,11 @@ serve(async (req) => {
         },
       },
       items: items.map((item: any) => ({
-        title: item.name,
+        title: `Pedido ${orderCode}`,
         quantity: item.quantity,
         unitPrice: Math.round(item.price * 100),
       })),
-      description: "Pedido MengoStore",
+      description: `Pedido ${orderCode}`,
     };
 
     if (address) {
