@@ -73,7 +73,7 @@ export const products: Product[] = [
     reviews: 1102,
     image: camisaFem2026,
     images: [camisaFem2026, camisaFem2026Costas, camisaFem2026Detalhe],
-    badge: "Novo",
+    
     description: "Camisa oficial feminina do Flamengo I 2026 Adidas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de absorção de suor. Gola polo clássica, escudo CRF bordado no peito e modelagem feminina ajustada. Tecido leve e respirável, perfeita para jogos no estádio ou uso no dia a dia. Produto licenciado.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
@@ -133,7 +133,7 @@ export const products: Product[] = [
     reviews: 1456,
     image: camisaBrancaFemFrente,
     images: [camisaBrancaFemFrente, camisaBrancaFemCostas],
-    badge: "Novo",
+    
     description: "Camisa reserva oficial feminina do Flamengo II 2025 Adidas, modelo branco com detalhes em vermelho e preto nas mangas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de controle de umidade. Gola careca, escudo CRF bordado em vermelho e modelagem feminina ajustada. Conforto e estilo para a torcedora rubro-negra.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
@@ -148,6 +148,7 @@ export const products: Product[] = [
     reviews: 987,
     image: mochilaFlamengo,
     images: [mochilaFlamengo, mochilaCostas, mochilaLateral, bolsaFlamengo],
+    badge: "Novo",
     description: "Kit Mochila + Bolsa Shoulder Bag oficial do Flamengo. Mochila em poliéster resistente com escudo CRF bordado, compartimento acolchoado para notebook até 15\", bolsos laterais em tela e alças acolchoadas ajustáveis. Acompanha bolsa transversal destacável com zíper e alça regulável. Capacidade de 25L.",
   },
   {
