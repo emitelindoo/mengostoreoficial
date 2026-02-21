@@ -1,12 +1,13 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Star, ShieldCheck, Truck, ArrowLeft, Minus, Plus } from "lucide-react";
+import { Star, ShieldCheck, Truck, ArrowLeft, Minus, Plus, ChevronDown, Package } from "lucide-react";
 import { useState, useEffect } from "react";
-import { getProductById } from "@/data/products";
+import { getProductById, sizeChart } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SocialProofGallery from "@/components/SocialProofGallery";
 import { fbEvent } from "@/lib/fbpixel";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -129,9 +130,23 @@ const ProductPage = () => {
                 Pagamento exclusivo via <span className="font-semibold text-foreground">PIX</span> • Envio via <span className="font-semibold text-foreground">SEDEX</span> • Frete Grátis
               </p>
 
+              {/* Stock indicator */}
+              {product.stock !== undefined && (
+                <div className="flex items-center gap-2 mb-6">
+                  <Package className="w-4 h-4 text-primary" />
+                  {product.stock <= 5 ? (
+                    <span className="text-sm font-semibold text-primary">🔥 Restam apenas {product.stock} unidades!</span>
+                  ) : product.stock <= 15 ? (
+                    <span className="text-sm font-semibold text-flamengo-gold">⚡ Apenas {product.stock} em estoque</span>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">Em estoque: {product.stock} unidades</span>
+                  )}
+                </div>
+              )}
+
               {/* Size selector */}
               {product.sizes && (
-                <div className="mb-6">
+                <div className="mb-4">
                   <p className="text-sm font-semibold mb-3">Tamanho:</p>
                   <div className="flex gap-2 flex-wrap">
                     {product.sizes.map((size) => (
@@ -148,6 +163,43 @@ const ProductPage = () => {
                       </button>
                     ))}
                   </div>
+
+                  {/* Size chart collapsible */}
+                  <Collapsible className="mt-3">
+                    <CollapsibleTrigger className="flex items-center gap-1 text-sm text-primary hover:underline cursor-pointer group">
+                      📏 Guia de Tamanhos
+                      <ChevronDown className="w-3.5 h-3.5 transition-transform group-data-[state=open]:rotate-180" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="mt-3">
+                      {(() => {
+                        const isFeminina = product.id.includes("feminina") || product.id.includes("cropete");
+                        const isBermuda = product.id.includes("bermuda");
+                        const chart = isBermuda ? sizeChart.bermuda : isFeminina ? sizeChart.feminino : sizeChart.masculino;
+                        return (
+                          <div className="overflow-x-auto rounded-lg border border-border">
+                            <table className="w-full text-sm">
+                              <thead>
+                                <tr className="bg-secondary/50">
+                                  {chart.headers.map((h) => (
+                                    <th key={h} className="px-3 py-2 text-left font-semibold text-foreground">{h}</th>
+                                  ))}
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {chart.rows.filter(row => product.sizes?.includes(row[0])).map((row) => (
+                                  <tr key={row[0]} className="border-t border-border hover:bg-secondary/30 transition-colors">
+                                    {row.map((cell, i) => (
+                                      <td key={i} className={`px-3 py-2 ${i === 0 ? "font-semibold text-foreground" : "text-muted-foreground"}`}>{cell}</td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        );
+                      })()}
+                    </CollapsibleContent>
+                  </Collapsible>
                 </div>
               )}
 
