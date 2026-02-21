@@ -22,6 +22,9 @@ import camisaCremeM from "@/assets/camisa-flamengo-creme-masc.png";
 import camisaCremeMascCostas from "@/assets/camisa-creme-masc-costas.png";
 import bermudaCreme from "@/assets/bermuda-flamengo-creme.webp";
 import bermudaCremeCostas from "@/assets/bermuda-creme-costas.webp";
+import camisaFem2026 from "@/assets/camisa-flamengo-i-2026-fem.webp";
+import camisaFem2026Costas from "@/assets/camisa-flamengo-i-2026-fem-costas.webp";
+import camisaFem2026Detalhe from "@/assets/camisa-flamengo-i-2026-fem-detalhe.webp";
 
 export interface Product {
   id: string;
@@ -57,6 +60,21 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     freeCustomization: true,
+  },
+  {
+    id: "camisa-flamengo-i-2026-feminina",
+    name: "Camisa Flamengo I 2026 Feminina Vermelha e Preta",
+    price: 99.90,
+    originalPrice: 199.90,
+    discount: 50,
+    rating: 5,
+    reviews: 1102,
+    image: camisaFem2026,
+    images: [camisaFem2026, camisaFem2026Costas, camisaFem2026Detalhe],
+    badge: "Novo",
+    description: "Camisa oficial feminina do Flamengo I 2026 Adidas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de absorção de suor. Gola polo clássica, escudo CRF bordado no peito e modelagem feminina ajustada. Tecido leve e respirável, perfeita para jogos no estádio ou uso no dia a dia. Produto licenciado.",
+    sizes: ["P", "M", "G", "GG"],
+    customizable: true,
   },
   {
     id: "camisa-flamengo-i-2026-sp",
