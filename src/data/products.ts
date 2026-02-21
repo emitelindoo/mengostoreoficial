@@ -44,7 +44,40 @@ export interface Product {
   sizes?: string[];
   customizable?: boolean;
   freeCustomization?: boolean;
+  stock?: number;
 }
+
+export const sizeChart = {
+  masculino: {
+    headers: ["Tamanho", "Largura (cm)", "Comprimento (cm)", "Manga (cm)"],
+    rows: [
+      ["P", "50", "70", "20"],
+      ["M", "53", "72", "21"],
+      ["G", "56", "74", "22"],
+      ["GG", "59", "76", "23"],
+      ["XGG", "62", "78", "24"],
+    ],
+  },
+  feminino: {
+    headers: ["Tamanho", "Largura (cm)", "Comprimento (cm)", "Manga (cm)"],
+    rows: [
+      ["P", "44", "64", "17"],
+      ["M", "47", "66", "18"],
+      ["G", "50", "68", "19"],
+      ["GG", "53", "70", "20"],
+    ],
+  },
+  bermuda: {
+    headers: ["Tamanho", "Cintura (cm)", "Quadril (cm)", "Comprimento (cm)"],
+    rows: [
+      ["P", "72", "96", "45"],
+      ["M", "76", "100", "46"],
+      ["G", "80", "104", "47"],
+      ["GG", "84", "108", "48"],
+      ["XGG", "88", "112", "49"],
+    ],
+  },
+};
 
 export const products: Product[] = [
   {
@@ -62,6 +95,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     freeCustomization: true,
+    stock: 12,
   },
   {
     id: "camisa-flamengo-i-2026-feminina",
@@ -77,6 +111,7 @@ export const products: Product[] = [
     description: "Camisa oficial feminina do Flamengo I 2026 Adidas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de absorção de suor. Gola polo clássica, escudo CRF bordado no peito e modelagem feminina ajustada. Tecido leve e respirável, perfeita para jogos no estádio ou uso no dia a dia. Produto licenciado.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
+    stock: 8,
   },
   {
     id: "camisa-flamengo-i-2026-sp",
@@ -92,6 +127,7 @@ export const products: Product[] = [
     description: "O manto rubro-negro na versão limpa, sem nenhum patrocinador. Tecido 100% poliéster reciclado com tecnologia AEROREADY que mantém o corpo seco. Gola polo, escudo CRF bordado e acabamento premium. Perfeita para quem valoriza a pureza do manto sagrado. Produto licenciado.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
+    stock: 15,
   },
   {
     id: "camisa-flamengo-treino-2026",
@@ -107,6 +143,7 @@ export const products: Product[] = [
     description: "Camisa de treino oficial do Flamengo 2026 Adidas. Tecido 100% poliéster com tecnologia AEROREADY de secagem rápida e ventilação otimizada. Corte atlético, gola careca e estampa exclusiva em tons de vermelho e preto. Ideal para treinos, academia e atividades físicas.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
+    stock: 20,
   },
   {
     id: "camisa-flamengo-ii-2025-branca",
@@ -122,6 +159,7 @@ export const products: Product[] = [
     description: "Camisa reserva oficial do Flamengo II 2025 Adidas, modelo branco com detalhes em vermelho e preto nas mangas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de controle de umidade. Gola careca, escudo CRF bordado em vermelho e costura reforçada. Conforto e estilo para representar a Nação.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
+    stock: 18,
   },
   {
     id: "camisa-flamengo-ii-2025-branca-feminina",
@@ -137,6 +175,7 @@ export const products: Product[] = [
     description: "Camisa reserva oficial feminina do Flamengo II 2025 Adidas, modelo branco com detalhes em vermelho e preto nas mangas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de controle de umidade. Gola careca, escudo CRF bordado em vermelho e modelagem feminina ajustada. Conforto e estilo para a torcedora rubro-negra.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
+    stock: 10,
   },
   {
     id: "mochila-flamengo-crf",
@@ -150,6 +189,7 @@ export const products: Product[] = [
     images: [mochilaFlamengo, mochilaCostas, mochilaLateral, bolsaFlamengo],
     badge: "Novo",
     description: "Kit Mochila + Bolsa Shoulder Bag oficial do Flamengo. Mochila em poliéster resistente com escudo CRF bordado, compartimento acolchoado para notebook até 15\", bolsos laterais em tela e alças acolchoadas ajustáveis. Acompanha bolsa transversal destacável com zíper e alça regulável. Capacidade de 25L.",
+    stock: 7,
   },
   {
     id: "cropete-flamengo-bege-2025",
@@ -163,6 +203,7 @@ export const products: Product[] = [
     description: "Cropete feminino oficial do Flamengo 2025, modelo bege com acabamento dourado. Tecido em algodão e poliéster com toque macio e caimento justo. Escudo CRF bordado, barra cortada e modelagem cropped moderna. Perfeito para compor looks casuais com atitude rubro-negra.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
+    stock: 14,
   },
   {
     id: "bermuda-flamengo-i-2025-branca",
@@ -176,6 +217,7 @@ export const products: Product[] = [
     images: [bermudaBranca, bermudaBrancaCostas],
     description: "Shorts oficial do Flamengo I 2025 Adidas, modelo branco com listras vermelhas laterais. Tecido 100% poliéster reciclado com tecnologia Climacool de ventilação. Cós elástico com cordão interno, escudo CRF bordado e bolsos laterais. Leve, confortável e com secagem rápida.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    stock: 11,
   },
   {
     id: "bermuda-flamengo-ii-2025-preta",
@@ -189,6 +231,7 @@ export const products: Product[] = [
     images: [bermudaPreta, bermudaPretaFrente, bermudaPretaCostas, bermudaPretaDetalhe],
     description: "Shorts reserva oficial do Flamengo II 2025 Adidas, modelo preto com detalhes em vermelho. Tecido 100% poliéster reciclado com tecnologia Climacool para máxima ventilação. Cós elástico com cordão, escudo CRF bordado e acabamento premium. Ideal para jogos e treinos.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    stock: 9,
   },
   {
     id: "camisa-flamengo-iii-2025-creme-feminina",
@@ -204,6 +247,7 @@ export const products: Product[] = [
     description: "Camisa especial feminina do Flamengo III 2025 Adidas, modelo creme com detalhes dourados. Tecido 100% poliéster reciclado com tecnologia AEROREADY de absorção de suor. Listras rubro-negras nos ombros, escudo CRF bordado em dourado e modelagem feminina ajustada. Elegância e tradição em cada detalhe.",
     sizes: ["P", "M", "G", "GG"],
     customizable: true,
+    stock: 6,
   },
   {
     id: "camisa-flamengo-iii-2025-creme-masculina",
@@ -219,6 +263,7 @@ export const products: Product[] = [
     description: "Camisa especial masculina do Flamengo III 2025 Adidas, modelo creme com detalhes dourados. Tecido 100% poliéster reciclado com tecnologia AEROREADY de secagem rápida. Listras rubro-negras nos ombros, escudo CRF bordado em dourado e corte regular. Uma peça de colecionador para o torcedor exigente.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
+    stock: 13,
   },
   {
     id: "bermuda-flamengo-iii-2025-creme",
@@ -232,6 +277,7 @@ export const products: Product[] = [
     images: [bermudaCreme, bermudaCremeCostas],
     description: "Shorts especial do Flamengo III 2025 Adidas, modelo creme com detalhes dourados e listras rubro-negras laterais. Tecido 100% poliéster reciclado com tecnologia Climacool. Cós elástico com cordão, escudo CRF bordado em dourado. Combina perfeitamente com a camisa III para o uniforme completo.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    stock: 5,
   },
 ];
 
