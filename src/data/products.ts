@@ -25,6 +25,8 @@ import bermudaCremeCostas from "@/assets/bermuda-creme-costas.webp";
 import camisaFem2026 from "@/assets/camisa-flamengo-i-2026-fem.webp";
 import camisaFem2026Costas from "@/assets/camisa-flamengo-i-2026-fem-costas.webp";
 import camisaFem2026Detalhe from "@/assets/camisa-flamengo-i-2026-fem-detalhe.webp";
+import camisaBrancaFemFrente from "@/assets/camisa-branca-fem-frente.png";
+import camisaBrancaFemCostas from "@/assets/camisa-branca-fem-costas.png";
 
 export interface Product {
   id: string;
@@ -119,6 +121,21 @@ export const products: Product[] = [
     
     description: "Camisa reserva oficial do Flamengo II 2025 Adidas, modelo branco com detalhes em vermelho e preto nas mangas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de controle de umidade. Gola careca, escudo CRF bordado em vermelho e costura reforçada. Conforto e estilo para representar a Nação.",
     sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+  },
+  {
+    id: "camisa-flamengo-ii-2025-branca-feminina",
+    name: "Camisa Flamengo II 2025 Branca Reserva Feminina",
+    price: 99.90,
+    originalPrice: 199.90,
+    discount: 50,
+    rating: 5,
+    reviews: 1456,
+    image: camisaBrancaFemFrente,
+    images: [camisaBrancaFemFrente, camisaBrancaFemCostas],
+    badge: "Novo",
+    description: "Camisa reserva oficial feminina do Flamengo II 2025 Adidas, modelo branco com detalhes em vermelho e preto nas mangas. Tecido 100% poliéster reciclado com tecnologia AEROREADY de controle de umidade. Gola careca, escudo CRF bordado em vermelho e modelagem feminina ajustada. Conforto e estilo para a torcedora rubro-negra.",
+    sizes: ["P", "M", "G", "GG"],
     customizable: true,
   },
   {
