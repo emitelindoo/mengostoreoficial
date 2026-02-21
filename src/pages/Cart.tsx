@@ -106,7 +106,7 @@ const Cart = () => {
                     )}
                     {(item.customName || item.customNumber) && (
                       <p className="text-xs text-primary mt-1 font-semibold">
-                        Personalizado: {item.customName && `${item.customName}`}{item.customName && item.customNumber && " • "}{item.customNumber && `Nº ${item.customNumber}`} (+R$ 19,90)
+                        Personalizado: {item.customName && `${item.customName}`}{item.customName && item.customNumber && " • "}{item.customNumber && `Nº ${item.customNumber}`} {item.product.freeCustomization ? "(grátis)" : "(+R$ 19,90)"}
                       </p>
                     )}
                     <p className="text-primary font-bold mt-2">
