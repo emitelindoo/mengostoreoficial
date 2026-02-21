@@ -38,6 +38,7 @@ export interface Product {
   description: string;
   sizes?: string[];
   customizable?: boolean;
+  freeCustomization?: boolean;
 }
 
 export const products: Product[] = [
@@ -55,6 +56,7 @@ export const products: Product[] = [
     description: "Camisa oficial do Flamengo I 2026 com patrocinadores. Confeccionada em poliéster reciclado com tecnologia AEROREADY de absorção de suor. Gola polo clássica, escudo CRF bordado no peito e corte regular confortável. Tecido leve e respirável, ideal para jogos no estádio ou uso no dia a dia. Produto licenciado pela Adidas.",
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
+    freeCustomization: true,
   },
   {
     id: "camisa-flamengo-i-2026-sp",
@@ -74,9 +76,9 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-treino-2026",
     name: "Camisa de Treino Flamengo 2026 Masculina",
-    price: 119.90,
+    price: 99.90,
     originalPrice: 179.90,
-    discount: 33,
+    discount: 44,
     rating: 5,
     reviews: 734,
     image: camisaTreino,
@@ -89,9 +91,9 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-ii-2025-branca",
     name: "Camisa Flamengo II 2025 Branca Reserva Masculina",
-    price: 129.90,
+    price: 99.90,
     originalPrice: 199.90,
-    discount: 57,
+    discount: 50,
     rating: 5,
     reviews: 2847,
     image: camisaBranca,
@@ -155,9 +157,9 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-iii-2025-creme-feminina",
     name: "Camisa Flamengo III 2025 Creme Dourada Feminina",
-    price: 139.90,
+    price: 99.90,
     originalPrice: 219.90,
-    discount: 36,
+    discount: 55,
     rating: 5,
     reviews: 1187,
     image: camisaCreme,
@@ -170,9 +172,9 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-iii-2025-creme-masculina",
     name: "Camisa Flamengo III 2025 Creme Dourada Masculina",
-    price: 139.90,
+    price: 99.90,
     originalPrice: 219.90,
-    discount: 36,
+    discount: 55,
     rating: 5,
     reviews: 943,
     image: camisaCremeM,

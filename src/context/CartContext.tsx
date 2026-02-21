@@ -64,7 +64,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const CUSTOM_FEE = 19.90;
   const total = items.reduce((sum, i) => {
-    const customExtra = (i.customName || i.customNumber) ? CUSTOM_FEE : 0;
+    const isFree = i.product.freeCustomization;
+    const customExtra = (!isFree && (i.customName || i.customNumber)) ? CUSTOM_FEE : 0;
     return sum + (i.product.price + customExtra) * i.quantity;
   }, 0);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
