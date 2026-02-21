@@ -209,6 +209,7 @@ const ProductPage = () => {
               >
                 {product.sizes && !selectedSize ? "SELECIONE O TAMANHO" : "COMPRAR AGORA"}
               </button>
+              <p className="text-center text-sm text-muted-foreground mt-2">Frete grátis para todo o Brasil</p>
 
               <div className="mt-6 space-y-3">
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
