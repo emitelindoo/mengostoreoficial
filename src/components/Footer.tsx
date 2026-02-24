@@ -1,4 +1,5 @@
 import { Shield, Truck, RefreshCw } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -45,10 +46,10 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-bold mb-3">Links Úteis</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Política de Troca</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Política de Privacidade</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">FAQ</a></li>
+              <li><Link to="/politica-de-privacidade" className="hover:text-primary transition-colors">Política de Privacidade</Link></li>
+              <li><Link to="/termos-de-uso" className="hover:text-primary transition-colors">Termos de Uso</Link></li>
+              <li><Link to="/contato" className="hover:text-primary transition-colors">Contato</Link></li>
+              <li><Link to="/prazo-de-entrega" className="hover:text-primary transition-colors">Prazo de Entrega</Link></li>
             </ul>
           </div>
 
