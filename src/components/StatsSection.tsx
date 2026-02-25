@@ -1,8 +1,8 @@
 const stats = [
   { value: "10K+", label: "Clientes Satisfeitos" },
   { value: "4.9", label: "Avaliação Média" },
-  { value: "24h", label: "Entrega Expressa" },
-  { value: "100%", label: "Produtos Oficiais" },
+  { value: "7 dias", label: "Entrega SEDEX" },
+  { value: "100%", label: "Qualidade Garantida" },
 ];
 
 const StatsSection = () => {

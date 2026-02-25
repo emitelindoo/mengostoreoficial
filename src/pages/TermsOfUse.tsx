@@ -18,7 +18,7 @@ const TermsOfUse = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">2. Produtos</h2>
-            <p>Todos os produtos vendidos são oficiais e de qualidade garantida. As imagens dos produtos são ilustrativas e podem apresentar variações de cor devido às configurações do seu monitor.</p>
+            <p>Todos os produtos vendidos são de qualidade garantida. As imagens dos produtos são ilustrativas e podem apresentar variações de cor devido às configurações do seu monitor.</p>
           </section>
 
           <section>
@@ -28,18 +28,12 @@ const TermsOfUse = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">4. Prazo de Entrega</h2>
-            <p>Os produtos são enviados via <strong>SEDEX</strong> com frete grátis para todo o Brasil. O prazo estimado de entrega é de:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li><strong>Sudeste:</strong> 3 a 5 dias úteis</li>
-              <li><strong>Sul e Centro-Oeste:</strong> 5 a 7 dias úteis</li>
-              <li><strong>Norte e Nordeste:</strong> 7 a 10 dias úteis</li>
-            </ul>
-            <p>O prazo começa a contar após a confirmação do pagamento. O código de rastreamento será enviado por e-mail.</p>
+            <p>Os produtos são enviados via <strong>SEDEX</strong> com frete grátis para todo o Brasil. O prazo de entrega é de <strong>7 dias úteis</strong> após a confirmação do pagamento via PIX. O código de rastreamento será enviado por e-mail.</p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">5. Política de Troca e Devolução</h2>
-            <p>Você tem até <strong>30 dias</strong> após o recebimento para solicitar troca ou devolução, conforme o Código de Defesa do Consumidor. O produto deve estar em sua embalagem original e sem sinais de uso. Para solicitar, entre em contato pelo e-mail: <strong>loja@flamengo.com.br</strong></p>
+            <p>Você tem até <strong>30 dias</strong> após o recebimento para solicitar troca ou devolução, conforme o Código de Defesa do Consumidor. O produto deve estar em sua embalagem original e sem sinais de uso. Para solicitar, entre em contato pelo e-mail: <strong>contato@mengostore.com</strong></p>
           </section>
 
           <section>

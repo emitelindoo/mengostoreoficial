@@ -9,7 +9,7 @@ import provaSocial6 from "@/assets/prova-social-6.webp";
 
 const socialReviews = [
   { src: provaSocial1, name: "Carlos M.", rating: 5, text: "Chegou certinho, qualidade top! Recomendo demais." },
-  { src: provaSocial2, name: "Fernanda S.", rating: 5, text: "Amei! Tecido muito bom, igual da loja oficial." },
+  { src: provaSocial2, name: "Fernanda S.", rating: 5, text: "Amei! Tecido muito bom, qualidade incrível." },
   { src: provaSocial3, name: "Rafael O.", rating: 5, text: "Produto original, entrega super rápida. Nota 10!" },
   { src: provaSocial4, name: "Ana Paula R.", rating: 5, text: "Meu marido amou o presente. É Mengão! 🔴⚫" },
   { src: provaSocial5, name: "Lucas F.", rating: 4, text: "Muito boa! Só demorou um pouquinho pra chegar." },

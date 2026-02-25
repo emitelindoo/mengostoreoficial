@@ -11,7 +11,7 @@ const Footer = () => {
             Veste a Nação
           </p>
           <p className="text-center text-muted-foreground mb-8 text-sm">
-            Seja parte da maior torcida do Brasil. Compre agora e receba em casa com frete grátis!
+            Seja parte da Nação Rubro-Negra. Compre agora e receba em casa com frete grátis!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -36,10 +36,10 @@ const Footer = () => {
         <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-display font-bold text-lg text-primary mb-3">
-              Mengão Store Oficial
+              Mengão Store
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Loja oficial de produtos do Clube de Regatas do Flamengo. Produtos originais, qualidade garantida e entrega para todo o Brasil.
+              Loja do torcedor rubro-negro. Produtos de qualidade garantida e entrega para todo o Brasil.
             </p>
           </div>
 
@@ -56,15 +56,15 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-bold mb-3">Contato</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>loja@flamengo.com.br</li>
-              <li>Gávea, Rio de Janeiro - RJ</li>
+              <li>contato@mengostore.com</li>
+              <li>Rio de Janeiro - RJ</li>
             </ul>
           </div>
         </div>
 
         <div className="container mx-auto max-w-6xl mt-8 pt-8 border-t border-border">
           <p className="text-center text-xs text-muted-foreground">
-            © 2025 Clube de Regatas do Flamengo. Todos os direitos reservados.
+            © 2025 Mengão Store. Todos os direitos reservados.
           </p>
         </div>
       </div>

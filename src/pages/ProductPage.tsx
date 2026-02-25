@@ -270,7 +270,7 @@ const ProductPage = () => {
                 </div>
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <ShieldCheck className="w-5 h-5 text-primary" />
-                  <span>Compra 100% segura • Produto oficial</span>
+                  <span>Compra 100% segura • Qualidade garantida</span>
                 </div>
               </div>
           </div>

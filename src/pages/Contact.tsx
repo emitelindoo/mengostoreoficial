@@ -18,8 +18,8 @@ const Contact = () => {
             <Mail className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" />
             <div>
               <h2 className="font-semibold text-foreground mb-1">E-mail</h2>
-              <a href="mailto:loja@flamengo.com.br" className="text-primary hover:underline">
-                loja@flamengo.com.br
+              <a href="mailto:contato@mengostore.com" className="text-primary hover:underline">
+                contato@mengostore.com
               </a>
             </div>
           </div>
@@ -36,7 +36,7 @@ const Contact = () => {
             <MapPin className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" />
             <div>
               <h2 className="font-semibold text-foreground mb-1">Endereço</h2>
-              <p className="text-muted-foreground">Gávea, Rio de Janeiro - RJ, Brasil</p>
+              <p className="text-muted-foreground">Rio de Janeiro - RJ, Brasil</p>
             </div>
           </div>
         </div>
