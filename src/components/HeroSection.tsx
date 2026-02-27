@@ -39,7 +39,7 @@ const HeroSection = () => {
         </a>
 
         <p className="mt-4 text-sm text-white/70 animate-fade-in-up drop-shadow" style={{ animationDelay: "0.5s" }}>
-          Frete grátis para todo o Brasil
+          ✅ Frete Grátis • ✅ Entrega em 7 dias úteis via SEDEX
         </p>
       </div>
     </section>
