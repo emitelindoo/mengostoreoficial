@@ -11,7 +11,7 @@ const socialReviews = [
   { src: provaSocial1, name: "Carlos M.", rating: 5, text: "Chegou certinho, qualidade top! Recomendo demais." },
   { src: provaSocial2, name: "Fernanda S.", rating: 5, text: "Amei! Tecido muito bom, qualidade incrível." },
   { src: provaSocial3, name: "Rafael O.", rating: 5, text: "Produto original, entrega super rápida. Nota 10!" },
-  { src: provaSocial4, name: "Ana Paula R.", rating: 5, text: "Meu marido amou o presente. Produto perfeito!" },
+  { src: provaSocial4, name: "Ana Paula R.", rating: 5, text: "Meu marido amou o presente. Produto incrível!" },
   { src: provaSocial5, name: "Lucas F.", rating: 4, text: "Muito boa! Só demorou um pouquinho pra chegar." },
   { src: provaSocial6, name: "Juliana C.", rating: 5, text: "Comprei 2 e vieram perfeitas. Já quero mais!" },
 ];

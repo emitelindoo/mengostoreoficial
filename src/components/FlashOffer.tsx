@@ -20,46 +20,52 @@ const FlashOffer = () => {
   const pad = (n: number) => n.toString().padStart(2, "0");
 
   return (
-    <section className="py-20 px-4">
-      <div className="container mx-auto max-w-2xl">
-        <div className="bg-gradient-to-br from-primary/20 via-card to-card border border-primary/30 rounded-2xl p-8 md:p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">
-            ⚡ OFERTA RELÂMPAGO
-          </h2>
-          <p className="text-lg font-semibold text-foreground mb-1">
-            Últimas Unidades Disponíveis!
-          </p>
-          <p className="text-muted-foreground mb-8">
-            Não perca esta oportunidade única. Estoque limitado!
-          </p>
-
-          <p className="text-sm text-muted-foreground mb-4">⏰ Oferta expira em:</p>
-
-          <div className="flex justify-center gap-4 mb-8">
-            {[
-              { val: pad(time.hours), label: "Horas" },
-              { val: pad(time.minutes), label: "Minutos" },
-              { val: pad(time.seconds), label: "Segundos" },
-            ].map((t, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-primary text-primary-foreground rounded-xl flex items-center justify-center text-2xl md:text-3xl font-display font-bold">
-                  {t.val}
+    <section className="py-12 px-4">
+      <div className="container mx-auto max-w-3xl">
+        <div className="relative overflow-hidden rounded-lg border border-primary/30"
+          style={{
+            background: "linear-gradient(135deg, hsl(220 25% 4%) 0%, hsl(210 60% 12%) 50%, hsl(210 100% 25%) 100%)"
+          }}
+        >
+          {/* Glow effect */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
+          
+          <div className="relative z-10 p-8 md:p-10 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-primary mb-2">⏰ Oferta expira em</p>
+            
+            <div className="flex justify-center gap-3 mb-6">
+              {[
+                { val: pad(time.hours), label: "H" },
+                { val: pad(time.minutes), label: "M" },
+                { val: pad(time.seconds), label: "S" },
+              ].map((t, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-primary/20 border border-primary/30 text-foreground rounded-lg flex items-center justify-center text-2xl md:text-3xl font-display">
+                    {t.val}
+                  </div>
+                  <span className="text-[10px] text-muted-foreground mt-1 uppercase">{t.label}</span>
                 </div>
-                <span className="text-xs text-muted-foreground mt-1">{t.label}</span>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            <h2 className="text-3xl md:text-5xl font-display tracking-wider mb-2">
+              OFERTA RELÂMPAGO
+            </h2>
+            <p className="text-sm text-muted-foreground mb-6">
+              Últimas unidades disponíveis. Estoque limitado!
+            </p>
+
+            <a
+              href="#produtos"
+              className="inline-block px-10 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display text-base tracking-widest rounded transition-all duration-300 animate-pulse-glow"
+            >
+              VER PRODUTOS
+            </a>
+
+            <p className="mt-4 text-[11px] text-muted-foreground">
+              ✅ Frete Grátis • ✅ Entrega em 7 dias úteis via SEDEX
+            </p>
           </div>
-
-          <a
-            href="#produtos"
-            className="inline-block w-full max-w-sm px-8 py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow"
-          >
-            🚨 GARANTIR O MEU AGORA
-          </a>
-
-          <p className="mt-4 text-sm text-muted-foreground">
-            ✅ Frete Grátis • ✅ Entrega em 7 dias úteis via SEDEX
-          </p>
         </div>
       </div>
     </section>
