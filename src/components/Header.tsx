@@ -2,6 +2,7 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
+import logoAuraFut from "@/assets/logo-aura-fut.png";
 
 const categories = [
   { label: "Lançamentos 2026", to: "/categoria/lancamentos-2026" },
@@ -19,9 +20,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-display text-2xl tracking-wider text-gradient-aura leading-none">
-            AURA FUT
-          </span>
+          <img src={logoAuraFut} alt="Aura Fut Brasil" className="h-10 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm">
