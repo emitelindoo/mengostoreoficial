@@ -17,6 +17,7 @@ interface CartContextType {
   clearCart: () => void;
   total: number;
   discount: number;
+  shipping: number;
   finalTotal: number;
   itemCount: number;
   promoLabel: string;
@@ -88,12 +89,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return allPrices[0];
   })();
 
-  const finalTotal = total - discount;
+  const SHIPPING_FEE = 39.90;
+  const shipping = itemCount >= 3 ? 0 : (itemCount > 0 ? SHIPPING_FEE : 0);
+  const finalTotal = total - discount + shipping;
   const promoLabel = itemCount >= 6 ? "Leve 6 Pague 3" : itemCount >= 3 ? "Leve 3 Pague 2" : "";
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, discount, finalTotal, itemCount, promoLabel }}
+      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, discount, shipping, finalTotal, itemCount, promoLabel }}
     >
       {children}
     </CartContext.Provider>

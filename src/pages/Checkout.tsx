@@ -32,7 +32,7 @@ const steps = [
 const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
 
 const Checkout = () => {
-  const { items, total, discount, finalTotal, clearCart, itemCount } = useCart();
+  const { items, total, discount, shipping, finalTotal, clearCart, itemCount } = useCart();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
@@ -528,7 +528,11 @@ const Checkout = () => {
                       )}
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Frete</span>
-                        <span className="text-emerald-500 font-semibold">Grátis</span>
+                        {shipping === 0 ? (
+                          <span className="text-emerald-500 font-semibold">Grátis</span>
+                        ) : (
+                          <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
+                        )}
                       </div>
                       <div className="flex justify-between font-bold text-xl border-t border-border pt-3 mt-2">
                         <span>Total</span>
@@ -640,7 +644,11 @@ const Checkout = () => {
                   )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
-                    <span className="text-emerald-500 font-semibold">Grátis</span>
+                    {shipping === 0 ? (
+                      <span className="text-emerald-500 font-semibold">Grátis</span>
+                    ) : (
+                      <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
+                    )}
                   </div>
                   <div className="flex justify-between font-bold text-xl border-t border-border pt-4 mt-3">
                     <span>Total</span>

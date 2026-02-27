@@ -63,7 +63,7 @@ const FlashOffer = () => {
             </a>
 
             <p className="mt-4 text-[11px] text-muted-foreground">
-              ✅ Frete Grátis • ✅ Entrega em 7 dias úteis via SEDEX
+              ✅ Frete Grátis acima de 3 itens • ✅ Entrega em 7 dias úteis via SEDEX
             </p>
           </div>
         </div>
