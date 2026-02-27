@@ -1,13 +1,29 @@
 import { Link } from "react-router-dom";
-import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart, Gift } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart, Gift, Truck } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fbEvent } from "@/lib/fbpixel";
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, total, shipping, finalTotal, itemCount } = useCart();
+  const [cep, setCep] = useState("");
+  const [shippingCalculated, setShippingCalculated] = useState(false);
+  const [calculatingCep, setCalculatingCep] = useState(false);
+  const freeShipping = itemCount >= 3;
+
+  const handleCalculateShipping = () => {
+    const cleanCep = cep.replace(/\D/g, "");
+    if (cleanCep.length !== 8) return;
+    setCalculatingCep(true);
+    setTimeout(() => {
+      setShippingCalculated(true);
+      setCalculatingCep(false);
+    }, 800);
+  };
+
+  const maskCEP = (v: string) => v.replace(/\D/g, "").slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -138,21 +154,56 @@ const Cart = () => {
                     <span className="text-muted-foreground">Subtotal ({itemCount} itens)</span>
                     <span>R$ {total.toFixed(2).replace(".", ",")}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Frete</span>
-                    {shipping === 0 ? (
-                      <span className="text-primary font-semibold">Grátis</span>
-                    ) : (
-                      <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
-                    )}
-                  </div>
-                  {shipping > 0 && (
-                    <p className="text-xs text-primary">🚚 Frete grátis a partir de 3 itens!</p>
+                  {/* CEP Shipping Calculator */}
+                  {freeShipping ? (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Frete</span>
+                      <span className="text-primary font-semibold">Grátis 🎉</span>
+                    </div>
+                  ) : !shippingCalculated ? (
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Calcular frete:</p>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          placeholder="00000-000"
+                          value={cep}
+                          onChange={(e) => setCep(maskCEP(e.target.value))}
+                          maxLength={9}
+                          inputMode="numeric"
+                          className="flex-1 px-3 py-2 bg-secondary/50 border border-border rounded-lg text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        />
+                        <button
+                          onClick={handleCalculateShipping}
+                          disabled={cep.replace(/\D/g, "").length !== 8 || calculatingCep}
+                          className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:bg-aura-dark-blue transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                        >
+                          {calculatingCep ? (
+                            <span className="animate-spin">⏳</span>
+                          ) : (
+                            <><Truck className="w-4 h-4" /> Calcular</>
+                          )}
+                        </button>
+                      </div>
+                      <p className="text-xs text-primary mt-1.5">🚚 Frete grátis a partir de 3 itens!</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Frete (SEDEX) — CEP {cep}</span>
+                        <span className="text-foreground font-semibold">R$ {shipping.toFixed(2).replace(".", ",")}</span>
+                      </div>
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-xs text-muted-foreground">Prazo: 7 dias úteis</p>
+                        <button onClick={() => { setShippingCalculated(false); setCep(""); }} className="text-xs text-primary hover:underline">Alterar CEP</button>
+                      </div>
+                      <p className="text-xs text-primary mt-1">🚚 Frete grátis a partir de 3 itens!</p>
+                    </div>
                   )}
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t border-border pt-4">
                   <span>Total</span>
-                  <span className="text-primary">R$ {finalTotal.toFixed(2).replace(".", ",")}</span>
+                  <span className="text-primary">R$ {(shippingCalculated || freeShipping ? finalTotal : total).toFixed(2).replace(".", ",")}</span>
                 </div>
 
                 <Link
