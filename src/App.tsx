@@ -14,6 +14,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import Contact from "./pages/Contact";
 import DeliveryInfo from "./pages/DeliveryInfo";
 import NotFound from "./pages/NotFound";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/prazo-de-entrega" element={<DeliveryInfo />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <WhatsAppButton />
         </BrowserRouter>
       </CartProvider>
     </TooltipProvider>
