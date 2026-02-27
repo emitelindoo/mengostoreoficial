@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart, Gift, Sparkles } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart, Gift } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { fbEvent } from "@/lib/fbpixel";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total, discount, shipping, finalTotal, itemCount } = useCart();
+  const { items, updateQuantity, removeItem, total, shipping, finalTotal, itemCount } = useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,25 +53,14 @@ const Cart = () => {
             <ArrowLeft className="w-4 h-4" /> Continuar comprando
           </Link>
 
-          {/* Promo Banner */}
-          {itemCount < 3 && (
-            <div className="mb-6">
-              <div className="bg-aura-cyan/10 border border-aura-cyan/30 rounded-xl p-4 flex items-center gap-3">
-                <Gift className="w-6 h-6 text-aura-cyan flex-shrink-0" />
-                <div>
-                  <p className="font-display font-bold text-foreground text-sm">🔥 LEVE 3, PAGUE 2!</p>
-                  <p className="text-xs text-muted-foreground">Adicione {3 - itemCount} {3 - itemCount === 1 ? "produto" : "produtos"} a mais e o menor valor sai de graça!</p>
-                </div>
-              </div>
-            </div>
-          )}
-          {itemCount >= 3 && itemCount < 6 && (
+          {/* Shipping Banner */}
+          {itemCount > 0 && itemCount < 3 && (
             <div className="mb-6">
               <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-center gap-3">
-                <Sparkles className="w-6 h-6 text-primary flex-shrink-0" />
+                <Gift className="w-6 h-6 text-primary flex-shrink-0" />
                 <div>
-                  <p className="font-display font-bold text-foreground text-sm">⚡ LEVE 6, PAGUE 3!</p>
-                  <p className="text-xs text-muted-foreground">Adicione {6 - itemCount} {6 - itemCount === 1 ? "produto" : "produtos"} a mais e pague apenas metade!</p>
+                  <p className="font-display font-bold text-foreground text-sm">🚚 FRETE GRÁTIS A PARTIR DE 3 ITENS!</p>
+                  <p className="text-xs text-muted-foreground">Adicione {3 - itemCount} {3 - itemCount === 1 ? "produto" : "produtos"} a mais e ganhe frete grátis!</p>
                 </div>
               </div>
             </div>
@@ -149,12 +138,6 @@ const Cart = () => {
                     <span className="text-muted-foreground">Subtotal ({itemCount} itens)</span>
                     <span>R$ {total.toFixed(2).replace(".", ",")}</span>
                   </div>
-                  {discount > 0 && (
-                    <div className="flex justify-between text-sm text-green-500">
-                      <span>Desconto promoção</span>
-                      <span>- R$ {discount.toFixed(2).replace(".", ",")}</span>
-                    </div>
-                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
                     {shipping === 0 ? (
