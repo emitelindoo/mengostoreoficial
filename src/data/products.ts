@@ -27,6 +27,10 @@ import camisaFem2026Costas from "@/assets/camisa-flamengo-i-2026-fem-costas.webp
 import camisaFem2026Detalhe from "@/assets/camisa-flamengo-i-2026-fem-detalhe.webp";
 import camisaBrancaFemFrente from "@/assets/camisa-branca-fem-frente.png";
 import camisaBrancaFemCostas from "@/assets/camisa-branca-fem-costas.png";
+import camisaBrasilAzulFrente from "@/assets/camisa-brasil-azul-frente.png";
+import camisaBrasilAzulDetalhe1 from "@/assets/camisa-brasil-azul-detalhe1.png";
+import camisaBrasilAzulDetalhe2 from "@/assets/camisa-brasil-azul-detalhe2.png";
+import camisaBrasilAzulCostas from "@/assets/camisa-brasil-azul-costas.png";
 
 export interface Product {
   id: string;
@@ -96,6 +100,22 @@ export const products: Product[] = [
     customizable: true,
     freeCustomization: true,
     stock: 12,
+  },
+  {
+    id: "camisa-selecao-brasileira-azul-2627",
+    name: "Camisa de Time Seleção Brasileira Copa do Mundo Azul 26/27",
+    price: 189.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 892,
+    image: camisaBrasilAzulFrente,
+    images: [camisaBrasilAzulFrente, camisaBrasilAzulDetalhe1, camisaBrasilAzulDetalhe2, camisaBrasilAzulCostas],
+    badge: "Lançamento",
+    description: "Camisa da Seleção Brasileira modelo visitante azul para a Copa do Mundo 26/27. Tecido 100% poliéster com tecnologia de secagem rápida e ventilação otimizada. Estampa exclusiva em tons de azul e preto, escudo da CBF bordado e detalhes em amarelo. Corte regular confortável, ideal para torcer pelo Brasil.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 15,
   },
 ];
 
