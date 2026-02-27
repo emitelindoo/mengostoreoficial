@@ -35,6 +35,10 @@ import camisaBrasilAmarelaFrente from "@/assets/camisa-brasil-amarela-frente.png
 import camisaBrasilAmarelaDetalhe1 from "@/assets/camisa-brasil-amarela-detalhe1.png";
 import camisaBrasilAmarelaDetalhe2 from "@/assets/camisa-brasil-amarela-detalhe2.png";
 import camisaBrasilAmarelaDetalhe3 from "@/assets/camisa-brasil-amarela-detalhe3.png";
+import camisaFlamengoNovaFrente from "@/assets/camisa-flamengo-nova-frente.png";
+import camisaFlamengoNovaDetalhe1 from "@/assets/camisa-flamengo-nova-detalhe1.png";
+import camisaFlamengoNovaDetalhe2 from "@/assets/camisa-flamengo-nova-detalhe2.png";
+import camisaFlamengoNovaCostas from "@/assets/camisa-flamengo-nova-costas.png";
 
 export interface Product {
   id: string;
