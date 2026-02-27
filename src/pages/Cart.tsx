@@ -11,16 +11,30 @@ const Cart = () => {
   const [cep, setCep] = useState("");
   const [shippingCalculated, setShippingCalculated] = useState(false);
   const [calculatingCep, setCalculatingCep] = useState(false);
+  const [cepLocation, setCepLocation] = useState("");
+  const [cepError, setCepError] = useState("");
   const freeShipping = itemCount >= 3;
 
-  const handleCalculateShipping = () => {
+  const handleCalculateShipping = async () => {
     const cleanCep = cep.replace(/\D/g, "");
     if (cleanCep.length !== 8) return;
     setCalculatingCep(true);
-    setTimeout(() => {
-      setShippingCalculated(true);
+    setCepError("");
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
+      const data = await res.json();
+      if (data.erro) {
+        setCepError("CEP não encontrado. Verifique e tente novamente.");
+        setShippingCalculated(false);
+      } else {
+        setCepLocation(`${data.localidade} - ${data.uf}`);
+        setShippingCalculated(true);
+      }
+    } catch {
+      setCepError("Erro ao consultar CEP. Tente novamente.");
+    } finally {
       setCalculatingCep(false);
-    }, 800);
+    }
   };
 
   const maskCEP = (v: string) => v.replace(/\D/g, "").slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
@@ -185,17 +199,19 @@ const Cart = () => {
                           )}
                         </button>
                       </div>
+                      {cepError && <p className="text-xs text-destructive mt-1.5">{cepError}</p>}
                       <p className="text-xs text-primary mt-1.5">🚚 Frete grátis a partir de 3 itens!</p>
                     </div>
                   ) : (
                     <div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Frete (SEDEX) — CEP {cep}</span>
+                        <span className="text-muted-foreground">Frete (SEDEX)</span>
                         <span className="text-foreground font-semibold">R$ {shipping.toFixed(2).replace(".", ",")}</span>
                       </div>
+                      <p className="text-xs text-muted-foreground mt-1">📍 {cepLocation} — CEP {cep}</p>
                       <div className="flex justify-between items-center mt-1">
                         <p className="text-xs text-muted-foreground">Prazo: 7 dias úteis</p>
-                        <button onClick={() => { setShippingCalculated(false); setCep(""); }} className="text-xs text-primary hover:underline">Alterar CEP</button>
+                        <button onClick={() => { setShippingCalculated(false); setCep(""); setCepLocation(""); setCepError(""); }} className="text-xs text-primary hover:underline">Alterar CEP</button>
                       </div>
                       <p className="text-xs text-primary mt-1">🚚 Frete grátis a partir de 3 itens!</p>
                     </div>
