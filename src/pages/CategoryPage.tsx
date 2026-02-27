@@ -9,6 +9,8 @@ import { useEffect } from "react";
 const categoryLabels: Record<string, { title: string; subtitle: string }> = {
   "lancamentos-2026": { title: "LANÇAMENTOS 2026", subtitle: "As novidades da temporada 2026" },
   "selecoes": { title: "SELEÇÕES", subtitle: "Camisas das seleções nacionais" },
+  "brasileirao": { title: "BRASILEIRÃO", subtitle: "Times do futebol brasileiro" },
+  "champions": { title: "CHAMPIONS LEAGUE", subtitle: "Times europeus" },
   "todos": { title: "TODOS OS PRODUTOS", subtitle: "Confira nosso catálogo completo" },
 };
 

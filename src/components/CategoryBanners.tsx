@@ -5,8 +5,8 @@ import bannerChampions from "@/assets/banner-champions.png";
 
 const banners = [
   { image: bannerSelecoes, to: "/categoria/selecoes", alt: "Seleções - Temporada 2025" },
-  { image: bannerBrasileiro, to: "/categoria/todos", alt: "Brasileirão - Temporada 2025" },
-  { image: bannerChampions, to: "/categoria/lancamentos-2026", alt: "Champions League - Lançamentos 25/26" },
+  { image: bannerBrasileiro, to: "/categoria/brasileirao", alt: "Brasileirão - Temporada 2025" },
+  { image: bannerChampions, to: "/categoria/champions", alt: "Champions League - Times Europeus" },
 ];
 
 const CategoryBanners = () => {

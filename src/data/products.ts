@@ -50,7 +50,7 @@ import camisaRealMadridAzulDetalhe2 from "@/assets/camisa-real-madrid-azul-detal
 import camisaRealMadridAzulDetalhe3 from "@/assets/camisa-real-madrid-azul-detalhe3.png";
 import camisaRealMadridAzulCostas from "@/assets/camisa-real-madrid-azul-costas.png";
 
-export type ProductCategory = "lancamentos-2026" | "selecoes" | "flamengo" | "champions";
+export type ProductCategory = "lancamentos-2026" | "selecoes" | "brasileirao" | "champions";
 
 export interface Product {
   id: string;
@@ -121,7 +121,7 @@ export const products: Product[] = [
     customizable: true,
     freeCustomization: true,
     stock: 12,
-    category: ["lancamentos-2026", "flamengo"],
+    category: ["lancamentos-2026", "brasileirao"],
   },
   {
     id: "camisa-selecao-brasileira-azul-2627",
@@ -173,7 +173,7 @@ export const products: Product[] = [
     customizable: true,
     freeCustomization: true,
     stock: 8,
-    category: ["lancamentos-2026", "flamengo"],
+    category: ["lancamentos-2026", "brasileirao"],
   },
   {
     id: "camisa-real-madrid-azul-2025",

@@ -5,7 +5,9 @@ import { useState } from "react";
 
 const categories = [
   { label: "Lançamentos 2026", to: "/categoria/lancamentos-2026" },
+  { label: "Brasileirão", to: "/categoria/brasileirao" },
   { label: "Seleções", to: "/categoria/selecoes" },
+  { label: "Champions", to: "/categoria/champions" },
   { label: "Todos os Produtos", to: "/categoria/todos" },
 ];
 
