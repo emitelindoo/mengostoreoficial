@@ -2,24 +2,24 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    text: "Produto top, chegou rápido! Qualidade excelente, super recomendo.",
-    name: "Carlos S.",
-    location: "RJ",
-  },
-  {
-    text: "Camisa linda, tecido de primeira qualidade. Meu filho amou!",
-    name: "Maria L.",
+    text: "Linda demais tá maluco. Top top, muito obrigado irmão! Qualidade 1000 🙏🙌🖤",
+    name: "Elber de Oliveira",
     location: "SP",
   },
   {
-    text: "Entrega super rápida e produto exatamente como nas fotos.",
-    name: "João O.",
+    text: "Encomenda recebida irmão. Até uma próxima 🤝🚀",
+    name: "Brian",
+    location: "RJ",
+  },
+  {
+    text: "Tudo na mais alta qualidade de sempre! Já retorno pra fazer mais encomendas 🙏",
+    name: "William",
     location: "MG",
   },
   {
-    text: "Comprei para presente e ficou perfeito. Já quero mais!",
-    name: "Ana C.",
-    location: "BA",
+    text: "Slk irmão, deu nem tempo você mandar o código de rastreio já chegou aqui. Qualidade top!",
+    name: "William",
+    location: "PR",
   },
 ];
 
@@ -34,7 +34,7 @@ const TestimonialsSection = () => {
               AVALIAÇÕES
             </h2>
             <p className="text-xs text-muted-foreground uppercase tracking-widest mt-0.5">
-              +10.000 clientes satisfeitos
+              Clientes satisfeitos
             </p>
           </div>
         </div>
