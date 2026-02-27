@@ -39,6 +39,11 @@ import camisaFlamengoNovaFrente from "@/assets/camisa-flamengo-nova-frente.png";
 import camisaFlamengoNovaDetalhe1 from "@/assets/camisa-flamengo-nova-detalhe1.png";
 import camisaFlamengoNovaDetalhe2 from "@/assets/camisa-flamengo-nova-detalhe2.png";
 import camisaFlamengoNovaCostas from "@/assets/camisa-flamengo-nova-costas.png";
+import camisaListradaFemFrente from "@/assets/camisa-flamengo-listrada-fem-frente.png";
+import camisaListradaFemDetalhe1 from "@/assets/camisa-flamengo-listrada-fem-detalhe1.png";
+import camisaListradaFemDetalhe2 from "@/assets/camisa-flamengo-listrada-fem-detalhe2.png";
+import camisaListradaFemDetalhe3 from "@/assets/camisa-flamengo-listrada-fem-detalhe3.png";
+import camisaListradaFemCostas from "@/assets/camisa-flamengo-listrada-fem-costas.png";
 
 export interface Product {
   id: string;
@@ -140,6 +145,23 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 10,
+  },
+  {
+    id: "camisa-flamengo-listrada-2627-fem",
+    name: "Camisa de Time Flamengo Listrada 26/27 Feminina",
+    price: 164.90,
+    originalPrice: 349.90,
+    discount: 53,
+    rating: 5,
+    reviews: 743,
+    image: camisaListradaFemFrente,
+    images: [camisaListradaFemFrente, camisaListradaFemDetalhe1, camisaListradaFemDetalhe2, camisaListradaFemDetalhe3, camisaListradaFemCostas],
+    badge: "Lançamento",
+    description: "Camisa do Flamengo Listrada 26/27 modelo feminino. Confeccionada em poliéster reciclado com tecnologia de absorção de suor. Gola polo clássica com detalhes em vermelho, escudo CRF bordado no peito e logo Adidas. Corte feminino ajustado para maior conforto. Tecido leve e respirável, perfeita para jogos ou uso casual.",
+    sizes: ["P", "M", "G", "GG"],
+    customizable: true,
+    freeCustomization: true,
+    stock: 8,
   },
 ];
 
