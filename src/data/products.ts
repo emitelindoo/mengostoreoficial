@@ -45,6 +45,8 @@ import camisaListradaFemDetalhe2 from "@/assets/camisa-flamengo-listrada-fem-det
 import camisaListradaFemDetalhe3 from "@/assets/camisa-flamengo-listrada-fem-detalhe3.png";
 import camisaListradaFemCostas from "@/assets/camisa-flamengo-listrada-fem-costas.png";
 
+export type ProductCategory = "lancamentos-2026" | "selecoes" | "flamengo";
+
 export interface Product {
   id: string;
   name: string;
@@ -62,6 +64,7 @@ export interface Product {
   customizable?: boolean;
   freeCustomization?: boolean;
   stock?: number;
+  category: ProductCategory[];
 }
 
 export const sizeChart = {
@@ -113,6 +116,7 @@ export const products: Product[] = [
     customizable: true,
     freeCustomization: true,
     stock: 12,
+    category: ["lancamentos-2026", "flamengo"],
   },
   {
     id: "camisa-selecao-brasileira-azul-2627",
@@ -129,6 +133,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 15,
+    category: ["selecoes"],
   },
   {
     id: "camisa-selecao-brasileira-amarela-2627",
@@ -145,6 +150,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 10,
+    category: ["selecoes"],
   },
   {
     id: "camisa-flamengo-listrada-2627-fem",
@@ -162,6 +168,7 @@ export const products: Product[] = [
     customizable: true,
     freeCustomization: true,
     stock: 8,
+    category: ["lancamentos-2026", "flamengo"],
   },
 ];
 

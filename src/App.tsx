@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import DeliveryInfo from "./pages/DeliveryInfo";
 import NotFound from "./pages/NotFound";
 import WhatsAppButton from "./components/WhatsAppButton";
+import CategoryPage from "./pages/CategoryPage";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/produto/:id" element={<ProductPage />} />
+            <Route path="/categoria/:slug" element={<CategoryPage />} />
             <Route path="/carrinho" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
