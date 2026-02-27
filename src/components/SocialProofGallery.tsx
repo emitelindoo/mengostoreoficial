@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { X, Star } from "lucide-react";
-import provaSocial7 from "@/assets/prova-social-7.png";
-import provaSocial8 from "@/assets/prova-social-8.png";
-import provaSocial9 from "@/assets/prova-social-9.png";
+import provaSocial1 from "@/assets/prova-social-1.webp";
+import provaSocial2 from "@/assets/prova-social-2.webp";
+import provaSocial3 from "@/assets/prova-social-3.webp";
+import provaSocial4 from "@/assets/prova-social-4.webp";
+import provaSocial5 from "@/assets/prova-social-5.webp";
+import provaSocial6 from "@/assets/prova-social-6.webp";
 
 const socialReviews = [
-  { src: provaSocial7, name: "Elber de Oliveira", rating: 5, text: "Linda demais tá maluco. Top top, muito obrigado irmão! Qualidade 1000 🙏🙌🖤" },
-  { src: provaSocial8, name: "Brian", rating: 5, text: "Encomenda recebida irmão. Até uma próxima 🤝🚀" },
-  { src: provaSocial9, name: "William", rating: 5, text: "Tudo na mais alta qualidade de sempre! Já retorno pra fazer mais encomendas 🙏" },
+  { src: provaSocial1, name: "Carlos M.", rating: 5, text: "Chegou certinho, qualidade top! Recomendo demais." },
+  { src: provaSocial2, name: "Fernanda S.", rating: 5, text: "Amei! Tecido muito bom, qualidade incrível." },
+  { src: provaSocial3, name: "Rafael O.", rating: 5, text: "Produto original, entrega super rápida. Nota 10!" },
+  { src: provaSocial4, name: "Ana Paula R.", rating: 5, text: "Meu marido amou o presente. Produto incrível!" },
+  { src: provaSocial5, name: "Lucas F.", rating: 4, text: "Muito boa! Só demorou um pouquinho pra chegar." },
+  { src: provaSocial6, name: "Juliana C.", rating: 5, text: "Comprei 2 e vieram perfeitas. Já quero mais!" },
 ];
 
 const SocialProofGallery = () => {
@@ -16,16 +22,16 @@ const SocialProofGallery = () => {
   return (
     <section className="mt-12">
       <h2 className="text-xl md:text-2xl font-display font-bold mb-2">
-        📸 Avaliações dos Clientes
+        📸 Fotos de Clientes
       </h2>
       <p className="text-sm text-muted-foreground mb-6">
-        Veja o que nossos clientes estão dizendo!
+        Veja o que nossos clientes estão recebendo em casa!
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {socialReviews.map((review, i) => (
           <div key={i} className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
-            <button onClick={() => setSelectedImage(review.src)} className="w-full aspect-[9/16] overflow-hidden">
+            <button onClick={() => setSelectedImage(review.src)} className="w-full aspect-square overflow-hidden">
               <img src={review.src} alt={`Avaliação de ${review.name}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
             </button>
             <div className="p-3">
