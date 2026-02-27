@@ -10,11 +10,8 @@ const ProductsSection = () => {
           <div className="h-8 w-1 bg-primary rounded-full" />
           <div>
             <h2 className="text-3xl md:text-4xl font-display tracking-wider leading-none">
-              NOSSOS PRODUTOS
+              LANÇAMENTOS 2026
             </h2>
-            <p className="text-xs text-muted-foreground uppercase tracking-widest mt-0.5">
-              Coleção 2025/2026
-            </p>
           </div>
         </div>
 
