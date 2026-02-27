@@ -146,6 +146,23 @@ export const products: Product[] = [
     customizable: true,
     stock: 10,
   },
+  {
+    id: "camisa-flamengo-listrada-2627-fem",
+    name: "Camisa de Time Flamengo Listrada 26/27 Feminina",
+    price: 164.90,
+    originalPrice: 349.90,
+    discount: 53,
+    rating: 5,
+    reviews: 743,
+    image: camisaListradaFemFrente,
+    images: [camisaListradaFemFrente, camisaListradaFemDetalhe1, camisaListradaFemDetalhe2, camisaListradaFemDetalhe3, camisaListradaFemCostas],
+    badge: "Lançamento",
+    description: "Camisa do Flamengo Listrada 26/27 modelo feminino. Confeccionada em poliéster reciclado com tecnologia de absorção de suor. Gola polo clássica com detalhes em vermelho, escudo CRF bordado no peito e logo Adidas. Corte feminino ajustado para maior conforto. Tecido leve e respirável, perfeita para jogos ou uso casual.",
+    sizes: ["P", "M", "G", "GG"],
+    customizable: true,
+    freeCustomization: true,
+    stock: 8,
+  },
 ];
 
 export const getProductById = (id: string) => products.find((p) => p.id === id);
