@@ -44,8 +44,13 @@ import camisaListradaFemDetalhe1 from "@/assets/camisa-flamengo-listrada-fem-det
 import camisaListradaFemDetalhe2 from "@/assets/camisa-flamengo-listrada-fem-detalhe2.png";
 import camisaListradaFemDetalhe3 from "@/assets/camisa-flamengo-listrada-fem-detalhe3.png";
 import camisaListradaFemCostas from "@/assets/camisa-flamengo-listrada-fem-costas.png";
+import camisaRealMadridAzulFrente from "@/assets/camisa-real-madrid-azul-frente.png";
+import camisaRealMadridAzulDetalhe1 from "@/assets/camisa-real-madrid-azul-detalhe1.png";
+import camisaRealMadridAzulDetalhe2 from "@/assets/camisa-real-madrid-azul-detalhe2.png";
+import camisaRealMadridAzulDetalhe3 from "@/assets/camisa-real-madrid-azul-detalhe3.png";
+import camisaRealMadridAzulCostas from "@/assets/camisa-real-madrid-azul-costas.png";
 
-export type ProductCategory = "lancamentos-2026" | "selecoes" | "flamengo";
+export type ProductCategory = "lancamentos-2026" | "selecoes" | "flamengo" | "champions";
 
 export interface Product {
   id: string;
