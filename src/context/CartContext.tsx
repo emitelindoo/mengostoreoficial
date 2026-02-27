@@ -19,12 +19,18 @@ interface CartContextType {
   shipping: number;
   finalTotal: number;
   itemCount: number;
+  firstPurchaseDiscount: number;
+  isFirstPurchase: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const getIsFirstPurchase = () => !localStorage.getItem("aura_purchased");
+export const markPurchased = () => localStorage.setItem("aura_purchased", "1");
+
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [isFirstPurchase] = useState(getIsFirstPurchase);
 
   const addItem = (product: Product, quantity: number, size?: string, customName?: string, customNumber?: string) => {
     setItems((prev) => {
@@ -71,11 +77,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const SHIPPING_FEE = 39.90;
   const shipping = itemCount >= 3 ? 0 : (itemCount > 0 ? SHIPPING_FEE : 0);
-  const finalTotal = total + shipping;
+  const firstPurchaseDiscount = isFirstPurchase && itemCount > 0 ? Math.round(total * 0.10 * 100) / 100 : 0;
+  const finalTotal = total - firstPurchaseDiscount + shipping;
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, shipping, finalTotal, itemCount }}
+      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, shipping, finalTotal, itemCount, firstPurchaseDiscount, isFirstPurchase }}
     >
       {children}
     </CartContext.Provider>

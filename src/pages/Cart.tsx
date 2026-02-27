@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { fbEvent } from "@/lib/fbpixel";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total, shipping, finalTotal, itemCount } = useCart();
+  const { items, updateQuantity, removeItem, total, shipping, finalTotal, itemCount, firstPurchaseDiscount, isFirstPurchase } = useCart();
   const [cep, setCep] = useState("");
   const [shippingCalculated, setShippingCalculated] = useState(false);
   const [calculatingCep, setCalculatingCep] = useState(false);
@@ -168,6 +168,12 @@ const Cart = () => {
                     <span className="text-muted-foreground">Subtotal ({itemCount} itens)</span>
                     <span>R$ {total.toFixed(2).replace(".", ",")}</span>
                   </div>
+                  {firstPurchaseDiscount > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-green-400 font-semibold">🎉 Desconto 1ª compra (10%)</span>
+                      <span className="text-green-400 font-semibold">- R$ {firstPurchaseDiscount.toFixed(2).replace(".", ",")}</span>
+                    </div>
+                  )}
                   {/* CEP Shipping Calculator */}
                   {freeShipping ? (
                     <div className="flex justify-between text-sm">

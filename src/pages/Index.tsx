@@ -8,10 +8,12 @@ import StatsSection from "@/components/StatsSection";
 import FlashOffer from "@/components/FlashOffer";
 import SizeChartBanner from "@/components/SizeChartBanner";
 import Footer from "@/components/Footer";
+import FirstPurchaseBanner from "@/components/FirstPurchaseBanner";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <FirstPurchaseBanner />
       <Header />
       <HeroSection />
       <TrustBadges />

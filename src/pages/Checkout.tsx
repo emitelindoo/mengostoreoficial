@@ -5,6 +5,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
+import { markPurchased } from "@/context/CartContext";
 import { toast } from "sonner";
 import { fbEvent, updatePixelUserData } from "@/lib/fbpixel";
 
@@ -32,7 +33,7 @@ const steps = [
 const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
 
 const Checkout = () => {
-  const { items, total, shipping, finalTotal, clearCart, itemCount } = useCart();
+  const { items, total, shipping, finalTotal, clearCart, itemCount, firstPurchaseDiscount } = useCart();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
@@ -167,6 +168,7 @@ const Checkout = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else if (data?.status === "paid") {
         setSubmitted(true);
+        markPurchased();
         clearCart();
       } else {
         toast.error("Não foi possível gerar o PIX. Tente novamente.");
@@ -207,6 +209,7 @@ const Checkout = () => {
           num_items: itemCount,
         });
         setSubmitted(true);
+        markPurchased();
         clearCart();
         toast.success("Pagamento confirmado! 🎉");
       } else {
@@ -520,6 +523,12 @@ const Checkout = () => {
                         <span className="text-muted-foreground">Subtotal</span>
                         <span>{formatCurrency(total)}</span>
                       </div>
+                      {firstPurchaseDiscount > 0 && (
+                        <div className="flex justify-between text-sm">
+                          <span className="text-green-400 font-semibold">🎉 Desconto 1ª compra</span>
+                          <span className="text-green-400 font-semibold">- {formatCurrency(firstPurchaseDiscount)}</span>
+                        </div>
+                      )}
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Frete</span>
                         {shipping === 0 ? (
@@ -630,6 +639,12 @@ const Checkout = () => {
                     <span className="text-muted-foreground">Subtotal</span>
                     <span>{formatCurrency(total)}</span>
                   </div>
+                  {firstPurchaseDiscount > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-green-400 font-semibold">🎉 Desconto 1ª compra</span>
+                      <span className="text-green-400 font-semibold">- {formatCurrency(firstPurchaseDiscount)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
                     {shipping === 0 ? (
