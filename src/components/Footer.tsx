@@ -1,18 +1,19 @@
 import { Shield, Truck, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
-import logoAuraFut from "@/assets/logo-aura-fut.png";
 
 const Footer = () => {
   return (
     <footer className="border-t border-border/50"
       style={{
-        background: "linear-gradient(180deg, hsl(0 0% 96%) 0%, hsl(220 15% 92%) 100%)"
+        background: "linear-gradient(180deg, hsl(220 25% 4%) 0%, hsl(210 40% 8%) 100%)"
       }}
     >
       <div className="py-10 px-4">
         <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <img src={logoAuraFut} alt="Aura Fut Brasil" className="h-12 w-auto mb-3" />
+            <h3 className="font-display text-2xl tracking-wider text-gradient-aura mb-3">
+              AURA FUT
+            </h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
               Camisas de futebol com qualidade premium. Entrega rápida para todo o Brasil via SEDEX. Frete grátis acima de 3 itens.
             </p>
