@@ -31,6 +31,10 @@ import camisaBrasilAzulFrente from "@/assets/camisa-brasil-azul-frente.png";
 import camisaBrasilAzulDetalhe1 from "@/assets/camisa-brasil-azul-detalhe1.png";
 import camisaBrasilAzulDetalhe2 from "@/assets/camisa-brasil-azul-detalhe2.png";
 import camisaBrasilAzulCostas from "@/assets/camisa-brasil-azul-costas.png";
+import camisaBrasilAmarelaFrente from "@/assets/camisa-brasil-amarela-frente.png";
+import camisaBrasilAmarelaDetalhe1 from "@/assets/camisa-brasil-amarela-detalhe1.png";
+import camisaBrasilAmarelaDetalhe2 from "@/assets/camisa-brasil-amarela-detalhe2.png";
+import camisaBrasilAmarelaDetalhe3 from "@/assets/camisa-brasil-amarela-detalhe3.png";
 
 export interface Product {
   id: string;
@@ -116,6 +120,22 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 15,
+  },
+  {
+    id: "camisa-selecao-brasileira-amarela-2627",
+    name: "Camisa de Time Seleção Brasileira Copa do Mundo Amarela 26/27",
+    price: 189.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 1340,
+    image: camisaBrasilAmarelaFrente,
+    images: [camisaBrasilAmarelaFrente, camisaBrasilAmarelaDetalhe1, camisaBrasilAmarelaDetalhe2, camisaBrasilAmarelaDetalhe3],
+    badge: "Lançamento",
+    description: "Camisa da Seleção Brasileira modelo titular amarela para a Copa do Mundo 26/27. Tecido 100% poliéster com tecnologia de secagem rápida. Gola V clássica com detalhes em verde, escudo da CBF bordado e textura exclusiva. Corte regular confortável, perfeita para torcer pelo Brasil com estilo.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 10,
   },
 ];
 
