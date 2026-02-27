@@ -18,6 +18,11 @@ const maskCEP = (v: string) => v.replace(/\D/g, "").slice(0, 8).replace(/(\d{5})
 
 const EMAIL_DOMAINS = ["@gmail.com", "@hotmail.com", "@outlook.com", "@yahoo.com.br", "@icloud.com", "@live.com"];
 
+const UF_OPTIONS = [
+  "AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT","PA",
+  "PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"
+];
+
 const steps = [
   { id: 1, label: "Dados Pessoais", icon: User },
   { id: 2, label: "Endereço", icon: MapPin },
@@ -43,9 +48,31 @@ const Checkout = () => {
   const [pixData, setPixData] = useState<{ qrCode?: string; qrCodeUrl?: string; copyPaste?: string; transactionId?: number } | null>(null);
   const [pixCopied, setPixCopied] = useState(false);
   const [checkingPayment, setCheckingPayment] = useState(false);
+  const [loadingCep, setLoadingCep] = useState(false);
   const emailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const fetchCep = async (cep: string) => {
+    const digits = cep.replace(/\D/g, "");
+    if (digits.length !== 8) return;
+    setLoadingCep(true);
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+      const data = await res.json();
+      if (!data.erro) {
+        setForm(prev => ({
+          ...prev,
+          street: data.logradouro || prev.street,
+          neighborhood: data.bairro || prev.neighborhood,
+          city: data.localidade || prev.city,
+          state: data.uf || prev.state,
+        }));
+      }
+    } catch {} finally {
+      setLoadingCep(false);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -369,7 +396,7 @@ const Checkout = () => {
                     <div className="space-y-4">
                       <div className="sm:w-1/2">
                         <label className="text-xs font-medium text-muted-foreground mb-1.5 block">CEP</label>
-                        <input required placeholder="00000-000" value={form.cep} onChange={(e) => updateField("cep", maskCEP(e.target.value))} className={inputClass} inputMode="numeric" />
+                        <input required placeholder="00000-000" value={form.cep} onChange={(e) => { const v = maskCEP(e.target.value); updateField("cep", v); if (v.replace(/\D/g, "").length === 8) fetchCep(v); }} className={inputClass} inputMode="numeric" />
                       </div>
                       <div>
                         <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Rua</label>
@@ -396,7 +423,10 @@ const Checkout = () => {
                         </div>
                         <div>
                           <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Estado</label>
-                          <input required placeholder="UF" value={form.state} onChange={(e) => updateField("state", e.target.value)} className={inputClass} />
+                          <select required value={form.state} onChange={(e) => updateField("state", e.target.value)} className={inputClass}>
+                            <option value="">Selecione</option>
+                            {UF_OPTIONS.map(uf => <option key={uf} value={uf}>{uf}</option>)}
+                          </select>
                         </div>
                       </div>
                     </div>
