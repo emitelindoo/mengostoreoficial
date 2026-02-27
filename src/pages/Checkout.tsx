@@ -32,7 +32,7 @@ const steps = [
 const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
 
 const Checkout = () => {
-  const { items, total, discount, shipping, finalTotal, clearCart, itemCount } = useCart();
+  const { items, total, shipping, finalTotal, clearCart, itemCount } = useCart();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
@@ -520,12 +520,6 @@ const Checkout = () => {
                         <span className="text-muted-foreground">Subtotal</span>
                         <span>{formatCurrency(total)}</span>
                       </div>
-                      {discount > 0 && (
-                        <div className="flex justify-between text-sm text-emerald-500 font-semibold">
-                          <span>Desconto promoção 🔥</span>
-                          <span>- {formatCurrency(discount)}</span>
-                        </div>
-                      )}
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Frete</span>
                         {shipping === 0 ? (
@@ -636,12 +630,6 @@ const Checkout = () => {
                     <span className="text-muted-foreground">Subtotal</span>
                     <span>{formatCurrency(total)}</span>
                   </div>
-                  {discount > 0 && (
-                    <div className="flex justify-between text-sm text-emerald-500">
-                      <span>Desconto promoção 🔥</span>
-                      <span>- {formatCurrency(discount)}</span>
-                    </div>
-                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
                     {shipping === 0 ? (
