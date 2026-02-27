@@ -243,7 +243,7 @@ const Checkout = () => {
             <p className="text-muted-foreground mb-8">Você receberá os detalhes do pedido no email <span className="text-foreground font-semibold">{form.email}</span></p>
             <Link
               to="/"
-              className="inline-block px-8 py-3 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-semibold rounded-lg transition-colors"
+              className="inline-block px-8 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold rounded-lg transition-colors"
             >
               Voltar à Loja
             </Link>
@@ -372,7 +372,7 @@ const Checkout = () => {
                         setStep(2);
                       }}
                       disabled={!canAdvanceStep1}
-                      className="w-full mt-8 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full mt-8 py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       Continuar <ChevronRight className="w-5 h-5" />
                     </button>
@@ -453,7 +453,7 @@ const Checkout = () => {
                         setStep(3);
                       }}
                       disabled={!canAdvanceStep2}
-                      className="w-full mt-8 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full mt-8 py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       Continuar <ChevronRight className="w-5 h-5" />
                     </button>
@@ -542,7 +542,7 @@ const Checkout = () => {
                       <button
                         onClick={handleSubmit}
                         disabled={isProcessing}
-                        className="w-full py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="w-full py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
                         {isProcessing ? (
                           <><Loader2 className="w-5 h-5 animate-spin" /> PROCESSANDO...</>
@@ -578,7 +578,7 @@ const Checkout = () => {
                               />
                               <button
                                 onClick={handleCopyPix}
-                                className="px-3 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm flex items-center gap-1 flex-shrink-0 hover:bg-flamengo-dark-red transition-colors"
+                                className="px-3 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm flex items-center gap-1 flex-shrink-0 hover:bg-aura-dark-blue transition-colors"
                               >
                                 {pixCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                                 <span className="hidden sm:inline">{pixCopied ? "Copiado" : "Copiar"}</span>
@@ -659,7 +659,7 @@ const Checkout = () => {
                     <span>Entrega garantida para todo Brasil</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                    <Lock className="w-4 h-4 text-flamengo-gold flex-shrink-0" />
+                    <Lock className="w-4 h-4 text-aura-cyan flex-shrink-0" />
                     <span>Dados criptografados com SSL</span>
                   </div>
                 </div>

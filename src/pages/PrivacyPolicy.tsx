@@ -52,7 +52,7 @@ const PrivacyPolicy = () => {
               <li>Solicitar a exclusão de seus dados</li>
               <li>Revogar consentimento a qualquer momento</li>
             </ul>
-            <p>Para exercer seus direitos, entre em contato pelo e-mail: <strong>contato@mengostore.com</strong></p>
+            <p>Para exercer seus direitos, entre em contato pelo e-mail: <strong>contato@aurafut.com</strong></p>
           </section>
 
           <section>

@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-secondary/50 border-t border-border">
-      {/* Trust badges */}
       <div className="py-12 px-4">
         <div className="container mx-auto max-w-4xl">
           <p className="text-center text-xl font-display font-bold text-primary mb-2">
-            Veste a Nação
+            AURA FUT
           </p>
           <p className="text-center text-muted-foreground mb-8 text-sm">
-            Seja parte da Nação Rubro-Negra. Compre agora e receba em casa com frete grátis!
+            Sua loja de camisas de futebol. Compre agora e receba em casa com frete grátis!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -31,15 +30,14 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Footer info */}
       <div className="border-t border-border py-12 px-4">
         <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-display font-bold text-lg text-primary mb-3">
-              Mengão Store
+              AURA FUT
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Loja do torcedor rubro-negro. Produtos de qualidade garantida e entrega para todo o Brasil.
+              Camisas de futebol com qualidade garantida e entrega para todo o Brasil.
             </p>
           </div>
 
@@ -56,15 +54,15 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-bold mb-3">Contato</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>contato@mengostore.com</li>
-              <li>Rio de Janeiro - RJ</li>
+              <li>contato@aurafut.com</li>
+              <li>Brasil</li>
             </ul>
           </div>
         </div>
 
         <div className="container mx-auto max-w-6xl mt-8 pt-8 border-t border-border">
           <p className="text-center text-xs text-muted-foreground">
-            © 2025 Mengão Store. Todos os direitos reservados.
+            © 2025 AURA FUT. Todos os direitos reservados.
           </p>
         </div>
       </div>
