@@ -34,12 +34,12 @@ const ProductCard = (product: ProductCardProps) => {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {product.discount > 0 && !product.soldOut && (
-          <span className="absolute top-2 left-2 z-20 px-2 py-0.5 bg-primary text-primary-foreground text-xs font-bold rounded">
+          <span className="absolute top-3 left-3 z-20 px-3 py-1 bg-primary text-primary-foreground text-sm font-bold rounded">
             -{product.discount}%
           </span>
         )}
         {product.badge && !product.soldOut && (
-          <span className="absolute top-2 right-2 z-20 px-2 py-0.5 bg-aura-cyan text-aura-deep text-[10px] font-bold rounded uppercase tracking-wider">
+          <span className="absolute top-3 right-3 z-20 px-3 py-1 bg-aura-cyan text-aura-deep text-xs font-bold rounded uppercase tracking-wider">
             {product.badge}
           </span>
         )}
@@ -52,44 +52,44 @@ const ProductCard = (product: ProductCardProps) => {
         )}
       </Link>
 
-      <div className="p-3 relative z-10">
-        <div className="flex items-center gap-0.5 mb-1.5">
+      <div className="p-4 relative z-10">
+        <div className="flex items-center gap-1 mb-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
-              className={`w-3 h-3 ${i < Math.floor(product.rating) ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground/30"}`}
+              className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground/30"}`}
             />
           ))}
-          <span className="text-[10px] text-muted-foreground ml-1">({product.reviews.toLocaleString("pt-BR")})</span>
+          <span className="text-xs text-muted-foreground ml-1">({product.reviews.toLocaleString("pt-BR")})</span>
         </div>
 
         <Link to={`/produto/${product.id}`}>
-          <h3 className="font-medium text-foreground text-xs mb-2 line-clamp-2 hover:text-primary transition-colors leading-tight">
+          <h3 className="font-medium text-foreground text-sm md:text-base mb-3 line-clamp-2 hover:text-primary transition-colors leading-snug">
             {product.name}
           </h3>
         </Link>
 
         {!product.soldOut ? (
           <>
-            <div className="flex items-baseline gap-1.5 mb-3">
-              <span className="text-lg font-bold text-primary font-display tracking-wide">
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="text-xl md:text-2xl font-bold text-primary font-display tracking-wide">
                 R$ {product.price.toFixed(2).replace(".", ",")}
               </span>
               {product.originalPrice > product.price && (
-                <span className="text-[10px] text-muted-foreground line-through">
+                <span className="text-xs text-muted-foreground line-through">
                   R$ {product.originalPrice.toFixed(2).replace(".", ",")}
                 </span>
               )}
             </div>
             <button
               onClick={handleBuy}
-              className="block w-full py-2.5 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display text-sm tracking-widest rounded transition-colors text-center"
+              className="block w-full py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display text-base tracking-widest rounded transition-colors text-center"
             >
               COMPRAR
             </button>
           </>
         ) : (
-          <div className="py-2.5 bg-muted text-muted-foreground font-display text-sm tracking-widest rounded text-center">
+          <div className="py-3 bg-muted text-muted-foreground font-display text-base tracking-widest rounded text-center">
             ESGOTADO
           </div>
         )}
