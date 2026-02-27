@@ -49,6 +49,16 @@ import camisaRealMadridAzulDetalhe1 from "@/assets/camisa-real-madrid-azul-detal
 import camisaRealMadridAzulDetalhe2 from "@/assets/camisa-real-madrid-azul-detalhe2.png";
 import camisaRealMadridAzulDetalhe3 from "@/assets/camisa-real-madrid-azul-detalhe3.png";
 import camisaRealMadridAzulCostas from "@/assets/camisa-real-madrid-azul-costas.png";
+import camisaCruzeiroAzulFrente from "@/assets/camisa-cruzeiro-azul-frente.png";
+import camisaCruzeiroAzulDetalhe1 from "@/assets/camisa-cruzeiro-azul-detalhe1.png";
+import camisaCruzeiroAzulDetalhe2 from "@/assets/camisa-cruzeiro-azul-detalhe2.png";
+import camisaCruzeiroAzulDetalhe3 from "@/assets/camisa-cruzeiro-azul-detalhe3.png";
+import camisaCruzeiroAzulCostas from "@/assets/camisa-cruzeiro-azul-costas.png";
+import camisaAlemanhaBrancaFrente from "@/assets/camisa-alemanha-branca-frente.png";
+import camisaAlemanhaBrancaDetalhe1 from "@/assets/camisa-alemanha-branca-detalhe1.png";
+import camisaAlemanhaBrancaDetalhe2 from "@/assets/camisa-alemanha-branca-detalhe2.png";
+import camisaAlemanhaBrancaDetalhe3 from "@/assets/camisa-alemanha-branca-detalhe3.png";
+import camisaAlemanhaBrancaCostas from "@/assets/camisa-alemanha-branca-costas.png";
 
 export type ProductCategory = "lancamentos-2026" | "selecoes" | "brasileirao" | "champions";
 
@@ -174,6 +184,40 @@ export const products: Product[] = [
     freeCustomization: true,
     stock: 8,
     category: ["lancamentos-2026", "brasileirao"],
+  },
+  {
+    id: "camisa-cruzeiro-azul-dourado-2526",
+    name: "Camisa de Time Cruzeiro Azul c/ Dourado 25/26",
+    price: 164.90,
+    originalPrice: 349.90,
+    discount: 53,
+    rating: 5,
+    reviews: 687,
+    image: camisaCruzeiroAzulFrente,
+    images: [camisaCruzeiroAzulFrente, camisaCruzeiroAzulDetalhe1, camisaCruzeiroAzulDetalhe2, camisaCruzeiroAzulDetalhe3, camisaCruzeiroAzulCostas],
+    badge: "Lançamento",
+    description: "Camisa do Cruzeiro Azul com detalhes dourados 25/26. Confeccionada em poliéster com tecnologia de absorção de suor. Escudo bordado no peito, detalhes em dourado e corte regular confortável. Tecido leve e respirável, ideal para jogos ou uso casual.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 15,
+    category: ["brasileirao"],
+  },
+  {
+    id: "camisa-selecao-alemanha-branca-2627",
+    name: "Camisa de Time Seleção Alemanha Copa do Mundo Branca 26/27",
+    price: 189.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 920,
+    image: camisaAlemanhaBrancaFrente,
+    images: [camisaAlemanhaBrancaFrente, camisaAlemanhaBrancaDetalhe1, camisaAlemanhaBrancaDetalhe2, camisaAlemanhaBrancaDetalhe3, camisaAlemanhaBrancaCostas],
+    badge: "Lançamento",
+    description: "Camisa da Seleção Alemanha modelo titular branca para a Copa do Mundo 26/27. Tecido 100% poliéster com tecnologia de secagem rápida. Escudo bordado, detalhes clássicos e corte regular confortável. Perfeita para torcer com estilo.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 12,
+    category: ["selecoes"],
   },
   {
     id: "camisa-real-madrid-azul-2025",
