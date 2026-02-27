@@ -175,6 +175,23 @@ export const products: Product[] = [
     stock: 8,
     category: ["lancamentos-2026", "flamengo"],
   },
+  {
+    id: "camisa-real-madrid-azul-2025",
+    name: "Camisa de Time Real Madrid Azul 2025",
+    price: 189.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 1105,
+    image: camisaRealMadridAzulFrente,
+    images: [camisaRealMadridAzulFrente, camisaRealMadridAzulDetalhe1, camisaRealMadridAzulDetalhe2, camisaRealMadridAzulDetalhe3, camisaRealMadridAzulCostas],
+    badge: "Lançamento",
+    description: "Camisa do Real Madrid modelo visitante azul 2025. Confeccionada em poliéster com tecnologia AEROREADY de absorção de suor. Gola V com detalhes em branco, escudo bordado no peito e três listras nos ombros. Tecido leve e respirável com textura exclusiva, ideal para jogos ou uso casual.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 14,
+    category: ["champions"],
+  },
 ];
 
 export const getProductById = (id: string) => products.find((p) => p.id === id);
