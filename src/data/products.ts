@@ -39,6 +39,11 @@ import camisaFlamengoNovaFrente from "@/assets/camisa-flamengo-nova-frente.png";
 import camisaFlamengoNovaDetalhe1 from "@/assets/camisa-flamengo-nova-detalhe1.png";
 import camisaFlamengoNovaDetalhe2 from "@/assets/camisa-flamengo-nova-detalhe2.png";
 import camisaFlamengoNovaCostas from "@/assets/camisa-flamengo-nova-costas.png";
+import camisaListradaFemFrente from "@/assets/camisa-flamengo-listrada-fem-frente.png";
+import camisaListradaFemDetalhe1 from "@/assets/camisa-flamengo-listrada-fem-detalhe1.png";
+import camisaListradaFemDetalhe2 from "@/assets/camisa-flamengo-listrada-fem-detalhe2.png";
+import camisaListradaFemDetalhe3 from "@/assets/camisa-flamengo-listrada-fem-detalhe3.png";
+import camisaListradaFemCostas from "@/assets/camisa-flamengo-listrada-fem-costas.png";
 
 export interface Product {
   id: string;
