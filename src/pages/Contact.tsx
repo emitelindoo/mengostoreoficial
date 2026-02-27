@@ -18,8 +18,8 @@ const Contact = () => {
             <Mail className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" />
             <div>
               <h2 className="font-semibold text-foreground mb-1">E-mail</h2>
-              <a href="mailto:contato@mengostore.com" className="text-primary hover:underline">
-                contato@mengostore.com
+              <a href="mailto:contato@aurafut.com" className="text-primary hover:underline">
+                contato@aurafut.com
               </a>
             </div>
           </div>

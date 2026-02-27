@@ -38,7 +38,7 @@ const ProductCard = (product: ProductCardProps) => {
           </span>
         )}
         {product.badge && !product.soldOut && (
-          <span className="absolute top-3 right-3 px-3 py-1 bg-flamengo-gold text-flamengo-black text-xs font-bold rounded-md uppercase">
+          <span className="absolute top-3 right-3 px-3 py-1 bg-aura-cyan text-aura-deep text-xs font-bold rounded-md uppercase">
             {product.badge}
           </span>
         )}
@@ -56,7 +56,7 @@ const ProductCard = (product: ProductCardProps) => {
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
-              className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-flamengo-gold text-flamengo-gold" : "text-muted-foreground"}`}
+              className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground"}`}
             />
           ))}
           <span className="text-sm text-muted-foreground ml-1">({product.reviews.toLocaleString("pt-BR")})</span>
@@ -80,7 +80,7 @@ const ProductCard = (product: ProductCardProps) => {
             </div>
             <button
               onClick={handleBuy}
-              className="block w-full py-3 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-semibold tracking-wider rounded-lg transition-colors text-center"
+              className="block w-full py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold tracking-wider rounded-lg transition-colors text-center"
             >
               Comprar Agora
             </button>

@@ -13,7 +13,7 @@ const TermsOfUse = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">1. Aceitação dos Termos</h2>
-            <p>Ao acessar e utilizar o site Mengão Store, você concorda com estes Termos de Uso. Se não concordar com algum dos termos, não utilize o site.</p>
+            <p>Ao acessar e utilizar o site AURA FUT, você concorda com estes Termos de Uso. Se não concordar com algum dos termos, não utilize o site.</p>
           </section>
 
           <section>
@@ -33,12 +33,12 @@ const TermsOfUse = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">5. Política de Troca e Devolução</h2>
-            <p>Você tem até <strong>30 dias</strong> após o recebimento para solicitar troca ou devolução, conforme o Código de Defesa do Consumidor. O produto deve estar em sua embalagem original e sem sinais de uso. Para solicitar, entre em contato pelo e-mail: <strong>contato@mengostore.com</strong></p>
+            <p>Você tem até <strong>30 dias</strong> após o recebimento para solicitar troca ou devolução, conforme o Código de Defesa do Consumidor. O produto deve estar em sua embalagem original e sem sinais de uso. Para solicitar, entre em contato pelo e-mail: <strong>contato@aurafut.com</strong></p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">6. Propriedade Intelectual</h2>
-            <p>Todo o conteúdo do site, incluindo textos, imagens, logotipos e design, é de propriedade da Mengão Store e protegido pelas leis de propriedade intelectual. É proibida a reprodução sem autorização.</p>
+            <p>Todo o conteúdo do site, incluindo textos, imagens, logotipos e design, é de propriedade da AURA FUT e protegido pelas leis de propriedade intelectual. É proibida a reprodução sem autorização.</p>
           </section>
 
           <section>

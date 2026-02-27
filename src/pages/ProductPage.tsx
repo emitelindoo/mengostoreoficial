@@ -81,7 +81,7 @@ const ProductPage = () => {
                   </span>
                 )}
                 {product.badge && (
-                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-flamengo-gold text-flamengo-black text-xs font-bold rounded-lg uppercase">
+                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-aura-cyan text-aura-deep text-xs font-bold rounded-lg uppercase">
                     {product.badge}
                   </span>
                 )}
@@ -110,7 +110,7 @@ const ProductPage = () => {
             <div className="flex flex-col">
               <div className="flex items-center gap-1 mb-3">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className={`w-5 h-5 ${i < product.rating ? "fill-flamengo-gold text-flamengo-gold" : "text-muted-foreground"}`} />
+                  <Star key={i} className={`w-5 h-5 ${i < product.rating ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground"}`} />
                 ))}
                 <span className="text-sm text-muted-foreground ml-2">({product.reviews.toLocaleString("pt-BR")} avaliações)</span>
               </div>
@@ -137,7 +137,7 @@ const ProductPage = () => {
                   {product.stock <= 5 ? (
                     <span className="text-sm font-semibold text-primary">🔥 Restam apenas {product.stock} unidades!</span>
                   ) : product.stock <= 15 ? (
-                    <span className="text-sm font-semibold text-flamengo-gold">⚡ Apenas {product.stock} em estoque</span>
+                    <span className="text-sm font-semibold text-aura-cyan">⚡ Apenas {product.stock} em estoque</span>
                   ) : (
                     <span className="text-sm text-muted-foreground">Em estoque: {product.stock} unidades</span>
                   )}
@@ -257,7 +257,7 @@ const ProductPage = () => {
               <button
                 onClick={handleBuy}
                 disabled={product.sizes && !selectedSize}
-                className="w-full py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow disabled:opacity-50 disabled:animate-none disabled:cursor-not-allowed"
+                className="w-full py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow disabled:opacity-50 disabled:animate-none disabled:cursor-not-allowed"
               >
                 {product.sizes && !selectedSize ? "SELECIONE O TAMANHO" : "COMPRAR AGORA"}
               </button>

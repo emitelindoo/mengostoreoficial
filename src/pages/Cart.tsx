@@ -33,7 +33,7 @@ const Cart = () => {
             <p className="text-muted-foreground mb-6">Adicione produtos para continuar</p>
             <Link
               to="/#produtos"
-              className="inline-block px-8 py-3 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-semibold rounded-lg transition-colors"
+              className="inline-block px-8 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold rounded-lg transition-colors"
             >
               Ver Produtos
             </Link>
@@ -56,8 +56,8 @@ const Cart = () => {
           {/* Promo Banner */}
           {itemCount < 3 && (
             <div className="mb-6">
-              <div className="bg-flamengo-gold/10 border border-flamengo-gold/30 rounded-xl p-4 flex items-center gap-3">
-                <Gift className="w-6 h-6 text-flamengo-gold flex-shrink-0" />
+              <div className="bg-aura-cyan/10 border border-aura-cyan/30 rounded-xl p-4 flex items-center gap-3">
+                <Gift className="w-6 h-6 text-aura-cyan flex-shrink-0" />
                 <div>
                   <p className="font-display font-bold text-foreground text-sm">🔥 LEVE 3, PAGUE 2!</p>
                   <p className="text-xs text-muted-foreground">Adicione {3 - itemCount} {3 - itemCount === 1 ? "produto" : "produtos"} a mais e o menor valor sai de graça!</p>
@@ -177,7 +177,7 @@ const Cart = () => {
                       num_items: itemCount,
                     });
                   }}
-                  className="block w-full mt-6 py-4 bg-primary hover:bg-flamengo-dark-red text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow text-center"
+                  className="block w-full mt-6 py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 animate-pulse-glow text-center"
                 >
                   FINALIZAR COMPRA
                 </Link>
