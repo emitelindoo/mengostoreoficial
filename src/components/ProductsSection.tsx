@@ -3,16 +3,22 @@ import { products } from "@/data/products";
 
 const ProductsSection = () => {
   return (
-    <section id="produtos" className="py-20 px-4">
+    <section id="produtos" className="py-12 px-4">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-3">
-          Nossos Produtos
-        </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-lg mx-auto">
-          Camisas de futebol com qualidade premium. Entrega rápida para todo o Brasil.
-        </p>
+        {/* Section header */}
+        <div className="flex items-center gap-3 mb-8">
+          <div className="h-8 w-1 bg-primary rounded-full" />
+          <div>
+            <h2 className="text-3xl md:text-4xl font-display tracking-wider leading-none">
+              NOSSOS PRODUTOS
+            </h2>
+            <p className="text-xs text-muted-foreground uppercase tracking-widest mt-0.5">
+              Coleção 2025/2026
+            </p>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
           {products.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}

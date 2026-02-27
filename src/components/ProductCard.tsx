@@ -25,69 +25,72 @@ const ProductCard = (product: ProductCardProps) => {
   };
 
   return (
-    <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/40 transition-all duration-300 group">
-      <Link to={`/produto/${product.id}`} className="block relative aspect-square overflow-hidden bg-secondary">
+    <div className="group relative rounded-lg overflow-hidden border border-border/50 bg-gradient-to-b from-secondary to-background hover:border-primary/40 transition-all duration-300">
+      <Link to={`/produto/${product.id}`} className="block relative aspect-[3/4] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-background/80 z-10" />
         <img
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {product.discount > 0 && !product.soldOut && (
-          <span className="absolute top-3 left-3 px-3 py-1 bg-primary text-primary-foreground text-sm font-bold rounded-md">
+          <span className="absolute top-2 left-2 z-20 px-2 py-0.5 bg-primary text-primary-foreground text-xs font-bold rounded">
             -{product.discount}%
           </span>
         )}
         {product.badge && !product.soldOut && (
-          <span className="absolute top-3 right-3 px-3 py-1 bg-aura-cyan text-aura-deep text-xs font-bold rounded-md uppercase">
+          <span className="absolute top-2 right-2 z-20 px-2 py-0.5 bg-aura-cyan text-aura-deep text-[10px] font-bold rounded uppercase tracking-wider">
             {product.badge}
           </span>
         )}
         {product.soldOut && (
-          <div className="absolute inset-0 bg-background/70 flex items-center justify-center">
-            <span className="px-6 py-2 bg-muted text-muted-foreground font-display font-bold text-lg rounded-lg">
+          <div className="absolute inset-0 z-20 bg-background/80 flex items-center justify-center">
+            <span className="px-4 py-1.5 bg-muted text-muted-foreground font-display text-lg rounded">
               ESGOTADO
             </span>
           </div>
         )}
       </Link>
 
-      <div className="p-4">
-        <div className="flex items-center gap-1 mb-2">
+      <div className="p-3 relative z-10">
+        <div className="flex items-center gap-0.5 mb-1.5">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
-              className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground"}`}
+              className={`w-3 h-3 ${i < Math.floor(product.rating) ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground/30"}`}
             />
           ))}
-          <span className="text-sm text-muted-foreground ml-1">({product.reviews.toLocaleString("pt-BR")})</span>
+          <span className="text-[10px] text-muted-foreground ml-1">({product.reviews.toLocaleString("pt-BR")})</span>
         </div>
 
         <Link to={`/produto/${product.id}`}>
-          <h3 className="font-semibold text-foreground text-sm mb-3 line-clamp-2 hover:text-primary transition-colors">{product.name}</h3>
+          <h3 className="font-medium text-foreground text-xs mb-2 line-clamp-2 hover:text-primary transition-colors leading-tight">
+            {product.name}
+          </h3>
         </Link>
 
         {!product.soldOut ? (
           <>
-            <div className="flex items-baseline gap-2 mb-4">
-              <span className="text-xl font-bold text-primary">
+            <div className="flex items-baseline gap-1.5 mb-3">
+              <span className="text-lg font-bold text-primary font-display tracking-wide">
                 R$ {product.price.toFixed(2).replace(".", ",")}
               </span>
               {product.originalPrice > product.price && (
-                <span className="text-sm text-muted-foreground line-through">
+                <span className="text-[10px] text-muted-foreground line-through">
                   R$ {product.originalPrice.toFixed(2).replace(".", ",")}
                 </span>
               )}
             </div>
             <button
               onClick={handleBuy}
-              className="block w-full py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold tracking-wider rounded-lg transition-colors text-center"
+              className="block w-full py-2.5 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display text-sm tracking-widest rounded transition-colors text-center"
             >
-              Comprar Agora
+              COMPRAR
             </button>
           </>
         ) : (
-          <div className="py-3 bg-muted text-muted-foreground font-display font-semibold tracking-wider rounded-lg text-center">
-            Esgotado
+          <div className="py-2.5 bg-muted text-muted-foreground font-display text-sm tracking-widest rounded text-center">
+            ESGOTADO
           </div>
         )}
       </div>

@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
+        display: ["Bebas Neue", "sans-serif"],
         body: ["DM Sans", "sans-serif"],
       },
       colors: {
@@ -55,6 +55,7 @@ export default {
         "aura-dark-blue": "hsl(var(--aura-dark-blue))",
         "aura-deep": "hsl(var(--aura-deep))",
         "aura-cyan": "hsl(var(--aura-cyan))",
+        "aura-glow": "hsl(var(--aura-glow))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -81,8 +82,8 @@ export default {
           to: { height: "0" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(215 80% 55% / 0.4)" },
-          "50%": { boxShadow: "0 0 40px hsl(215 80% 55% / 0.7)" },
+          "0%, 100%": { boxShadow: "0 0 15px hsl(210 100% 50% / 0.4)" },
+          "50%": { boxShadow: "0 0 30px hsl(210 100% 50% / 0.7)" },
         },
         "fade-in-up": {
           from: { opacity: "0", transform: "translateY(20px)" },

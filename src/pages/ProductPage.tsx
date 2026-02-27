@@ -81,7 +81,7 @@ const ProductPage = () => {
                   </span>
                 )}
                 {product.badge && (
-                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-aura-cyan text-aura-deep text-xs font-bold rounded-lg uppercase">
+                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-aura-cyan text-aura-deep text-xs font-bold rounded uppercase">
                     {product.badge}
                   </span>
                 )}
@@ -110,7 +110,7 @@ const ProductPage = () => {
             <div className="flex flex-col">
               <div className="flex items-center gap-1 mb-3">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className={`w-5 h-5 ${i < product.rating ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground"}`} />
+                  <Star key={i} className={`w-4 h-4 ${i < product.rating ? "fill-aura-cyan text-aura-cyan" : "text-muted-foreground/30"}`} />
                 ))}
                 <span className="text-sm text-muted-foreground ml-2">({product.reviews.toLocaleString("pt-BR")} avaliações)</span>
               </div>
