@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { fbEvent } from "@/lib/fbpixel";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total, discount, finalTotal, itemCount } = useCart();
+  const { items, updateQuantity, removeItem, total, discount, shipping, finalTotal, itemCount } = useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -157,8 +157,15 @@ const Cart = () => {
                   )}
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
-                    <span className="text-primary font-semibold">Grátis</span>
+                    {shipping === 0 ? (
+                      <span className="text-primary font-semibold">Grátis</span>
+                    ) : (
+                      <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
+                    )}
                   </div>
+                  {shipping > 0 && (
+                    <p className="text-xs text-primary">🚚 Frete grátis a partir de 3 itens!</p>
+                  )}
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t border-border pt-4">
                   <span>Total</span>

@@ -10,7 +10,7 @@ const DeliveryInfo = () => {
         <h1 className="text-3xl font-display font-bold text-primary mb-8">Prazo de Entrega</h1>
 
         <p className="text-muted-foreground mb-10">
-          Enviamos para todo o Brasil com <strong className="text-foreground">frete grátis via SEDEX</strong>. Prazo de entrega: <strong className="text-foreground">7 dias úteis</strong> para qualquer região do Brasil.
+          Enviamos para todo o Brasil via <strong className="text-foreground">SEDEX</strong>. <strong className="text-foreground">Frete grátis</strong> para compras acima de 3 itens. Para pedidos com menos de 3 itens, o frete é de <strong className="text-foreground">R$ 39,90</strong>. Prazo de entrega: <strong className="text-foreground">7 dias úteis</strong> para qualquer região do Brasil.
         </p>
 
         <div className="flex items-center gap-4 p-5 rounded-lg border border-border bg-card mb-10">
@@ -42,8 +42,8 @@ const DeliveryInfo = () => {
           <div className="flex items-start gap-4">
             <Truck className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
             <div>
-              <h2 className="font-semibold text-foreground mb-1">Frete Grátis</h2>
-              <p className="text-muted-foreground text-sm">Todas as compras possuem <strong>frete grátis via SEDEX</strong> para qualquer lugar do Brasil. Sem valor mínimo de compra.</p>
+              <h2 className="font-semibold text-foreground mb-1">Frete Grátis acima de 3 itens</h2>
+              <p className="text-muted-foreground text-sm">Compras com 3 ou mais itens possuem <strong>frete grátis via SEDEX</strong> para qualquer lugar do Brasil. Para pedidos com menos de 3 itens, o frete é de R$ 39,90.</p>
             </div>
           </div>
         </div>
