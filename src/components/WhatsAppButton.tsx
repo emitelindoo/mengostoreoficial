@@ -1,5 +1,5 @@
 const WhatsAppButton = () => {
-  const phoneNumber = "5511979519503";
+  const phoneNumber = "5511967131733";
   const message = encodeURIComponent("Olá! Gostaria de comprar pelo suporte. Pode me ajudar?");
 
   return (
