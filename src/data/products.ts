@@ -44,8 +44,13 @@ import camisaListradaFemDetalhe1 from "@/assets/camisa-flamengo-listrada-fem-det
 import camisaListradaFemDetalhe2 from "@/assets/camisa-flamengo-listrada-fem-detalhe2.png";
 import camisaListradaFemDetalhe3 from "@/assets/camisa-flamengo-listrada-fem-detalhe3.png";
 import camisaListradaFemCostas from "@/assets/camisa-flamengo-listrada-fem-costas.png";
+import camisaRealMadridAzulFrente from "@/assets/camisa-real-madrid-azul-frente.png";
+import camisaRealMadridAzulDetalhe1 from "@/assets/camisa-real-madrid-azul-detalhe1.png";
+import camisaRealMadridAzulDetalhe2 from "@/assets/camisa-real-madrid-azul-detalhe2.png";
+import camisaRealMadridAzulDetalhe3 from "@/assets/camisa-real-madrid-azul-detalhe3.png";
+import camisaRealMadridAzulCostas from "@/assets/camisa-real-madrid-azul-costas.png";
 
-export type ProductCategory = "lancamentos-2026" | "selecoes" | "flamengo";
+export type ProductCategory = "lancamentos-2026" | "selecoes" | "flamengo" | "champions";
 
 export interface Product {
   id: string;
@@ -169,6 +174,23 @@ export const products: Product[] = [
     freeCustomization: true,
     stock: 8,
     category: ["lancamentos-2026", "flamengo"],
+  },
+  {
+    id: "camisa-real-madrid-azul-2025",
+    name: "Camisa de Time Real Madrid Azul 2025",
+    price: 189.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 1105,
+    image: camisaRealMadridAzulFrente,
+    images: [camisaRealMadridAzulFrente, camisaRealMadridAzulDetalhe1, camisaRealMadridAzulDetalhe2, camisaRealMadridAzulDetalhe3, camisaRealMadridAzulCostas],
+    badge: "Lançamento",
+    description: "Camisa do Real Madrid modelo visitante azul 2025. Confeccionada em poliéster com tecnologia AEROREADY de absorção de suor. Gola V com detalhes em branco, escudo bordado no peito e três listras nos ombros. Tecido leve e respirável com textura exclusiva, ideal para jogos ou uso casual.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 14,
+    category: ["champions"],
   },
 ];
 
