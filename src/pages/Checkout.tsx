@@ -1,11 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ShieldCheck, Truck, ArrowLeft, Lock, User, MapPin, CreditCard, Check, ChevronRight, Loader2, Copy, CheckCircle } from "lucide-react";
-import { QRCodeSVG } from "qrcode.react";
+import { ShieldCheck, Truck, ArrowLeft, User, MapPin, Check, ChevronRight, MessageCircle, Lock } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 import { fbEvent, updatePixelUserData } from "@/lib/fbpixel";
 
 const maskCPF = (v: string) => v.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
@@ -23,10 +20,12 @@ const UF_OPTIONS = [
   "PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"
 ];
 
+// TODO: Substituir pelo número real do WhatsApp
+const WHATSAPP_NUMBER = "5500000000000";
+
 const steps = [
   { id: 1, label: "Dados Pessoais", icon: User },
   { id: 2, label: "Endereço", icon: MapPin },
-  { id: 3, label: "Pagamento", icon: CreditCard },
 ];
 
 const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
@@ -41,13 +40,8 @@ const Checkout = () => {
     cep: "", street: "", number: "", complement: "",
     neighborhood: "", city: "", state: "",
   });
-  const [submitted, setSubmitted] = useState(false);
   const [emailSuggestions, setEmailSuggestions] = useState<string[]>([]);
   const [showEmailSuggestions, setShowEmailSuggestions] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [pixData, setPixData] = useState<{ qrCode?: string; qrCodeUrl?: string; copyPaste?: string; transactionId?: number } | null>(null);
-  const [pixCopied, setPixCopied] = useState(false);
-  const [checkingPayment, setCheckingPayment] = useState(false);
   const [loadingCep, setLoadingCep] = useState(false);
   const emailRef = useRef<HTMLDivElement>(null);
 
@@ -98,7 +92,7 @@ const Checkout = () => {
     }
   };
 
-  if (items.length === 0 && !submitted) {
+  if (items.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -109,115 +103,51 @@ const Checkout = () => {
     );
   }
 
-  const handleSubmit = async () => {
-    setIsProcessing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("create-payment", {
-        body: {
-          amount: finalTotal,
-          customer: {
-            name: form.name,
-            email: form.email,
-            phone: form.phone,
-            cpf: form.cpf,
-          },
-          items: items.map((item) => ({
-            name: item.product.name,
-            quantity: item.quantity,
-            price: item.product.price,
-          })),
-          address: {
-            street: form.street,
-            number: form.number,
-            complement: form.complement,
-            neighborhood: form.neighborhood,
-            city: form.city,
-            state: form.state,
-            cep: form.cep,
-          },
-        },
-      });
-
-      if (error) throw error;
-
-      // Check if transaction was refused
-      if (data?.status === "refused" || data?.status === "error") {
-        const reason = data?.refusedReason?.description || "Transação recusada. Verifique seus dados e tente novamente.";
-        toast.error(reason);
-        return;
+  const buildWhatsAppMessage = () => {
+    let msg = `🛒 *NOVO PEDIDO - Mengo Store*\n\n`;
+    msg += `👤 *Dados do Cliente*\n`;
+    msg += `Nome: ${form.name}\n`;
+    msg += `Email: ${form.email}\n`;
+    msg += `Telefone: ${form.phone}\n`;
+    msg += `CPF: ${form.cpf}\n\n`;
+    msg += `📍 *Endereço de Entrega*\n`;
+    msg += `${form.street}, ${form.number}`;
+    if (form.complement) msg += ` - ${form.complement}`;
+    msg += `\n${form.neighborhood} - ${form.city}/${form.state}\n`;
+    msg += `CEP: ${form.cep}\n\n`;
+    msg += `📦 *Produtos*\n`;
+    items.forEach((item) => {
+      msg += `• ${item.product.name}`;
+      if (item.size) msg += ` (Tam: ${item.size})`;
+      if (item.customName || item.customNumber) {
+        msg += ` [Personalizado: ${item.customName || ""}${item.customName && item.customNumber ? " " : ""}${item.customNumber ? `Nº${item.customNumber}` : ""}]`;
       }
-
-      // Extract PIX data from new Nivus API response
-      const pixQrCode = data?.pix?.qrcode;
-      const transactionId = data?.id;
-
-      if (pixQrCode) {
-        setPixData({
-          qrCode: pixQrCode,
-          copyPaste: pixQrCode,
-          transactionId: transactionId,
-        });
-        fbEvent("AddPaymentInfo", {
-          content_ids: items.map(i => i.product.id),
-          contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
-          content_type: "product",
-          value: finalTotal,
-          currency: "BRL",
-        });
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else if (data?.status === "paid") {
-        setSubmitted(true);
-        clearCart();
-      } else {
-        toast.error("Não foi possível gerar o PIX. Tente novamente.");
-      }
-    } catch (err: any) {
-      console.error("Payment error:", err);
-      toast.error("Erro ao processar pagamento. Tente novamente.");
-    } finally {
-      setIsProcessing(false);
-    }
+      msg += ` — Qtd: ${item.quantity} — ${formatCurrency(item.product.price * item.quantity)}\n`;
+    });
+    msg += `\n💰 *Resumo*\n`;
+    msg += `Subtotal: ${formatCurrency(total)}\n`;
+    msg += `Frete: ${shipping === 0 ? "Grátis 🎉" : formatCurrency(shipping)}\n`;
+    msg += `*Total: ${formatCurrency(finalTotal)}*\n`;
+    return msg;
   };
 
-  const handleCopyPix = () => {
-    if (pixData?.copyPaste) {
-      navigator.clipboard.writeText(pixData.copyPaste);
-      setPixCopied(true);
-      toast.success("Código PIX copiado!");
-      setTimeout(() => setPixCopied(false), 3000);
-    }
-  };
+  const handleWhatsAppRedirect = () => {
+    const message = buildWhatsAppMessage();
+    const encoded = encodeURIComponent(message);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
 
-  const handleConfirmPixPayment = async () => {
-    if (!pixData?.transactionId) return;
-    setCheckingPayment(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("check-payment", {
-        body: { transactionId: pixData.transactionId },
-      });
-      if (error) throw error;
+    fbEvent("Purchase", {
+      content_ids: items.map(i => i.product.id),
+      contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+      content_type: "product",
+      value: finalTotal,
+      currency: "BRL",
+      num_items: itemCount,
+    });
 
-      if (data?.status === "paid") {
-        fbEvent("Purchase", {
-          content_ids: items.map(i => i.product.id),
-          contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
-          content_type: "product",
-          value: finalTotal,
-          currency: "BRL",
-          num_items: itemCount,
-        });
-        setSubmitted(true);
-        clearCart();
-        toast.success("Pagamento confirmado! 🎉");
-      } else {
-        toast.error("Pagamento ainda não identificado. Aguarde alguns instantes e tente novamente.");
-      }
-    } catch (err: any) {
-      console.error("Check payment error:", err);
-      toast.error("Erro ao verificar pagamento. Tente novamente.");
-    } finally {
-      setCheckingPayment(false);
-    }
+    clearCart();
+    window.open(url, "_blank");
+    navigate("/");
   };
 
   const updateField = (field: string, value: string) => {
@@ -228,30 +158,6 @@ const Checkout = () => {
   const canAdvanceStep2 = form.cep && form.street && form.number && form.neighborhood && form.city && form.state;
 
   const inputClass = "w-full px-4 py-3.5 bg-secondary/50 border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 text-sm";
-
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main className="pt-24 pb-16 px-4 flex items-center justify-center min-h-[80vh]">
-          <div className="max-w-md text-center animate-fade-in">
-            <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-6">
-              <ShieldCheck className="w-10 h-10 text-primary" />
-            </div>
-            <h1 className="text-3xl font-display font-bold mb-4">Pedido Confirmado! 🔥</h1>
-            <p className="text-muted-foreground mb-2">Obrigado pela compra, {form.name.split(" ")[0]}!</p>
-            <p className="text-muted-foreground mb-8">Você receberá os detalhes do pedido no email <span className="text-foreground font-semibold">{form.email}</span></p>
-            <Link
-              to="/"
-              className="inline-block px-8 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold rounded-lg transition-colors"
-            >
-              Voltar à Loja
-            </Link>
-          </div>
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -380,7 +286,7 @@ const Checkout = () => {
                 </div>
               )}
 
-              {/* Step 2: Endereço */}
+              {/* Step 2: Endereço + Confirmar */}
               {step === 2 && (
                 <div className="animate-fade-in">
                   <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
@@ -430,6 +336,42 @@ const Checkout = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Order summary before WhatsApp */}
+                    <div className="mt-8 border-t border-border pt-6">
+                      <p className="text-xs text-muted-foreground mb-3 font-medium">📦 Produtos ({itemCount} {itemCount === 1 ? "item" : "itens"})</p>
+                      <div className="space-y-2 mb-4">
+                        {items.map((item) => (
+                          <div key={`${item.product.id}-${item.size}`} className="flex gap-3 items-center">
+                            <img src={item.product.image} alt={item.product.name} className="w-10 h-10 object-contain rounded-lg bg-secondary" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-semibold text-foreground line-clamp-1">{item.product.name}</p>
+                              <p className="text-[10px] text-muted-foreground">{item.size && `Tam: ${item.size} · `}Qtd: {item.quantity}</p>
+                            </div>
+                            <p className="text-xs text-primary font-bold whitespace-nowrap">{formatCurrency(item.product.price * item.quantity)}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="space-y-1.5 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Subtotal</span>
+                          <span>{formatCurrency(total)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Frete</span>
+                          {shipping === 0 ? (
+                            <span className="text-primary font-semibold">Grátis 🎉</span>
+                          ) : (
+                            <span>{formatCurrency(shipping)}</span>
+                          )}
+                        </div>
+                        <div className="flex justify-between font-bold text-lg border-t border-border pt-3 mt-2">
+                          <span>Total</span>
+                          <span className="text-primary">{formatCurrency(finalTotal)}</span>
+                        </div>
+                      </div>
+                    </div>
+
                     <button
                       onClick={() => {
                         if (!canAdvanceStep2) return;
@@ -450,154 +392,14 @@ const Checkout = () => {
                           currency: "BRL",
                           num_items: itemCount,
                         });
-                        setStep(3);
+                        handleWhatsAppRedirect();
                       }}
                       disabled={!canAdvanceStep2}
-                      className="w-full mt-8 py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full mt-6 py-4 bg-[#25D366] hover:bg-[#1da851] text-white font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                     >
-                      Continuar <ChevronRight className="w-5 h-5" />
+                      <MessageCircle className="w-6 h-6" /> COMPRAR PELO WHATSAPP
                     </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 3: Confirmação */}
-              {step === 3 && (
-                <div className="animate-fade-in">
-                  <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center">
-                        <CreditCard className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <h2 className="font-display font-bold text-lg">Confirmar Pedido</h2>
-                        <p className="text-xs text-muted-foreground">Revise seus dados e finalize</p>
-                      </div>
-                    </div>
-
-                    {!pixData && (
-                      <>
-                    {/* Review cards */}
-                    <div className="space-y-4 mb-6">
-                      <div className="bg-secondary/30 rounded-xl p-4 flex items-start justify-between">
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Dados Pessoais</p>
-                          <p className="text-sm font-semibold">{form.name}</p>
-                          <p className="text-xs text-muted-foreground">{form.email} · {form.phone}</p>
-                        </div>
-                        <button onClick={() => setStep(1)} className="text-xs text-primary hover:underline font-semibold">Editar</button>
-                      </div>
-                      <div className="bg-secondary/30 rounded-xl p-4 flex items-start justify-between">
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Endereço de Entrega</p>
-                          <p className="text-sm font-semibold">{form.street}, {form.number}</p>
-                          <p className="text-xs text-muted-foreground">{form.neighborhood} · {form.city}/{form.state} · CEP {form.cep}</p>
-                        </div>
-                        <button onClick={() => setStep(2)} className="text-xs text-primary hover:underline font-semibold">Editar</button>
-                      </div>
-                    </div>
-
-                    {/* Products list */}
-                    <div className="border-t border-border pt-4 mb-6">
-                      <p className="text-xs text-muted-foreground mb-3 font-medium">Produtos ({itemCount} {itemCount === 1 ? "item" : "itens"})</p>
-                      <div className="space-y-3">
-                        {items.map((item) => (
-                          <div key={`${item.product.id}-${item.size}`} className="flex gap-3 items-center">
-                            <img src={item.product.image} alt={item.product.name} className="w-14 h-14 object-contain rounded-lg bg-secondary" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-foreground line-clamp-1">{item.product.name}</p>
-                              <p className="text-xs text-muted-foreground">{item.size && `Tam: ${item.size} · `}Qtd: {item.quantity}</p>
-                            </div>
-                            <p className="text-sm text-primary font-bold whitespace-nowrap">{formatCurrency(item.product.price * item.quantity)}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Totals */}
-                    <div className="border-t border-border pt-4 mb-6 space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Subtotal</span>
-                        <span>{formatCurrency(total)}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Frete</span>
-                        {shipping === 0 ? (
-                          <span className="text-emerald-500 font-semibold">Grátis</span>
-                        ) : (
-                          <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
-                        )}
-                      </div>
-                      <div className="flex justify-between font-bold text-xl border-t border-border pt-3 mt-2">
-                        <span>Total</span>
-                        <span className="text-primary">{formatCurrency(finalTotal)}</span>
-                      </div>
-                    </div>
-                      </>
-                    )}
-
-                    {!pixData ? (
-                      <button
-                        onClick={handleSubmit}
-                        disabled={isProcessing}
-                        className="w-full py-4 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-bold text-lg tracking-wider rounded-xl transition-all duration-300 animate-pulse-glow flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                      >
-                        {isProcessing ? (
-                          <><Loader2 className="w-5 h-5 animate-spin" /> PROCESSANDO...</>
-                        ) : (
-                          <><Lock className="w-5 h-5" /> PAGAR COM PIX</>
-                        )}
-                      </button>
-                    ) : (
-                      <div className="space-y-5 animate-fade-in">
-                        <div className="text-center">
-                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-500 rounded-full text-sm font-semibold mb-4">
-                            <CheckCircle className="w-4 h-4" /> PIX Gerado com Sucesso
-                          </div>
-                          <p className="text-sm text-muted-foreground">Escaneie o QR Code ou copie o código abaixo</p>
-                        </div>
-
-                        {pixData.qrCode && (
-                          <div className="flex justify-center">
-                            <div className="bg-white p-4 rounded-xl">
-                              <QRCodeSVG value={pixData.qrCode} size={192} />
-                            </div>
-                          </div>
-                        )}
-
-                        {pixData.copyPaste && (
-                          <div className="overflow-hidden">
-                            <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Código PIX Copia e Cola</label>
-                            <div className="flex gap-2">
-                              <input
-                                readOnly
-                                value={pixData.copyPaste}
-                                className="flex-1 min-w-0 px-3 py-3 bg-secondary/50 border border-border rounded-xl text-foreground text-xs truncate"
-                              />
-                              <button
-                                onClick={handleCopyPix}
-                                className="px-3 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm flex items-center gap-1 flex-shrink-0 hover:bg-aura-dark-blue transition-colors"
-                              >
-                                {pixCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                                <span className="hidden sm:inline">{pixCopied ? "Copiado" : "Copiar"}</span>
-                              </button>
-                            </div>
-                          </div>
-                        )}
-
-                        <button
-                          onClick={handleConfirmPixPayment}
-                          disabled={checkingPayment}
-                          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-primary-foreground font-display font-bold text-base tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                        >
-                          {checkingPayment ? (
-                            <><Loader2 className="w-5 h-5 animate-spin" /> VERIFICANDO PAGAMENTO...</>
-                          ) : (
-                            <><CheckCircle className="w-5 h-5" /> JÁ FIZ O PAGAMENTO</>
-                          )}
-                        </button>
-                      </div>
-                    )}
+                    <p className="text-center text-xs text-muted-foreground mt-2">Você será redirecionado ao WhatsApp com seu pedido</p>
                   </div>
                 </div>
               )}
@@ -633,9 +435,9 @@ const Checkout = () => {
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Frete</span>
                     {shipping === 0 ? (
-                      <span className="text-emerald-500 font-semibold">Grátis</span>
+                      <span className="text-primary font-semibold">Grátis 🎉</span>
                     ) : (
-                      <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
+                      <span>{formatCurrency(shipping)}</span>
                     )}
                   </div>
                   <div className="flex justify-between font-bold text-xl border-t border-border pt-4 mt-3">
@@ -647,7 +449,7 @@ const Checkout = () => {
                 {/* Trust badges */}
                 <div className="mt-6 space-y-2.5 border-t border-border pt-5">
                   <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                    <ShieldCheck className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-primary flex-shrink-0" />
                     <span>Compra 100% segura e protegida</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
@@ -655,8 +457,8 @@ const Checkout = () => {
                     <span>Entrega garantida para todo Brasil</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                    <Lock className="w-4 h-4 text-aura-cyan flex-shrink-0" />
-                    <span>Dados criptografados com SSL</span>
+                    <Lock className="w-4 h-4 text-primary flex-shrink-0" />
+                    <span>Atendimento direto via WhatsApp</span>
                   </div>
                 </div>
               </div>
