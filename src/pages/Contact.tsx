@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Mail, MapPin, Clock } from "lucide-react";
+import { Mail, MapPin, Clock, Instagram } from "lucide-react";
 
 const Contact = () => {
   return (
@@ -37,6 +37,15 @@ const Contact = () => {
             <div>
               <h2 className="font-semibold text-foreground mb-1">Endereço</h2>
               <p className="text-muted-foreground">Rio de Janeiro - RJ, Brasil</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-4 p-6 rounded-lg border border-border bg-card">
+            <Instagram className="w-6 h-6 text-primary mt-0.5 flex-shrink-0" />
+            <div>
+              <h2 className="font-semibold text-foreground mb-1">Instagram</h2>
+              <a href="https://instagram.com/aurafutbrasil" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                @aurafutbrasil
+              </a>
             </div>
           </div>
         </div>

@@ -33,6 +33,7 @@ const Footer = () => {
             <h4 className="font-display text-sm tracking-widest mb-3 text-foreground">CONTATO</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>contato@aurafut.com</li>
+              <li><a href="https://instagram.com/aurafutbrasil" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@aurafutbrasil</a></li>
               <li>Brasil</li>
             </ul>
           </div>
