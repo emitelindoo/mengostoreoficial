@@ -267,6 +267,13 @@ const ProductPage = () => {
                   href={`https://wa.me/5511967131733?text=${encodeURIComponent(`Olá! Quero comprar: ${product.name}${selectedSize ? ` - Tamanho: ${selectedSize}` : ""}${customName ? ` - Nome: ${customName}` : ""}${customNumber ? ` - Número: ${customNumber}` : ""} - Quantidade: ${quantity}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => fbEvent("Lead", {
+                    content_name: product.name,
+                    content_category: "whatsapp_compra",
+                    content_ids: [product.id],
+                    value: product.price * quantity,
+                    currency: "BRL",
+                  })}
                   className="w-full py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white font-display font-bold text-lg tracking-wider rounded-lg transition-all duration-300 flex items-center justify-center gap-3"
                 >
                   <svg viewBox="0 0 32 32" className="w-6 h-6 fill-white">

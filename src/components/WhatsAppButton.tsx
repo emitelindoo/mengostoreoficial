@@ -1,12 +1,22 @@
+import { fbEvent } from "@/lib/fbpixel";
+
 const WhatsAppButton = () => {
   const phoneNumber = "5511967131733";
   const message = encodeURIComponent("Olá! Gostaria de comprar pelo suporte. Pode me ajudar?");
+
+  const handleClick = () => {
+    fbEvent("Lead", {
+      content_name: "WhatsApp Suporte",
+      content_category: "suporte",
+    });
+  };
 
   return (
     <a
       href={`https://wa.me/${phoneNumber}?text=${message}`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
       className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#1ebe57] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200"
       aria-label="Falar no WhatsApp"
     >
