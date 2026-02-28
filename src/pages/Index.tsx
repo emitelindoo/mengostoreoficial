@@ -6,7 +6,7 @@ import ProductsSection from "@/components/ProductsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import StatsSection from "@/components/StatsSection";
 import FlashOffer from "@/components/FlashOffer";
-import SizeChartBanner from "@/components/SizeChartBanner";
+
 import Footer from "@/components/Footer";
 import FirstPurchaseBanner from "@/components/FirstPurchaseBanner";
 
@@ -22,7 +22,7 @@ const Index = () => {
       <FlashOffer />
       <TestimonialsSection />
       <StatsSection />
-      <SizeChartBanner />
+      
       <Footer />
     </div>
   );
