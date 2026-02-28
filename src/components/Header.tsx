@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 
-const categories = [
-  { label: "Lançamentos 2026", to: "/categoria/lancamentos-2026" },
-  { label: "Brasileirão", to: "/categoria/brasileirao" },
-  { label: "Seleções", to: "/categoria/selecoes" },
-  { label: "Champions", to: "/categoria/champions" },
+const navLinks = [
   { label: "Todos os Produtos", to: "/categoria/todos" },
+  { label: "Contato", to: "/contato" },
+  { label: "Entrega", to: "/prazo-de-entrega" },
 ];
 
 const Header = () => {
@@ -25,18 +23,15 @@ const Header = () => {
         </Link>
 
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          {categories.map((cat) => (
+          {navLinks.map((link) => (
             <Link
-              key={cat.to}
-              to={cat.to}
+              key={link.to}
+              to={link.to}
               className="text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-medium"
             >
-              {cat.label}
+              {link.label}
             </Link>
           ))}
-          <Link to="/contato" className="text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-medium">
-            Contato
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -58,34 +53,19 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-3">
-            {categories.map((cat) => (
+            {navLinks.map((link) => (
               <Link
-                key={cat.to}
-                to={cat.to}
+                key={link.to}
+                to={link.to}
                 onClick={() => setMenuOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-medium text-sm py-1"
               >
-                {cat.label}
+                {link.label}
               </Link>
             ))}
-            <Link
-              to="/contato"
-              onClick={() => setMenuOpen(false)}
-              className="text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-medium text-sm py-1"
-            >
-              Contato
-            </Link>
-            <Link
-              to="/prazo-de-entrega"
-              onClick={() => setMenuOpen(false)}
-              className="text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-medium text-sm py-1"
-            >
-              Entrega
-            </Link>
           </nav>
         </div>
       )}
