@@ -32,7 +32,7 @@ const SocialProofGallery = () => {
         {socialReviews.map((review, i) => (
           <div key={i} className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
             <button onClick={() => setSelectedImage(review.src)} className="w-full aspect-square overflow-hidden">
-              <img src={review.src} alt={`Avaliação de ${review.name}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+              <img src={review.src} alt={`Avaliação de ${review.name}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
             </button>
             <div className="p-3">
               <div className="flex gap-0.5 mb-1">

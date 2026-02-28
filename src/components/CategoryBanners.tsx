@@ -35,6 +35,7 @@ const CategoryBanners = () => {
               <img
                 src={banner.image}
                 alt={banner.alt}
+                loading="lazy"
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </Link>
