@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Search, Package, Truck, CheckCircle, Clock, MapPin, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
@@ -42,7 +43,8 @@ const STATUS_STEPS = ["pending_payment", "paid", "processing", "shipped", "deliv
 const formatCurrency = (v: number) => `R$ ${Number(v).toFixed(2).replace(".", ",")}`;
 
 const TrackOrder = () => {
-  const [query, setQuery] = useState("");
+  const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("code") || "");
   const [orders, setOrders] = useState<Order[]>([]);
   const [items, setItems] = useState<Record<string, OrderItem[]>>({});
   const [loading, setLoading] = useState(false);
@@ -70,6 +72,10 @@ const TrackOrder = () => {
     setOrders((data as Order[]) || []);
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (searchParams.get("code")) handleSearch();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadItems = async (orderId: string) => {
     if (items[orderId]) return;

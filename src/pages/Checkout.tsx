@@ -314,10 +314,23 @@ const Checkout = () => {
             )}
             <p className="text-muted-foreground mb-2">Obrigado pela compra, {form.name.split(" ")[0]}!</p>
             <p className="text-muted-foreground mb-6">Você receberá os detalhes do pedido no email <span className="text-foreground font-semibold">{form.email}</span></p>
+            
+            {/* Account creation prompt */}
+            <div className="bg-card border border-border rounded-xl p-4 mb-6 text-left">
+              <p className="text-sm font-semibold mb-1">📱 Quer acompanhar seus pedidos com facilidade?</p>
+              <p className="text-xs text-muted-foreground mb-3">Crie uma conta gratuita com seu email e acompanhe todos os seus pedidos em um só lugar.</p>
+              <Link
+                to={`/login?email=${encodeURIComponent(form.email)}&redirect=/minha-conta`}
+                className="inline-block px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-display font-semibold text-sm rounded-lg transition-colors"
+              >
+                Criar Conta Grátis
+              </Link>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/rastrear"
-                className="inline-block px-8 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold rounded-lg transition-colors"
+                className="inline-block px-8 py-3 bg-secondary hover:bg-secondary/80 text-foreground font-display font-semibold rounded-lg transition-colors"
               >
                 Rastrear Pedido
               </Link>
