@@ -1,7 +1,8 @@
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu, X, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const navLinks = [
   { label: "Todos os Produtos", to: "/categoria/todos" },
@@ -13,6 +14,13 @@ const navLinks = [
 const Header = () => {
   const { itemCount } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((_, session) => {
+      setLoggedIn(!!session?.user);
+    });
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
@@ -43,6 +51,14 @@ const Header = () => {
                 {itemCount}
               </span>
             )}
+          </Link>
+
+          <Link
+            to={loggedIn ? "/minha-conta" : "/login"}
+            className="p-2 text-foreground hover:text-primary transition-colors"
+            title={loggedIn ? "Minha Conta" : "Entrar"}
+          >
+            <User className="w-5 h-5" />
           </Link>
 
           <button

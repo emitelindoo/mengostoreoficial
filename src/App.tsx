@@ -21,6 +21,8 @@ const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Login = lazy(() => import("./pages/Login"));
+const MinhaConta = lazy(() => import("./pages/MinhaConta"));
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,8 @@ const App = () => (
               <Route path="/rastrear" element={<TrackOrder />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/minha-conta" element={<MinhaConta />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
