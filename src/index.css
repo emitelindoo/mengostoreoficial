@@ -68,6 +68,14 @@
 }
 
 @layer utilities {
+  #mp-card-number iframe,
+  #mp-expiration-date iframe,
+  #mp-security-code iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+  }
+
   .text-gradient-aura {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-aura-cyan;
   }
