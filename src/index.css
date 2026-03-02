@@ -68,12 +68,24 @@
 }
 
 @layer utilities {
+  #mp-card-number,
+  #mp-expiration-date,
+  #mp-security-code {
+    position: relative;
+    min-height: 44px;
+  }
+
   #mp-card-number iframe,
   #mp-expiration-date iframe,
   #mp-security-code iframe {
     width: 100% !important;
     height: 100% !important;
+    min-height: 44px !important;
     border: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 10 !important;
   }
 
   .text-gradient-aura {
