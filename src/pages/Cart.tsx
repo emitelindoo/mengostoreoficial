@@ -86,8 +86,8 @@ const Cart = () => {
             <ShoppingCart className="w-6 h-6 text-primary" /> Carrinho ({itemCount} {itemCount === 1 ? "item" : "itens"})
           </h1>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 space-y-4">
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-8 w-full min-w-0">
+            <div className="md:col-span-2 space-y-4 min-w-0">
               {items.map((item) => (
                 <div
                   key={`${item.product.id}-${item.size}`}
