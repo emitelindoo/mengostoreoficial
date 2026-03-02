@@ -74,10 +74,10 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header />
-      <main className="pt-24 pb-16 px-4">
-        <div className="container mx-auto max-w-4xl">
+      <main className="pt-24 pb-16 px-4 overflow-x-hidden">
+        <div className="container mx-auto max-w-4xl overflow-hidden">
           <Link to="/#produtos" className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Continuar comprando
           </Link>
