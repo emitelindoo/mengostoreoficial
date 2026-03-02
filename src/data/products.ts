@@ -304,8 +304,6 @@ export const products: Product[] = [
     stock: 12,
     category: ["champions"],
   },
-];
-
   {
     id: "camisa-inter-milao-2526",
     name: "Camisa de Time Inter de Milão 25/26",
