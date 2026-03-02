@@ -165,7 +165,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 15,
-    category: ["selecoes"],
+    category: ["lancamentos-2026", "selecoes"],
   },
   {
     id: "camisa-selecao-brasileira-amarela-2627",
@@ -182,7 +182,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 10,
-    category: ["selecoes"],
+    category: ["lancamentos-2026", "selecoes"],
   },
   {
     id: "camisa-flamengo-listrada-2627-fem",
@@ -217,7 +217,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 15,
-    category: ["brasileirao"],
+    category: ["lancamentos-2026", "brasileirao"],
   },
   {
     id: "camisa-selecao-alemanha-branca-2627",
@@ -234,7 +234,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 12,
-    category: ["selecoes"],
+    category: ["lancamentos-2026", "selecoes"],
   },
   {
     id: "camisa-real-madrid-azul-2025",
@@ -251,7 +251,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 14,
-    category: ["champions"],
+    category: ["lancamentos-2026", "champions"],
   },
   {
     id: "camisa-selecao-portugal-vermelha-2627",
@@ -268,7 +268,7 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 14,
-    category: ["selecoes"],
+    category: ["lancamentos-2026", "selecoes"],
   },
   {
     id: "camisa-selecao-brasileira-retro-amarela",
@@ -302,7 +302,7 @@ export const products: Product[] = [
     sizes: ["M", "G", "GG"],
     customizable: true,
     stock: 12,
-    category: ["champions"],
+    category: ["lancamentos-2026", "champions"],
   },
   {
     id: "camisa-inter-milao-2526",
@@ -320,7 +320,7 @@ export const products: Product[] = [
     customizable: true,
     freeCustomization: false,
     stock: 15,
-    category: ["champions"],
+    category: ["lancamentos-2026", "champions"],
   },
 ];
 
