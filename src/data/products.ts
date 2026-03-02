@@ -118,7 +118,7 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-i-2026",
     name: "Camisa Rubro-Negra I 2026 Vermelha e Preta",
-    price: 164.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 53,
     rating: 5,
@@ -170,7 +170,7 @@ export const products: Product[] = [
   {
     id: "camisa-flamengo-listrada-2627-fem",
     name: "Camisa de Time Flamengo Listrada 26/27 Feminina",
-    price: 164.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 53,
     rating: 5,
