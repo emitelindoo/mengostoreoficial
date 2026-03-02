@@ -218,7 +218,7 @@ export const products: Product[] = [
   {
     id: "camisa-selecao-alemanha-branca-2627",
     name: "Camisa de Time Seleção Alemanha Copa do Mundo Branca 26/27",
-    price: 199.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -235,7 +235,7 @@ export const products: Product[] = [
   {
     id: "camisa-real-madrid-azul-2025",
     name: "Camisa de Time Real Madrid Azul 2025",
-    price: 199.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -252,7 +252,7 @@ export const products: Product[] = [
   {
     id: "camisa-selecao-portugal-vermelha-2627",
     name: "Camisa Seleção Portugal 2026 Copa do Mundo I Vermelha",
-    price: 199.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -269,7 +269,7 @@ export const products: Product[] = [
   {
     id: "camisa-selecao-brasileira-retro-amarela",
     name: "Camisa de Time Seleção Brasileira Amarela Retrô Lisa",
-    price: 199.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
