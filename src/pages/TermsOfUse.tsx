@@ -23,12 +23,12 @@ const TermsOfUse = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">3. Preços e Pagamento</h2>
-            <p>Os preços são em Reais (R$) e podem ser alterados sem aviso prévio. O pagamento é realizado via PIX, com confirmação instantânea.</p>
+            <p>Os preços são em Reais (R$) e podem ser alterados sem aviso prévio. O pagamento pode ser realizado via PIX (confirmação instantânea) ou Cartão de Crédito (com opção de parcelamento).</p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-foreground">4. Prazo de Entrega</h2>
-            <p>Os produtos são enviados via <strong>SEDEX</strong> para todo o Brasil. Compras com 3 ou mais itens possuem <strong>frete grátis</strong>. Para pedidos com menos de 3 itens, o frete é de <strong>R$ 39,90</strong>. O prazo de entrega é de <strong>7 dias úteis</strong> após a confirmação do pagamento via PIX. O código de rastreamento será enviado por e-mail.</p>
+            <p>Os produtos são enviados via <strong>SEDEX</strong> para todo o Brasil. Compras com 3 ou mais itens possuem <strong>frete grátis</strong>. Para pedidos com menos de 3 itens, o frete é de <strong>R$ 39,90</strong>. O prazo de entrega é de <strong>7 dias úteis</strong> após a confirmação do pagamento. O código de rastreamento será enviado por e-mail.</p>
           </section>
 
           <section>

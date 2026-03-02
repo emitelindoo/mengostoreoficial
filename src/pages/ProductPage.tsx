@@ -127,7 +127,7 @@ const ProductPage = () => {
               </div>
 
               <p className="text-sm text-muted-foreground mb-6">
-                Pagamento exclusivo via <span className="font-semibold text-foreground">PIX</span> • Envio via <span className="font-semibold text-foreground">SEDEX</span> • Frete grátis acima de 3 itens
+                Pague via <span className="font-semibold text-foreground">PIX</span> ou <span className="font-semibold text-foreground">Cartão de Crédito</span> • Envio via <span className="font-semibold text-foreground">SEDEX</span> • Frete grátis acima de 3 itens
               </p>
 
               {/* Stock indicator */}
