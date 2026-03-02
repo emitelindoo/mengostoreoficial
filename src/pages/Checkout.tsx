@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ShieldCheck, Truck, ArrowLeft, Lock, User, MapPin, CreditCard, Check, ChevronRight, Loader2, Copy, CheckCircle } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useCart } from "@/context/CartContext";
@@ -8,6 +8,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { markPurchased } from "@/context/CartContext";
 import { toast } from "sonner";
 import { fbEvent, updatePixelUserData } from "@/lib/fbpixel";
+
+declare global {
+  interface Window {
+    MercadoPago: any;
+  }
+}
+
+const MP_PUBLIC_KEY = "APP_USR-a3616f1f-fd41-48ab-bf23-d4c363e2038a";
 
 const maskCPF = (v: string) => v.replace(/\D/g, "").slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 const maskPhone = (v: string) => {
@@ -53,6 +61,68 @@ const Checkout = () => {
   const [savedOrderId, setSavedOrderId] = useState<string | null>(null);
   const [savedOrderCode, setSavedOrderCode] = useState<string>("");
   const emailRef = useRef<HTMLDivElement>(null);
+  const [paymentMethod, setPaymentMethod] = useState<"pix" | "card">("pix");
+  const [cardForm, setCardForm] = useState<any>(null);
+  const cardFormRef = useRef<HTMLDivElement>(null);
+  const mpInstanceRef = useRef<any>(null);
+
+  // Initialize MercadoPago card form when switching to card
+  const initCardForm = useCallback(() => {
+    if (!window.MercadoPago || paymentMethod !== "card" || step !== 3 || pixData) return;
+
+    // Clean up previous form
+    if (cardForm) {
+      try { cardForm.unmount(); } catch {}
+      setCardForm(null);
+    }
+
+    // Wait for DOM element
+    setTimeout(() => {
+      if (!cardFormRef.current) return;
+
+      try {
+        if (!mpInstanceRef.current) {
+          mpInstanceRef.current = new window.MercadoPago(MP_PUBLIC_KEY, { locale: "pt-BR" });
+        }
+        const mp = mpInstanceRef.current;
+
+        const cf = mp.cardForm({
+          amount: String(finalTotal),
+          iframe: true,
+          form: {
+            id: "mp-card-form",
+            cardNumber: { id: "mp-card-number", placeholder: "Número do cartão" },
+            expirationDate: { id: "mp-expiration-date", placeholder: "MM/AA" },
+            securityCode: { id: "mp-security-code", placeholder: "CVV" },
+            cardholderName: { id: "mp-cardholder-name", placeholder: "Nome no cartão" },
+            issuer: { id: "mp-issuer", placeholder: "Banco emissor" },
+            installments: { id: "mp-installments", placeholder: "Parcelas" },
+            identificationType: { id: "mp-identification-type" },
+            identificationNumber: { id: "mp-identification-number", placeholder: "CPF" },
+          },
+          callbacks: {
+            onFormMounted: (error: any) => {
+              if (error) console.warn("CardForm mount error:", error);
+            },
+            onSubmit: () => {},
+            onFetching: () => {},
+          },
+        });
+        setCardForm(cf);
+      } catch (err) {
+        console.error("Error initializing card form:", err);
+      }
+    }, 300);
+  }, [paymentMethod, step, pixData, finalTotal]);
+
+  useEffect(() => {
+    initCardForm();
+    return () => {
+      if (cardForm) {
+        try { cardForm.unmount(); } catch {}
+      }
+    };
+  }, [paymentMethod, step]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -163,7 +233,102 @@ const Checkout = () => {
 
 
 
+  const handleCardSubmit = async () => {
+    if (!cardForm) {
+      toast.error("Formulário de cartão não carregado. Aguarde.");
+      return;
+    }
+    setIsProcessing(true);
+    try {
+      const cardFormData = cardForm.getCardFormData();
+      if (!cardFormData.token) {
+        toast.error("Preencha todos os dados do cartão corretamente.");
+        setIsProcessing(false);
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke("create-card-payment", {
+        body: {
+          amount: finalTotal,
+          token: cardFormData.token,
+          installments: cardFormData.installments,
+          paymentMethodId: cardFormData.paymentMethodId,
+          issuerId: cardFormData.issuerId,
+          customer: {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            cpf: form.cpf,
+          },
+          items: items.map((item) => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            price: item.product.price,
+          })),
+          address: {
+            street: form.street,
+            number: form.number,
+            complement: form.complement,
+            neighborhood: form.neighborhood,
+            city: form.city,
+            state: form.state,
+            cep: form.cep,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.status === "approved") {
+        const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        setSavedOrderCode(orderCode);
+        await saveOrderToDb(orderCode, data?.id, "paid");
+        fbEvent("Purchase", {
+          content_ids: items.map(i => i.product.id),
+          contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
+          content_type: "product",
+          value: finalTotal,
+          currency: "BRL",
+          num_items: itemCount,
+        });
+        setSubmitted(true);
+        markPurchased();
+        clearCart();
+        toast.success("Pagamento aprovado! 🎉");
+      } else if (data?.status === "in_process") {
+        const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        setSavedOrderCode(orderCode);
+        await saveOrderToDb(orderCode, data?.id, "pending_payment");
+        setSubmitted(true);
+        markPurchased();
+        clearCart();
+        toast.info("Pagamento em análise. Você será notificado quando for aprovado.");
+      } else {
+        const detail = data?.status_detail || "";
+        const messages: Record<string, string> = {
+          cc_rejected_bad_filled_card_number: "Número do cartão inválido.",
+          cc_rejected_bad_filled_date: "Data de validade inválida.",
+          cc_rejected_bad_filled_security_code: "CVV inválido.",
+          cc_rejected_bad_filled_other: "Dados do cartão incorretos.",
+          cc_rejected_insufficient_amount: "Saldo insuficiente.",
+          cc_rejected_call_for_authorize: "Ligue para o banco para autorizar.",
+          cc_rejected_card_disabled: "Cartão desabilitado. Contate o emissor.",
+          cc_rejected_max_attempts: "Limite de tentativas atingido. Tente outro cartão.",
+        };
+        toast.error(messages[detail] || "Pagamento recusado. Tente outro cartão.");
+      }
+    } catch (err: any) {
+      console.error("Card payment error:", err);
+      toast.error("Erro ao processar pagamento com cartão.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handleSubmit = async () => {
+    if (paymentMethod === "card") {
+      return handleCardSubmit();
+    }
     setIsProcessing(true);
     try {
       const { data, error } = await supabase.functions.invoke("create-payment", {
@@ -203,7 +368,6 @@ const Checkout = () => {
       const transactionId = data?.id;
 
       if (pixQrCode) {
-        // Generate order code and save to DB
         const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
         setSavedOrderCode(orderCode);
         const orderId = await saveOrderToDb(orderCode, transactionId, "pending_payment");
@@ -632,7 +796,86 @@ const Checkout = () => {
                         <span className="text-primary">{formatCurrency(finalTotal)}</span>
                       </div>
                     </div>
+
+                    {/* Payment Method Selector */}
+                    <div className="mb-6">
+                      <p className="text-sm font-semibold mb-3">Forma de pagamento:</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMethod("pix")}
+                          className={`flex items-center gap-2 px-4 py-3.5 rounded-xl border-2 transition-all font-semibold text-sm ${
+                            paymentMethod === "pix"
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-card text-muted-foreground hover:border-primary/50"
+                          }`}
+                        >
+                          <svg viewBox="0 0 512 512" className="w-5 h-5" fill="currentColor">
+                            <path d="M242.4 292.5C247.8 287.1 257.1 287.1 262.5 292.5L339.5 369.5C353.7 383.7 372.5 391.5 392.5 391.5H407.7L310.6 488.6C280.3 518.9 231.1 518.9 200.8 488.6L103.3 391.1H112.6C132.6 391.1 151.5 383.3 165.7 369.1L242.4 292.5zM242.4 219.5C247.8 224.9 257.1 224.9 262.5 219.5L339.5 142.5C353.7 128.3 372.5 120.5 392.5 120.5H407.7L310.6 23.4C280.3-6.9 231.1-6.9 200.8 23.4L103.3 120.9H112.6C132.6 120.9 151.5 128.7 165.7 142.9L242.4 219.5zM488.6 200.8L391.5 103.3V112.6C391.5 132.6 383.7 151.5 369.5 165.7L292.5 242.4C287.1 247.8 287.1 257.1 292.5 262.5L369.5 339.5C383.7 353.7 391.5 372.5 391.5 392.5V407.7L488.6 310.6C518.9 280.3 518.9 231.1 488.6 200.8zM23.4 200.8C-6.9 231.1-6.9 280.3 23.4 310.6L120.5 407.7V392.5C120.5 372.5 128.3 353.7 142.5 339.5L219.5 262.5C224.9 257.1 224.9 247.8 219.5 242.4L142.5 165.7C128.3 151.5 120.5 132.6 120.5 112.6V103.3L23.4 200.8z"/>
+                          </svg>
+                          PIX
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMethod("card")}
+                          className={`flex items-center gap-2 px-4 py-3.5 rounded-xl border-2 transition-all font-semibold text-sm ${
+                            paymentMethod === "card"
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-card text-muted-foreground hover:border-primary/50"
+                          }`}
+                        >
+                          <CreditCard className="w-5 h-5" />
+                          Cartão
+                        </button>
+                      </div>
+                    </div>
                       </>
+                    )}
+
+                    {/* Card Form */}
+                    {paymentMethod === "card" && !pixData && (
+                      <div ref={cardFormRef} className="mb-6">
+                        <form id="mp-card-form" onSubmit={(e) => e.preventDefault()}>
+                          <div className="space-y-3">
+                            <div>
+                              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Número do cartão</label>
+                              <div id="mp-card-number" className="h-11 rounded-xl border border-border bg-secondary/50"></div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Validade</label>
+                                <div id="mp-expiration-date" className="h-11 rounded-xl border border-border bg-secondary/50"></div>
+                              </div>
+                              <div>
+                                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">CVV</label>
+                                <div id="mp-security-code" className="h-11 rounded-xl border border-border bg-secondary/50"></div>
+                              </div>
+                            </div>
+                            <div>
+                              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Nome no cartão</label>
+                              <input id="mp-cardholder-name" type="text" className={inputClass} defaultValue={form.name} />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Tipo de documento</label>
+                                <select id="mp-identification-type" className={inputClass}></select>
+                              </div>
+                              <div>
+                                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Documento</label>
+                                <input id="mp-identification-number" type="text" className={inputClass} defaultValue={form.cpf.replace(/\D/g, "")} />
+                              </div>
+                            </div>
+                            <div>
+                              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Banco emissor</label>
+                              <select id="mp-issuer" className={inputClass}></select>
+                            </div>
+                            <div>
+                              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Parcelas</label>
+                              <select id="mp-installments" className={inputClass}></select>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     )}
 
                     {!pixData ? (
@@ -643,8 +886,10 @@ const Checkout = () => {
                       >
                         {isProcessing ? (
                           <><Loader2 className="w-5 h-5 animate-spin" /> PROCESSANDO...</>
-                        ) : (
+                        ) : paymentMethod === "pix" ? (
                           <><Lock className="w-5 h-5" /> PAGAR COM PIX</>
+                        ) : (
+                          <><CreditCard className="w-5 h-5" /> PAGAR COM CARTÃO</>
                         )}
                       </button>
                     ) : (
