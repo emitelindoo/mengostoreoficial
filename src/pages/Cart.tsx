@@ -162,7 +162,12 @@ const Cart = () => {
                   )}
 
                   {/* CEP Shipping Calculator */}
-                  {!shippingCalculated ? (
+                  {itemCount >= 3 ? (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-green-400 font-semibold">🚚 Frete Grátis (3+ itens)</span>
+                      <span className="text-green-400 font-semibold">R$ 0,00</span>
+                    </div>
+                  ) : !shippingCalculated ? (
                     <div>
                       <p className="text-sm text-muted-foreground mb-2">Calcular frete:</p>
                       <div className="flex gap-2">
@@ -221,7 +226,7 @@ const Cart = () => {
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t border-border pt-4">
                   <span>Total</span>
-                  <span className="text-primary">R$ {(shippingCalculated ? finalTotal : total - firstPurchaseDiscount).toFixed(2).replace(".", ",")}</span>
+                  <span className="text-primary">R$ {(itemCount >= 3 || shippingCalculated ? finalTotal : total - firstPurchaseDiscount).toFixed(2).replace(".", ",")}</span>
                 </div>
 
                 <Link
