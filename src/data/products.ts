@@ -188,7 +188,7 @@ export const products: Product[] = [
   {
     id: "camisa-cruzeiro-azul-dourado-2526",
     name: "Camisa de Time Cruzeiro Azul c/ Dourado 25/26",
-    price: 164.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 53,
     rating: 5,
