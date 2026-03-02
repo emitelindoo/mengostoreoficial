@@ -84,6 +84,7 @@ const Checkout = () => {
 
   // Initialize MercadoPago card form when switching to card
   const initCardForm = useCallback(() => {
+    console.log("initCardForm called:", { hasMP: !!window.MercadoPago, paymentMethod, step, hasPix: !!pixData });
     if (!window.MercadoPago || paymentMethod !== "card" || step !== 3 || pixData) return;
 
     // Clean up previous form
