@@ -85,7 +85,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, 0);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
-  const shipping = itemCount > 0 ? SHIPPING_OPTIONS[shippingOption].price : 0;
+  const freeShipping = itemCount >= 3;
+  const shipping = itemCount > 0 && !freeShipping ? SHIPPING_OPTIONS[shippingOption].price : 0;
   const firstPurchaseDiscount = isFirstPurchase && itemCount > 0 ? Math.round(total * 0.10 * 100) / 100 : 0;
   const finalTotal = total - firstPurchaseDiscount + shipping;
 
