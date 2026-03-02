@@ -12,11 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    const NIVUS_SECRET_KEY = Deno.env.get("NIVUS_SECRET_KEY");
-    const NIVUS_COMPANY_ID = Deno.env.get("NIVUS_COMPANY_ID");
+    const MP_ACCESS_TOKEN = Deno.env.get("MP_ACCESS_TOKEN");
 
-    if (!NIVUS_SECRET_KEY || !NIVUS_COMPANY_ID) {
-      throw new Error("Nivus Pay keys not configured");
+    if (!MP_ACCESS_TOKEN) {
+      throw new Error("Mercado Pago access token not configured");
     }
 
     const { amount, customer, items, address } = await req.json();
@@ -28,72 +27,94 @@ serve(async (req) => {
       );
     }
 
-    // Build Basic auth: SECRET_KEY:COMPANY_ID
-    const credentials = btoa(`${NIVUS_SECRET_KEY}:${NIVUS_COMPANY_ID}`);
-
-    // Generate short order ID
+    // Generate short order ID for description
     const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
 
     const payload: Record<string, any> = {
-      amount: Math.round(amount * 100), // centavos
-      paymentMethod: "PIX",
-      customer: {
-        name: customer.name,
+      transaction_amount: Number(amount),
+      payment_method_id: "pix",
+      description: `Pedido ${orderCode}`,
+      payer: {
         email: customer.email,
-        phone: customer.phone?.replace(/\D/g, ""),
-        document: {
-          type: "cpf",
+        first_name: customer.name?.split(" ")[0] || "",
+        last_name: customer.name?.split(" ").slice(1).join(" ") || "",
+        identification: {
+          type: "CPF",
           number: customer.cpf?.replace(/\D/g, ""),
         },
       },
-      items: items.map((item: any) => ({
-        title: `Pedido ${orderCode}`,
-        quantity: item.quantity,
-        unitPrice: Math.round(item.price * 100),
-      })),
-      description: `Pedido ${orderCode}`,
     };
 
     if (address) {
-      payload.shipping = {
-        name: customer.name,
-        fee: 0,
-        address: {
-          street: address.street,
-          streetNumber: address.number,
-          complement: address.complement || "",
-          neighborhood: address.neighborhood,
-          city: address.city,
-          state: address.state,
-          zipCode: address.cep?.replace(/\D/g, ""),
-          country: "BR",
+      payload.additional_info = {
+        items: items.map((item: any, i: number) => ({
+          id: `item-${i}`,
+          title: `Pedido ${orderCode}`,
+          quantity: String(item.quantity),
+          unit_price: String(item.price),
+        })),
+        payer: {
+          first_name: customer.name?.split(" ")[0] || "",
+          last_name: customer.name?.split(" ").slice(1).join(" ") || "",
+          phone: {
+            area_code: customer.phone?.replace(/\D/g, "").substring(0, 2) || "",
+            number: customer.phone?.replace(/\D/g, "").substring(2) || "",
+          },
+          address: {
+            zip_code: address.cep?.replace(/\D/g, ""),
+            street_name: address.street,
+            street_number: address.number,
+            city: address.city,
+            federal_unit: address.state,
+          },
+        },
+        shipments: {
+          receiver_address: {
+            zip_code: address.cep?.replace(/\D/g, ""),
+            street_name: address.street,
+            street_number: address.number,
+            city_name: address.city,
+            state_name: address.state,
+          },
         },
       };
     }
 
-    console.log("Creating Nivus payment with payload:", JSON.stringify(payload));
+    console.log("Creating Mercado Pago PIX payment:", JSON.stringify(payload));
 
-    const response = await fetch("https://api.nivuspay.com.br/functions/v1/transactions", {
+    const response = await fetch("https://api.mercadopago.com/v1/payments", {
       method: "POST",
       headers: {
-        Authorization: `Basic ${credentials}`,
+        Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "X-Idempotency-Key": crypto.randomUUID(),
       },
       body: JSON.stringify(payload),
     });
 
     const data = await response.json();
-    console.log("Nivus response status:", response.status, "data:", JSON.stringify(data));
+    console.log("Mercado Pago response status:", response.status);
 
     if (!response.ok) {
+      console.error("Mercado Pago error:", JSON.stringify(data));
       return new Response(
         JSON.stringify({ error: "Payment creation failed", details: data }),
         { status: response.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    return new Response(JSON.stringify(data), {
+    // Extract PIX data from MP response
+    const pixData = data.point_of_interaction?.transaction_data;
+
+    const result = {
+      id: data.id,
+      status: data.status,
+      qr_code: pixData?.qr_code,
+      qr_code_base64: pixData?.qr_code_base64,
+      ticket_url: pixData?.ticket_url,
+    };
+
+    return new Response(JSON.stringify(result), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

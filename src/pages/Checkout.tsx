@@ -194,13 +194,12 @@ const Checkout = () => {
 
       if (error) throw error;
 
-      if (data?.status === "refused" || data?.status === "error") {
-        const reason = data?.refusedReason?.description || "Transação recusada. Verifique seus dados e tente novamente.";
-        toast.error(reason);
+      if (data?.status === "rejected") {
+        toast.error("Transação recusada. Verifique seus dados e tente novamente.");
         return;
       }
 
-      const pixQrCode = data?.pix?.qrcode;
+      const pixQrCode = data?.qr_code;
       const transactionId = data?.id;
 
       if (pixQrCode) {
@@ -223,7 +222,7 @@ const Checkout = () => {
           currency: "BRL",
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
-      } else if (data?.status === "paid") {
+      } else if (data?.status === "approved") {
         const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
         setSavedOrderCode(orderCode);
         await saveOrderToDb(orderCode, data?.id, "paid");
