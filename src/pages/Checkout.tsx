@@ -26,6 +26,21 @@ const maskPhone = (v: string) => {
 };
 const maskCEP = (v: string) => v.replace(/\D/g, "").slice(0, 8).replace(/(\d{5})(\d)/, "$1-$2");
 
+const isValidCPF = (cpf: string): boolean => {
+  const nums = cpf.replace(/\D/g, "");
+  if (nums.length !== 11 || /^(\d)\1+$/.test(nums)) return false;
+  let sum = 0;
+  for (let i = 0; i < 9; i++) sum += parseInt(nums[i]) * (10 - i);
+  let rest = (sum * 10) % 11;
+  if (rest === 10) rest = 0;
+  if (rest !== parseInt(nums[9])) return false;
+  sum = 0;
+  for (let i = 0; i < 10; i++) sum += parseInt(nums[i]) * (11 - i);
+  rest = (sum * 10) % 11;
+  if (rest === 10) rest = 0;
+  return rest === parseInt(nums[10]);
+};
+
 const EMAIL_DOMAINS = ["@gmail.com", "@hotmail.com", "@outlook.com", "@yahoo.com.br", "@icloud.com", "@live.com"];
 
 const UF_OPTIONS = [
@@ -331,6 +346,11 @@ const Checkout = () => {
       return handleCardSubmit();
     }
     setIsProcessing(true);
+    if (!isValidCPF(form.cpf)) {
+      toast.error("CPF inválido. Verifique e tente novamente.");
+      setIsProcessing(false);
+      return;
+    }
     try {
       const { data, error } = await supabase.functions.invoke("create-payment", {
         body: {
