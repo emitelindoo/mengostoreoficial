@@ -72,6 +72,10 @@ import camisaPsgVermelhaDetalhe1 from "@/assets/camisa-psg-vermelha-detalhe1.png
 import camisaPsgVermelhaDetalhe2 from "@/assets/camisa-psg-vermelha-detalhe2.png";
 import camisaPsgVermelhaDetalhe3 from "@/assets/camisa-psg-vermelha-detalhe3.png";
 import camisaPsgVermelhaDetalhe4 from "@/assets/camisa-psg-vermelha-detalhe4.png";
+import camisaInterMilaoFrente from "@/assets/camisa-inter-milao-frente.png";
+import camisaInterMilaoDetalhe1 from "@/assets/camisa-inter-milao-detalhe1.png";
+import camisaInterMilaoDetalhe2 from "@/assets/camisa-inter-milao-detalhe2.png";
+import camisaInterMilaoDetalhe3 from "@/assets/camisa-inter-milao-detalhe3.png";
 
 export type ProductCategory = "lancamentos-2026" | "selecoes" | "brasileirao" | "champions";
 
@@ -218,7 +222,7 @@ export const products: Product[] = [
   {
     id: "camisa-selecao-alemanha-branca-2627",
     name: "Camisa de Time Seleção Alemanha Copa do Mundo Branca 26/27",
-    price: 169.90,
+    price: 199.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -252,7 +256,7 @@ export const products: Product[] = [
   {
     id: "camisa-selecao-portugal-vermelha-2627",
     name: "Camisa Seleção Portugal 2026 Copa do Mundo I Vermelha",
-    price: 169.90,
+    price: 199.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -269,7 +273,7 @@ export const products: Product[] = [
   {
     id: "camisa-selecao-brasileira-retro-amarela",
     name: "Camisa de Time Seleção Brasileira Amarela Retrô Lisa",
-    price: 169.90,
+    price: 199.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -286,7 +290,7 @@ export const products: Product[] = [
   {
     id: "camisa-psg-vermelha-total90-2526",
     name: "Camisa de Time PSG Vermelha 25/26 Total 90",
-    price: 199.90,
+    price: 169.90,
     originalPrice: 349.90,
     discount: 46,
     rating: 5,
@@ -298,6 +302,26 @@ export const products: Product[] = [
     sizes: ["M", "G", "GG"],
     customizable: true,
     stock: 12,
+    category: ["champions"],
+  },
+];
+
+  {
+    id: "camisa-inter-milao-2526",
+    name: "Camisa de Time Inter de Milão 25/26",
+    price: 169.90,
+    originalPrice: 349.90,
+    discount: 53,
+    rating: 5,
+    reviews: 590,
+    image: camisaInterMilaoFrente,
+    images: [camisaInterMilaoFrente, camisaInterMilaoDetalhe1, camisaInterMilaoDetalhe2, camisaInterMilaoDetalhe3],
+    badge: "Lançamento",
+    description: "Camisa da Inter de Milão modelo titular 25/26 em azul marinho com detalhes em laranja. Confeccionada em poliéster com tecnologia DRI-FIT de absorção de suor. Gola V com acabamento laranja, escudo bordado no peito com duas estrelas e patrocinador Betsson.sport. Corte regular confortável, ideal para jogos ou uso casual.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    freeCustomization: false,
+    stock: 15,
     category: ["champions"],
   },
 ];
