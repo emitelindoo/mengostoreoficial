@@ -2,7 +2,7 @@ import { Shield, Truck, RefreshCw, CreditCard } from "lucide-react";
 
 const trustItems = [
   { icon: Shield, title: "Compra Segura", desc: "Pagamento 100% protegido via PIX" },
-  { icon: Truck, title: "Frete Grátis", desc: "Acima de 3 itens via SEDEX" },
+  { icon: Truck, title: "Envio SEDEX", desc: "A partir de R$ 29,90" },
   { icon: RefreshCw, title: "Troca Fácil", desc: "30 dias para troca" },
   { icon: CreditCard, title: "Melhor Preço", desc: "Garantia de menor preço" },
 ];

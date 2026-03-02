@@ -127,7 +127,7 @@ const ProductPage = () => {
               </div>
 
               <p className="text-sm text-muted-foreground mb-6">
-                Pague via <span className="font-semibold text-foreground">PIX</span> ou <span className="font-semibold text-foreground">Cartão de Crédito</span> • Envio via <span className="font-semibold text-foreground">SEDEX</span> • Frete grátis acima de 3 itens
+                Pague via <span className="font-semibold text-foreground">PIX</span> ou <span className="font-semibold text-foreground">Cartão de Crédito</span> • Envio via <span className="font-semibold text-foreground">SEDEX</span> • A partir de R$ 29,90
               </p>
 
               {/* Stock indicator */}
@@ -282,13 +282,13 @@ const ProductPage = () => {
                   COMPRAR PELO WHATSAPP
                 </a>
 
-                <p className="text-center text-sm text-muted-foreground">Frete grátis a partir de 3 itens</p>
+                <p className="text-center text-sm text-muted-foreground">Frete a partir de R$ 29,90 via SEDEX</p>
               </div>
 
               <div className="mt-6 space-y-3">
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <Truck className="w-5 h-5 text-primary" />
-                  <span>Frete grátis a partir de 3 itens • SEDEX para todo o Brasil</span>
+                  <span>Entrega via SEDEX para todo o Brasil • 7 a 15 dias úteis</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <ShieldCheck className="w-5 h-5 text-primary" />

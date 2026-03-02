@@ -9,6 +9,13 @@ export interface CartItem {
   customNumber?: string;
 }
 
+export type ShippingOption = "standard" | "express";
+
+export const SHIPPING_OPTIONS = {
+  standard: { label: "Padrão", days: 15, price: 29.90 },
+  express: { label: "Expresso", days: 7, price: 42.80 },
+};
+
 interface CartContextType {
   items: CartItem[];
   addItem: (product: Product, quantity: number, size?: string, customName?: string, customNumber?: string) => void;
@@ -21,6 +28,8 @@ interface CartContextType {
   itemCount: number;
   firstPurchaseDiscount: number;
   isFirstPurchase: boolean;
+  shippingOption: ShippingOption;
+  setShippingOption: (option: ShippingOption) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -31,6 +40,7 @@ export const markPurchased = () => localStorage.setItem("aura_purchased", "1");
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isFirstPurchase] = useState(getIsFirstPurchase);
+  const [shippingOption, setShippingOption] = useState<ShippingOption>("standard");
 
   const addItem = (product: Product, quantity: number, size?: string, customName?: string, customNumber?: string) => {
     setItems((prev) => {
@@ -75,14 +85,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, 0);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
-  const SHIPPING_FEE = 39.90;
-  const shipping = itemCount >= 3 ? 0 : (itemCount > 0 ? SHIPPING_FEE : 0);
+  const shipping = itemCount > 0 ? SHIPPING_OPTIONS[shippingOption].price : 0;
   const firstPurchaseDiscount = isFirstPurchase && itemCount > 0 ? Math.round(total * 0.10 * 100) / 100 : 0;
   const finalTotal = total - firstPurchaseDiscount + shipping;
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, shipping, finalTotal, itemCount, firstPurchaseDiscount, isFirstPurchase }}
+      value={{ items, addItem, removeItem, updateQuantity, clearCart, total, shipping, finalTotal, itemCount, firstPurchaseDiscount, isFirstPurchase, shippingOption, setShippingOption }}
     >
       {children}
     </CartContext.Provider>
