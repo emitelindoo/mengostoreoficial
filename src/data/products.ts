@@ -59,6 +59,8 @@ import camisaAlemanhaBrancaDetalhe1 from "@/assets/camisa-alemanha-branca-detalh
 import camisaAlemanhaBrancaDetalhe2 from "@/assets/camisa-alemanha-branca-detalhe2.png";
 import camisaAlemanhaBrancaDetalhe3 from "@/assets/camisa-alemanha-branca-detalhe3.png";
 import camisaAlemanhaBrancaCostas from "@/assets/camisa-alemanha-branca-costas.png";
+import camisaPortugalVermelhaFrente from "@/assets/camisa-portugal-vermelha-frente.webp";
+import camisaPortugalVermelhaCostas from "@/assets/camisa-portugal-vermelha-costas.webp";
 
 export type ProductCategory = "lancamentos-2026" | "selecoes" | "brasileirao" | "champions";
 
@@ -235,6 +237,23 @@ export const products: Product[] = [
     customizable: true,
     stock: 14,
     category: ["champions"],
+  },
+  {
+    id: "camisa-selecao-portugal-vermelha-2627",
+    name: "Camisa Seleção Portugal 2026 Copa do Mundo I Vermelha",
+    price: 199.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 780,
+    image: camisaPortugalVermelhaFrente,
+    images: [camisaPortugalVermelhaFrente, camisaPortugalVermelhaCostas],
+    badge: "Lançamento",
+    description: "Camisa da Seleção de Portugal modelo titular vermelha para a Copa do Mundo 2026. Confeccionada em poliéster com tecnologia de secagem rápida e ventilação otimizada. Gola V com detalhes em verde-turquesa, escudo FPF bordado no peito e textura ondulada exclusiva. Corte regular confortável, perfeita para torcer por Portugal com estilo.",
+    sizes: ["P", "M", "G", "GG", "XGG"],
+    customizable: true,
+    stock: 14,
+    category: ["selecoes"],
   },
 ];
 
