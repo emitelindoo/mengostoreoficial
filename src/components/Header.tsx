@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const navLinks = [
   { label: "Todos os Produtos", to: "/categoria/todos" },
+  { label: "Rastrear Pedido", to: "/rastrear" },
   { label: "Contato", to: "/contato" },
   { label: "Entrega", to: "/prazo-de-entrega" },
 ];
