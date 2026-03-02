@@ -61,6 +61,12 @@ import camisaAlemanhaBrancaDetalhe3 from "@/assets/camisa-alemanha-branca-detalh
 import camisaAlemanhaBrancaCostas from "@/assets/camisa-alemanha-branca-costas.png";
 import camisaPortugalVermelhaFrente from "@/assets/camisa-portugal-vermelha-frente.webp";
 import camisaPortugalVermelhaCostas from "@/assets/camisa-portugal-vermelha-costas.webp";
+import camisaBrasilRetroFrente from "@/assets/camisa-brasil-retro-frente.png";
+import camisaBrasilRetroDetalhe1 from "@/assets/camisa-brasil-retro-detalhe1.png";
+import camisaBrasilRetroDetalhe2 from "@/assets/camisa-brasil-retro-detalhe2.png";
+import camisaBrasilRetroDetalhe3 from "@/assets/camisa-brasil-retro-detalhe3.png";
+import camisaBrasilRetroDetalhe4 from "@/assets/camisa-brasil-retro-detalhe4.png";
+import camisaBrasilRetroCostas from "@/assets/camisa-brasil-retro-costas.png";
 
 export type ProductCategory = "lancamentos-2026" | "selecoes" | "brasileirao" | "champions";
 
@@ -253,6 +259,23 @@ export const products: Product[] = [
     sizes: ["P", "M", "G", "GG", "XGG"],
     customizable: true,
     stock: 14,
+    category: ["selecoes"],
+  },
+  {
+    id: "camisa-selecao-brasileira-retro-amarela",
+    name: "Camisa de Time Seleção Brasileira Amarela Retrô Lisa",
+    price: 199.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 1150,
+    image: camisaBrasilRetroFrente,
+    images: [camisaBrasilRetroFrente, camisaBrasilRetroDetalhe1, camisaBrasilRetroDetalhe2, camisaBrasilRetroDetalhe3, camisaBrasilRetroDetalhe4, camisaBrasilRetroCostas],
+    badge: "Retrô",
+    description: "Camisa retrô da Seleção Brasileira modelo titular amarela lisa. Confeccionada em poliéster com tecnologia DRI-FIT ADV de secagem rápida e ventilação otimizada. Gola redonda com detalhes em verde, escudo CBF bordado no peito e design clássico inspirado nas grandes conquistas do Brasil. Corte regular confortável, perfeita para quem ama o estilo clássico da seleção.",
+    sizes: ["G", "GG"],
+    customizable: true,
+    stock: 8,
     category: ["selecoes"],
   },
 ];
