@@ -12,11 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    const NIVUS_SECRET_KEY = Deno.env.get("NIVUS_SECRET_KEY");
-    const NIVUS_COMPANY_ID = Deno.env.get("NIVUS_COMPANY_ID");
+    const MP_ACCESS_TOKEN = Deno.env.get("MP_ACCESS_TOKEN");
 
-    if (!NIVUS_SECRET_KEY || !NIVUS_COMPANY_ID) {
-      throw new Error("Nivus Pay keys not configured");
+    if (!MP_ACCESS_TOKEN) {
+      throw new Error("Mercado Pago access token not configured");
     }
 
     const { transactionId } = await req.json();
@@ -28,20 +27,15 @@ serve(async (req) => {
       );
     }
 
-    // Build Basic auth: SECRET_KEY:COMPANY_ID
-    const credentials = btoa(`${NIVUS_SECRET_KEY}:${NIVUS_COMPANY_ID}`);
-
-    const response = await fetch(`https://api.nivuspay.com.br/functions/v1/transactions/${transactionId}`, {
+    const response = await fetch(`https://api.mercadopago.com/v1/payments/${transactionId}`, {
       method: "GET",
       headers: {
-        Authorization: `Basic ${credentials}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
       },
     });
 
     const data = await response.json();
-    console.log("Nivus check-payment status:", data?.status, "id:", transactionId);
+    console.log("MP check-payment status:", data?.status, "id:", transactionId);
 
     if (!response.ok) {
       return new Response(
@@ -50,8 +44,14 @@ serve(async (req) => {
       );
     }
 
+    // Map MP status: "approved" = paid
+    const isPaid = data.status === "approved";
+
     return new Response(
-      JSON.stringify({ status: data.status, paidAt: data.paidAt }),
+      JSON.stringify({
+        status: isPaid ? "paid" : data.status,
+        paidAt: data.date_approved || null,
+      }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error: unknown) {
