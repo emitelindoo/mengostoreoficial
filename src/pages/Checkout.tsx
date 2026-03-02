@@ -5,6 +5,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
+import { SHIPPING_OPTIONS } from "@/context/CartContext";
 import { markPurchased } from "@/context/CartContext";
 import { toast } from "sonner";
 import { fbEvent, updatePixelUserData } from "@/lib/fbpixel";
@@ -41,7 +42,7 @@ const steps = [
 const formatCurrency = (value: number) => `R$ ${value.toFixed(2).replace(".", ",")}`;
 
 const Checkout = () => {
-  const { items, total, shipping, finalTotal, clearCart, itemCount, firstPurchaseDiscount } = useCart();
+  const { items, total, shipping, finalTotal, clearCart, itemCount, firstPurchaseDiscount, shippingOption } = useCart();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
@@ -784,13 +785,10 @@ const Checkout = () => {
                         </div>
                       )}
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Frete</span>
-                        {shipping === 0 ? (
-                          <span className="text-emerald-500 font-semibold">Grátis</span>
-                        ) : (
-                          <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
-                        )}
+                        <span className="text-muted-foreground">Frete ({SHIPPING_OPTIONS[shippingOption].label})</span>
+                        <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
                       </div>
+                      <p className="text-xs text-muted-foreground">{SHIPPING_OPTIONS[shippingOption].days} dias úteis via SEDEX</p>
                       <div className="flex justify-between font-bold text-xl border-t border-border pt-3 mt-2">
                         <span>Total</span>
                         <span className="text-primary">{formatCurrency(finalTotal)}</span>
@@ -981,13 +979,10 @@ const Checkout = () => {
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Frete</span>
-                    {shipping === 0 ? (
-                      <span className="text-emerald-500 font-semibold">Grátis</span>
-                    ) : (
-                      <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
-                    )}
+                    <span className="text-muted-foreground">Frete ({SHIPPING_OPTIONS[shippingOption].label})</span>
+                    <span className="text-foreground">R$ {shipping.toFixed(2).replace(".", ",")}</span>
                   </div>
+                  <p className="text-xs text-muted-foreground">{SHIPPING_OPTIONS[shippingOption].days} dias úteis via SEDEX</p>
                   <div className="flex justify-between font-bold text-xl border-t border-border pt-4 mt-3">
                     <span>Total</span>
                     <span className="text-primary">{formatCurrency(finalTotal)}</span>

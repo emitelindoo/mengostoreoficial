@@ -1,19 +1,18 @@
 import { Link } from "react-router-dom";
-import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart, Gift, Truck } from "lucide-react";
-import { useCart } from "@/context/CartContext";
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingCart, Truck } from "lucide-react";
+import { useCart, SHIPPING_OPTIONS, ShippingOption } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { fbEvent } from "@/lib/fbpixel";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total, shipping, finalTotal, itemCount, firstPurchaseDiscount, isFirstPurchase } = useCart();
+  const { items, updateQuantity, removeItem, total, shipping, finalTotal, itemCount, firstPurchaseDiscount, shippingOption, setShippingOption } = useCart();
   const [cep, setCep] = useState("");
   const [shippingCalculated, setShippingCalculated] = useState(false);
   const [calculatingCep, setCalculatingCep] = useState(false);
   const [cepLocation, setCepLocation] = useState("");
   const [cepError, setCepError] = useState("");
-  const freeShipping = itemCount >= 3;
 
   const handleCalculateShipping = async () => {
     const cleanCep = cep.replace(/\D/g, "");
@@ -83,19 +82,6 @@ const Cart = () => {
             <ArrowLeft className="w-4 h-4" /> Continuar comprando
           </Link>
 
-          {/* Shipping Banner */}
-          {itemCount > 0 && itemCount < 3 && (
-            <div className="mb-6">
-              <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-center gap-3">
-                <Gift className="w-6 h-6 text-primary flex-shrink-0" />
-                <div>
-                  <p className="font-display font-bold text-foreground text-sm">🚚 FRETE GRÁTIS A PARTIR DE 3 ITENS!</p>
-                  <p className="text-xs text-muted-foreground">Adicione {3 - itemCount} {3 - itemCount === 1 ? "produto" : "produtos"} a mais e ganhe frete grátis!</p>
-                </div>
-              </div>
-            </div>
-          )}
-
           <h1 className="text-2xl md:text-3xl font-display font-bold mb-8 flex items-center gap-3">
             <ShoppingCart className="w-6 h-6 text-primary" /> Carrinho ({itemCount} {itemCount === 1 ? "item" : "itens"})
           </h1>
@@ -125,7 +111,7 @@ const Cart = () => {
                     )}
                     {(item.customName || item.customNumber) && (
                       <p className="text-xs text-primary mt-1 font-semibold">
-                        Personalizado: {item.customName && `${item.customName}`}{item.customName && item.customNumber && " • "}{item.customNumber && `Nº ${item.customNumber}`} {item.product.freeCustomization ? "(grátis)" : "(+R$ 19,90)"}
+                        Personalizado: {item.customName && `${item.customName}`}{item.customName && item.customNumber && " • "}{item.customNumber && `Nº ${item.customNumber}`} (+R$ 19,90)
                       </p>
                     )}
                     <p className="text-primary font-bold mt-2">
@@ -174,13 +160,9 @@ const Cart = () => {
                       <span className="text-green-400 font-semibold">- R$ {firstPurchaseDiscount.toFixed(2).replace(".", ",")}</span>
                     </div>
                   )}
+
                   {/* CEP Shipping Calculator */}
-                  {freeShipping ? (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Frete</span>
-                      <span className="text-primary font-semibold">Grátis 🎉</span>
-                    </div>
-                  ) : !shippingCalculated ? (
+                  {!shippingCalculated ? (
                     <div>
                       <p className="text-sm text-muted-foreground mb-2">Calcular frete:</p>
                       <div className="flex gap-2">
@@ -206,26 +188,40 @@ const Cart = () => {
                         </button>
                       </div>
                       {cepError && <p className="text-xs text-destructive mt-1.5">{cepError}</p>}
-                      <p className="text-xs text-primary mt-1.5">🚚 Frete grátis a partir de 3 itens!</p>
                     </div>
                   ) : (
                     <div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Frete (SEDEX)</span>
-                        <span className="text-foreground font-semibold">R$ {shipping.toFixed(2).replace(".", ",")}</span>
+                      <p className="text-xs text-muted-foreground mb-2">📍 {cepLocation} — CEP {cep}
+                        <button onClick={() => { setShippingCalculated(false); setCep(""); setCepLocation(""); setCepError(""); }} className="text-primary hover:underline ml-2">Alterar</button>
+                      </p>
+                      <p className="text-sm font-semibold text-foreground mb-2">Escolha o frete:</p>
+                      <div className="space-y-2">
+                        {(Object.entries(SHIPPING_OPTIONS) as [ShippingOption, typeof SHIPPING_OPTIONS.standard][]).map(([key, opt]) => (
+                          <button
+                            key={key}
+                            onClick={() => setShippingOption(key)}
+                            className={`w-full text-left px-3 py-3 rounded-xl border-2 transition-all ${
+                              shippingOption === key
+                                ? "border-primary bg-primary/10"
+                                : "border-border hover:border-primary/50"
+                            }`}
+                          >
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="text-sm font-semibold text-foreground">{opt.label}</p>
+                                <p className="text-xs text-muted-foreground">{opt.days} dias úteis via SEDEX</p>
+                              </div>
+                              <span className="text-sm font-bold text-primary">R$ {opt.price.toFixed(2).replace(".", ",")}</span>
+                            </div>
+                          </button>
+                        ))}
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">📍 {cepLocation} — CEP {cep}</p>
-                      <div className="flex justify-between items-center mt-1">
-                        <p className="text-xs text-muted-foreground">Prazo: 7 dias úteis</p>
-                        <button onClick={() => { setShippingCalculated(false); setCep(""); setCepLocation(""); setCepError(""); }} className="text-xs text-primary hover:underline">Alterar CEP</button>
-                      </div>
-                      <p className="text-xs text-primary mt-1">🚚 Frete grátis a partir de 3 itens!</p>
                     </div>
                   )}
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t border-border pt-4">
                   <span>Total</span>
-                  <span className="text-primary">R$ {(shippingCalculated || freeShipping ? finalTotal : total).toFixed(2).replace(".", ",")}</span>
+                  <span className="text-primary">R$ {(shippingCalculated ? finalTotal : total - firstPurchaseDiscount).toFixed(2).replace(".", ",")}</span>
                 </div>
 
                 <Link

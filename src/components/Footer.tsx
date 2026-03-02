@@ -15,7 +15,7 @@ const Footer = () => {
               AURA FUT
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Camisas de futebol com qualidade premium. Entrega rápida para todo o Brasil via SEDEX. Frete grátis acima de 3 itens.
+              Camisas de futebol com qualidade premium. Entrega rápida para todo o Brasil via SEDEX. Frete a partir de R$ 29,90.
             </p>
           </div>
 
