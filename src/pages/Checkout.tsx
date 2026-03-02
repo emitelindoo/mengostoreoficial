@@ -50,6 +50,8 @@ const Checkout = () => {
   const [pixCopied, setPixCopied] = useState(false);
   const [checkingPayment, setCheckingPayment] = useState(false);
   const [loadingCep, setLoadingCep] = useState(false);
+  const [savedOrderId, setSavedOrderId] = useState<string | null>(null);
+  const [savedOrderCode, setSavedOrderCode] = useState<string>("");
   const emailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -110,6 +112,57 @@ const Checkout = () => {
     );
   }
 
+  const saveOrderToDb = async (orderCode: string, transactionId?: string | number, status = "pending_payment") => {
+    try {
+      const { data: orderData, error: orderError } = await supabase
+        .from("orders")
+        .insert({
+          order_code: orderCode,
+          customer_name: form.name,
+          customer_email: form.email.toLowerCase(),
+          customer_phone: form.phone,
+          customer_cpf: form.cpf,
+          address_street: form.street,
+          address_number: form.number,
+          address_complement: form.complement || null,
+          address_neighborhood: form.neighborhood,
+          address_city: form.city,
+          address_state: form.state,
+          address_cep: form.cep,
+          subtotal: total,
+          shipping,
+          discount: firstPurchaseDiscount,
+          total: finalTotal,
+          status: status as any,
+          transaction_id: transactionId ? String(transactionId) : null,
+        })
+        .select("id")
+        .single();
+
+      if (orderError) { console.error("Order save error:", orderError); return null; }
+
+      const orderItems = items.map((item) => ({
+        order_id: orderData.id,
+        product_name: item.product.name,
+        product_id: item.product.id,
+        size: item.size || null,
+        quantity: item.quantity,
+        unit_price: item.product.price,
+        custom_name: item.customName || null,
+        custom_number: item.customNumber || null,
+      }));
+
+      await supabase.from("order_items").insert(orderItems);
+      return orderData.id;
+    } catch (err) {
+      console.error("Save order error:", err);
+      return null;
+    }
+  };
+
+
+
+
   const handleSubmit = async () => {
     setIsProcessing(true);
     try {
@@ -141,18 +194,22 @@ const Checkout = () => {
 
       if (error) throw error;
 
-      // Check if transaction was refused
       if (data?.status === "refused" || data?.status === "error") {
         const reason = data?.refusedReason?.description || "Transação recusada. Verifique seus dados e tente novamente.";
         toast.error(reason);
         return;
       }
 
-      // Extract PIX data from new Nivus API response
       const pixQrCode = data?.pix?.qrcode;
       const transactionId = data?.id;
 
       if (pixQrCode) {
+        // Generate order code and save to DB
+        const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        setSavedOrderCode(orderCode);
+        const orderId = await saveOrderToDb(orderCode, transactionId, "pending_payment");
+        setSavedOrderId(orderId);
+
         setPixData({
           qrCode: pixQrCode,
           copyPaste: pixQrCode,
@@ -167,6 +224,9 @@ const Checkout = () => {
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else if (data?.status === "paid") {
+        const orderCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        setSavedOrderCode(orderCode);
+        await saveOrderToDb(orderCode, data?.id, "paid");
         setSubmitted(true);
         markPurchased();
         clearCart();
@@ -200,6 +260,10 @@ const Checkout = () => {
       if (error) throw error;
 
       if (data?.status === "paid") {
+        // Update order status in DB
+        if (savedOrderId) {
+          await supabase.from("orders").update({ status: "paid" as any }).eq("id", savedOrderId);
+        }
         fbEvent("Purchase", {
           content_ids: items.map(i => i.product.id),
           contents: items.map(i => ({ id: i.product.id, quantity: i.quantity })),
@@ -242,14 +306,28 @@ const Checkout = () => {
               <ShieldCheck className="w-10 h-10 text-primary" />
             </div>
             <h1 className="text-3xl font-display font-bold mb-4">Pedido Confirmado! 🔥</h1>
+            {savedOrderCode && (
+              <div className="bg-primary/10 border border-primary/20 rounded-xl px-6 py-3 mb-4 inline-block">
+                <p className="text-xs text-muted-foreground">Código do Pedido</p>
+                <p className="text-2xl font-display font-bold text-primary">{savedOrderCode}</p>
+              </div>
+            )}
             <p className="text-muted-foreground mb-2">Obrigado pela compra, {form.name.split(" ")[0]}!</p>
-            <p className="text-muted-foreground mb-8">Você receberá os detalhes do pedido no email <span className="text-foreground font-semibold">{form.email}</span></p>
-            <Link
-              to="/"
-              className="inline-block px-8 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold rounded-lg transition-colors"
-            >
-              Voltar à Loja
-            </Link>
+            <p className="text-muted-foreground mb-6">Você receberá os detalhes do pedido no email <span className="text-foreground font-semibold">{form.email}</span></p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/rastrear"
+                className="inline-block px-8 py-3 bg-primary hover:bg-aura-dark-blue text-primary-foreground font-display font-semibold rounded-lg transition-colors"
+              >
+                Rastrear Pedido
+              </Link>
+              <Link
+                to="/"
+                className="inline-block px-8 py-3 bg-secondary hover:bg-secondary/80 text-foreground font-display font-semibold rounded-lg transition-colors"
+              >
+                Voltar à Loja
+              </Link>
+            </div>
           </div>
         </main>
       </div>

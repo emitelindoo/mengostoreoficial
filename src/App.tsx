@@ -18,6 +18,9 @@ const Contact = lazy(() => import("./pages/Contact"));
 const DeliveryInfo = lazy(() => import("./pages/DeliveryInfo"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 const queryClient = new QueryClient();
 
@@ -46,6 +49,9 @@ const App = () => (
               <Route path="/termos-de-uso" element={<TermsOfUse />} />
               <Route path="/contato" element={<Contact />} />
               <Route path="/prazo-de-entrega" element={<DeliveryInfo />} />
+              <Route path="/rastrear" element={<TrackOrder />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
