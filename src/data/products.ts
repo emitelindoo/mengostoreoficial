@@ -67,6 +67,11 @@ import camisaBrasilRetroDetalhe2 from "@/assets/camisa-brasil-retro-detalhe2.png
 import camisaBrasilRetroDetalhe3 from "@/assets/camisa-brasil-retro-detalhe3.png";
 import camisaBrasilRetroDetalhe4 from "@/assets/camisa-brasil-retro-detalhe4.png";
 import camisaBrasilRetroCostas from "@/assets/camisa-brasil-retro-costas.png";
+import camisaPsgVermelhaFrente from "@/assets/camisa-psg-vermelha-frente.png";
+import camisaPsgVermelhaDetalhe1 from "@/assets/camisa-psg-vermelha-detalhe1.png";
+import camisaPsgVermelhaDetalhe2 from "@/assets/camisa-psg-vermelha-detalhe2.png";
+import camisaPsgVermelhaDetalhe3 from "@/assets/camisa-psg-vermelha-detalhe3.png";
+import camisaPsgVermelhaDetalhe4 from "@/assets/camisa-psg-vermelha-detalhe4.png";
 
 export type ProductCategory = "lancamentos-2026" | "selecoes" | "brasileirao" | "champions";
 
@@ -277,6 +282,23 @@ export const products: Product[] = [
     customizable: true,
     stock: 8,
     category: ["selecoes"],
+  },
+  {
+    id: "camisa-psg-vermelha-total90-2526",
+    name: "Camisa de Time PSG Vermelha 25/26 Total 90",
+    price: 199.90,
+    originalPrice: 349.90,
+    discount: 46,
+    rating: 5,
+    reviews: 642,
+    image: camisaPsgVermelhaFrente,
+    images: [camisaPsgVermelhaFrente, camisaPsgVermelhaDetalhe1, camisaPsgVermelhaDetalhe2, camisaPsgVermelhaDetalhe3, camisaPsgVermelhaDetalhe4],
+    badge: "Lançamento",
+    description: "Camisa do Paris Saint-Germain vermelha modelo Total 90 temporada 25/26. Confeccionada em tecido NikeBreathe altamente respirável com tecnologia DRI-FIT que absorve o suor. Design clássico com listras verticais em dois tons de vermelho, detalhes em azul royal na gola e mangas, e escudo do PSG centralizado. Corte regular confortável para uso casual ou esportivo.",
+    sizes: ["M", "G", "GG"],
+    customizable: true,
+    stock: 12,
+    category: ["champions"],
   },
 ];
 
