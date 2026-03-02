@@ -64,8 +64,6 @@ serve(async (req) => {
             zip_code: address.cep?.replace(/\D/g, ""),
             street_name: address.street,
             street_number: address.number,
-            city: address.city,
-            federal_unit: address.state,
           },
         },
         shipments: {
